@@ -2,42 +2,45 @@
 
 ## Executive summary
 
-This page explains who the job-list tool is for, what hidden information it surfaces, and where it saves time in a job-search day. It is built for an international computer-science master's student who graduates in December and needs a visa-sponsoring employer. The core problem: the student can't easily see which open jobs are at companies with a real record of sponsoring this kind of role. Here is the case that the tool turns hours of manual checking into a short review, and the two mistakes it is most likely to make.
+This page explains who the job-list tool is for, what hidden information it surfaces, and where it saves time in a job-search day. It is built for an international computer-science master's student on pre-completion OPT who has a few years of AI engineering experience and needs an employer that will eventually sponsor a work visa. The core problem: the student can't easily see which open AI Engineer jobs are at companies with a real sponsorship record, and which job descriptions quietly rule them out. Here is the case that the tool turns many hours of manual checking into a short review, and the two mistakes it is most likely to make.
 
 ## Who, in exactly what situation
 
-An international MS Computer Science student in Boston, graduating **December 2026**, on F-1 status with post-completion OPT **not yet started** (EAD expected around January 2027). They are targeting entry-level **software and AI/ML engineering** roles (SOC 15-1252 Software Developers; 15-1221 for AI Engineer and Applied Scientist titles), and they need an employer that will file an H-1B.
+The student is an international MS Computer Science student on F-1 status, working under **pre-completion OPT** from mid-October 2026. They have about **3.5 years** of prior AI engineering experience (Azure OpenAI, Semantic Kernel, Azure ML, C#/.NET). They want **mid-level AI Engineer roles on the Microsoft AI stack**, anywhere in the US but **Texas and remote first**, at an employer that will file an H-1B.
 
-Timing is what makes this the right moment. Applying in October–December burns **zero** of the 90 unemployment days, because the clock only starts with OPT. But only applications to real postings at real sponsors count. Every week spent on non-sponsors is a week the clock will later take back.
+Two facts from DHS (*Study in the States*, F-1 OPT page, checked 2026-10-02) shape the timing:
+- The 90-day unemployment limit applies to **post-completion** OPT.
+- OPT is applied for by the **student**; no employer "sponsors OPT". So the question "who sponsors OPT?" really means "who hires people on OPT and will sponsor an H-1B later?". That is what this recipe answers from the H-1B record.
 
 ## The information asymmetry
 
-From the outside, the student cannot easily see three things together:
-1. Whether a company has **sponsored H-1Bs for software titles**, rather than for any title.
-2. Whether it **raised money recently** and is likely hiring.
-3. Whether it has an **open entry-level US posting today**, or only senior roles and ghost listings.
+From the outside, this student cannot easily see four things together:
+1. Whether a company has a real **H-1B record** for engineering titles.
+2. Whether it **raised money recently**.
+3. Whether it has an **open AI Engineer posting at their level** today.
+4. Whether that posting's **description rules them out**.
 
-Job boards show postings without sponsorship history. H-1B lookup sites show history without postings. Neither shows funding. A chatbot answers "does X sponsor?" fluently whether or not a record exists. The tool joins the three, and it labels which parts are records and which are the student's own rules.
+The fourth was invisible until the author checked by hand at gate G3 in iteration 1. Both AI Engineer roles the tool suggested then were disqualifying: one was closed to new graduates, the other required US citizenship and a secret clearance. Iteration 2 reads descriptions. It found live postings at companies *with* H-1B history saying *"unable to sponsor … for this role"*: Verkada on 156 of 307 postings, Twin Health on 23 of 39. Job boards don't show sponsorship history; H-1B lookup sites don't show live descriptions; a chatbot answers "does X sponsor?" fluently either way. The tool joins them and labels which parts are records.
 
 ## Engine layers it connects
 
-- **80 Days to Stay:** H-1B approvals, sponsored titles and funding from the mapped CSV, cross-checked against the Form D samples.
-- **Job-Ops:** board discovery and liveness, through the repo's allow-listed Greenhouse/Ashby fetcher.
-- **Cognitive Pivot:** national wage and job zone shown beside each posting as context only, because the scorer gives role quality zero weight.
+- **80 Days to Stay:** H-1B approvals, sponsored titles, funding; Form D samples as a cross-check.
+- **Job-Ops:** board discovery, liveness, and now the job descriptions, through the repo's allow-listed Greenhouse/Ashby fetcher.
+- **Cognitive Pivot:** national wage and job zone as context only (the scorer gives role quality zero weight).
 
-Decisions come from the engine's own scorer, run unchanged.
+Decisions come from the engine's own scorer, unchanged.
 
 ## Where it fits the 3-3-2 day
 
-It takes over the **research half of the 2 research-and-apply hours**: deciding *which* postings deserve tailoring, before any tailoring starts.
+It takes over the **research half of the 2 research-and-apply hours**: finding which postings are even worth tailoring.
 
-- **By hand** *(estimate, not measured)*: about 20–25 minutes per company to look up sponsorship history, check funding, find the careers page and filter to entry-level US roles. For the 37 candidate companies that is roughly 12–15 hours.
-- **With the tool** *(observed for the run; the review time is an estimate)*: the run itself takes about 2 minutes. Clearing gates G1–G3 takes roughly 45 minutes.
-- **Saving** *(estimate)*: about **10+ hours the first week**, then 2–3 hours per weekly re-run. The saving is mostly in the companies it lets the student skip: 96% of evaluated postings in this run.
+- **By hand** *(estimate, not measured)*: about 25–30 minutes per company to check sponsorship history, funding, the careers page, the level, and the fine print. For the 40 candidate companies that is roughly 17–20 hours.
+- **With the tool** *(run time observed; review time estimated)*: about 2 minutes for the run, then roughly 45 minutes to clear gates G1–G3.
+- **Saving** *(estimate)*: **15+ hours the first week**, then 2–3 hours per weekly re-run. Most of it comes from what it lets the student skip: 94.5% of the 55 AI/ML postings evaluated in iteration 2.
 
-It also **feeds the 3 networking hours**. The "network, don't apply" list names strong, recently funded sponsors with no matching opening today; in this run, Apptronik, Twin Health, PsiQuantum and VidMob. Those are targets for an informational conversation before a role opens. The prototype itself, with its tests and an honest account of what it can't verify, is a **credibility-hours** artifact for a software-engineering candidate.
+It also **feeds the 3 networking hours**. In iteration 2 the network list (Cohere Health, Apptronik, Twin Health, PsiQuantum, VidMob, CodaMetrix) names recently funded sponsors with no qualifying AI opening today, each shown with its count of "can't sponsor this role" postings. The prototype itself is a **credibility-hours** artifact for an AI engineer.
 
 ## Domain-specific failure modes
 
-1. **"Software Engineer" means different jobs.** The sponsorship match is by title family. So a robotics or quantum-hardware company's past "Software Engineer III" petitions count toward an embedded-firmware posting, and a med-tech company's toward a cloud backend role. *Hardest to catch for:* a new graduate who hasn't yet seen how differently industries use the title. A long-time engineer would spot it from the job description in seconds.
-2. **A strong sponsor is mistaken for a good match.** A company with hundreds of approvals clears "Apply" on sponsorship alone, even when the résumé barely matches (live run: fit 0.25, still Apply). *Hardest to catch for:* a student anxious about the clock, who reads "Apply" as "you'll get this job". The fit column is the only warning, and the report's ordering doesn't force anyone to read it.
+1. **A role-specific "can't sponsor" read as company policy, or the reverse.** Verkada's statement appears on most sales roles but not its backend roles. A student who sees it once may write off a 272-approval sponsor. A student who never reads it may apply to a role explicitly closed to them. *Hardest to catch for:* someone short on time who reads one posting per company. The tool counts the statements per company and rules out only the posting that carries them.
+2. **A top-few title list mistaken for the whole sponsorship record.** The CSV keeps only a company's top sponsored titles, and only 100 of 1,552 sponsors list an AI/ML title. So every AI posting in iteration 2 was graded "Possible" and none reached Apply, even at Databricks (1,640 approvals). *Hardest to catch for:* a student who sees an empty Apply list and concludes nobody sponsors AI engineers. Per-petition SOC data (recipe TODO 1) is the fix.

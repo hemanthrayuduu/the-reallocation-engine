@@ -104,6 +104,26 @@ Failures that were **not** predicted:
 
 All three are fixed and tested. F4 (SOC with no BLS row) happened only in a fixture: the real BLS file has every SOC the run used. Slug changed from the plan's `swe-network-targets` to `swe-sponsor-pipeline` after the author asked for an apply list as the main output.
 
-### Revision 2 — author
+### Revision 2 — 2026-10-02, author (Hemanth Rayudu), recorded by Claude Code at his direction
 
-*(Your own predictions or corrections, in your words.)*
+**Situation corrected.** The original situation above (December graduate, OPT not started, entry-level) was Claude's framing of an early answer, not the author's real case. The real case:
+- pre-completion OPT from mid-October 2026;
+- about 3.5 years of experience;
+- **mid-level AI Engineer** roles on the **Microsoft AI stack**;
+- anywhere in the US, **Texas and remote first**.
+
+Checked against DHS *Study in the States*: the 90-day unemployment limit is stated for post-completion OPT, and OPT is applied for by the student, not sponsored by an employer.
+
+**No new predictions were written down before the iteration-2 runs.** That is an honest gap in this record, not an omission in the summary. The original predictions P1–P3 are scored against iteration 2 below instead.
+
+### Revision 3 — 2026-10-02, Claude Code (after the iteration-2 runs)
+
+| Original prediction | Iteration 2 outcome | Evidence |
+|---|---|---|
+| P1: boards found for fewer than a third | **Confirmed again:** 10 of 40 (25%) | `evidence/25-…` |
+| P2: title-family matching misfires | **Confirmed again:** "Partner Engineer … AI & Apps" and "AI Automation QA Engineer" matched the AI family until excluded by rule | `evidence/23b-…` |
+| P3: most Apply results demoted to Consider | Wrong in iteration 1. **In iteration 2 it is true, and more:** nothing reached Apply, and every AI posting was tier Possible | `runs/2026-10-02-live-v2/` |
+
+Not predicted:
+- **The first pass found almost nothing.** Only 100 of 1,552 sponsors list an AI title (`23a`).
+- **"Can't sponsor" statements are role-specific**, so a company-wide rule drafted on that basis was wrong and was withdrawn (`24a`, `24b`).

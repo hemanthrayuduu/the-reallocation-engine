@@ -23,6 +23,12 @@ This is the honest record of how the work actually went: what was tried, what br
 | 13 | Drafting claims are accurate | Claude wrote that Intel/ServiceNow use un-probed ATSs (unverified), and "six" identity-confirmed rows (actually 11) | both corrected after checking | Claude self-correction | recipe TODO 3; TEST-REPORT G1 line |
 | 14 | G3: author wanted to apply to both AI Engineer (Consider) roles | Claude pulled both job descriptions. One excludes new graduates; the other requires US citizenship and a secret clearance | author rejected both at G3 and prioritized Cohere Health SWE II and Verkada Backend; logged as recipe TODO 7 rather than a code change, so the tested code stays as signed | author decided; Claude checked the source | `evidence/20-…`, run log G3 |
 | 15 | Claude said a TODO-only change keeps the attestation valid | too strong: SNICKERDOODLE says any recipe edit after attestation voids it | recipe bumped to 0.1.2 (text only), with a note under the attestation naming what changed after signing | Claude self-correction | `worked-run.md` attestation note |
+| 16 | Recipe built for a December graduate on entry-level SWE/AI | author: "my case is I will be on pre-opt and the clock start in Oct 2nd week"; then "AI Engineer jobs with Microsoft AI stack mainly and mid level jobs with 3-4 years of experience"; then "all locations but focus more on jobs in texas and remote, who sponsors opt" | re-scoped persona, résumé, rules (iteration 2) | author decided; Claude built | commit `75f3c41`; CHANGE-BRIEF Rev. 2 |
+| 17 | "The clock starts in October" | DHS page: the 90-day limit is stated for post-completion OPT, and the student applies for OPT (no employer sponsors it) | timeline gate stays on post-completion OPT; told the author to confirm with the DSO | Claude checked the source | persona `opt_start_note`; recipe |
+| 18 | AI-only sponsorship evidence finds AI sponsors | 10 candidates, 0 US AI roles: only 100 of 1,552 sponsors list an AI title in the top-few list | software-or-AI evidence; a mismatch gets the soft tier | Claude | `evidence/23a` → `25` |
+| 19 | "AI" + "engineer" means an AI role | matched "Partner Engineer … AI & Apps" and "AI Automation QA Engineer" | `not_if_title_has` exclusions + tests | Claude | `23b`; rules 0.2.1 |
+| 20 | Twin Health "won't sponsor", so drop it from networking | Claude said this to the author from one posting; raw data: statements are role-specific, and its Senior AI postings have none | rule withdrawn before commit; statements counted per company; claim corrected to the author | Claude self-correction | `24a`, `24b` |
+| 21 | Drafted predictions P4/P5 for iteration 2 | Claude labeled them "written before the iteration-2 live run" when they were written after | removed; CHANGE-BRIEF now says no predictions were recorded before iteration 2 | Claude self-correction | CHANGE-BRIEF Rev. 2 |
 
 **Unresolved questions:**
 - How should the recipe's proposed-addition TODOs count against SNICKERDOODLE's "zero open TODOs" rule for SPECIFIED?
@@ -63,6 +69,12 @@ This is the honest record of how the work actually went: what was tried, what br
 - A "Consider" or "Apply" from the scorer is not the same as "I'm eligible." Sponsorship history and live postings are visible from data. Requirements like citizenship, clearance or "no new grads" live in the job description, and only a person reading it caught them.
 - Labels matter: `record` means read from a file or job board, and `your-input` means my own rule or assumption. Seeing them side by side showed me how much of each score rests on choices rather than facts.
 - Running the same thing again isn't iteration. The useful changes all came from noticing something wrong in real output.
+
+**Iteration 2 (re-scope), drafted from the session for me to edit**
+- I corrected the situation the tool was built for: I'm on **pre-completion OPT** from mid-October, I have about 3.5 years of experience, and I want **mid-level AI Engineer roles on the Microsoft AI stack**, anywhere in the US but Texas and remote first.
+- I thought my 90-day clock would start in October. The DHS page says the 90-day limit is a post-completion OPT rule, and that the student applies for OPT; no employer sponsors it. So my real question was "who hires on OPT and sponsors H-1B later". I still need to confirm my dates with my DSO.
+- After the change, the tool found 3 AI roles to consider and none to apply to, because the sponsorship records rarely list AI titles. It also showed companies with a sponsorship history posting "unable to sponsor … for this role" on some jobs.
+- *(Add: what you checked in the iteration-2 report and what you'd act on.)*
 
 **Still unresolved for me**
 - Where to find AI Engineer roles that are open to new graduates *and* at companies that sponsor that title. The sponsorship records behind this run mostly cover software titles.

@@ -2,7 +2,11 @@
 
 ## Executive summary
 
-This is the run record for a new job-search recipe that lists open entry-level software and AI jobs at companies with a public record of visa sponsorship and recent funding. One full live run on 2026-10-02 completed and was checked against its sources. Two bugs found along the way were fixed. The student then checked the results by hand and signed off on 2026-10-02, which promoted the recipe from draft to runnable-on-sample-data. That review found that both AI Engineer roles the tool suggested were ones this student cannot apply to.
+This is the run record for a job-search recipe that finds open jobs at companies with a public record of visa sponsorship and recent funding. It went through two iterations on 2026-10-02.
+- **Iteration 1:** entry-level software and AI roles. It ran, was checked against its sources, and was signed off by the student. That sign-off revealed that both AI roles it suggested were closed to them.
+- **Iteration 2:** after the student corrected their situation (pre-completion OPT, about 3.5 years of experience, mid-level AI Engineer roles on the Microsoft AI stack, Texas and remote first), the tool was changed to read job descriptions. It was run again.
+
+The iteration-2 sign-off lines at the bottom are still open.
 
 ## 2026-10-02 — swe-sponsor-pipeline live sample run
 
@@ -54,3 +58,35 @@ This is the run record for a new job-search recipe that lists open entry-level s
   - by/date: Hemanth Rayudu, 2026-10-02
 
 *When the sample-run gate is cleared:* set `status: RUNNABLE-SAMPLE` and `last_gate: "sample-run, <date>, <name>, logs/runs/2026fa-hemanthrayuduu-1.md"` in the recipe frontmatter, and `status: RUNNABLE-SAMPLE` in the prototype README.
+
+## 2026-10-02 — iteration 2: author re-scope, description rules (rules 0.2.1, code 75f3c41)
+
+- **Recipe:** manual (`recipes/cases/2026fa/hemanthrayuduu-swe-sponsor-pipeline.md` v0.2.1, rules 0.2.1, code `75f3c41`)
+- **Trigger (author):** the real situation is pre-completion OPT from mid-October, about 3.5 years of experience, AI Engineer roles on the Microsoft AI stack, all US with Texas and remote first.
+  - Checked against DHS *Study in the States* (F-1 OPT page, 2026-10-02): the 90-day unemployment limit is stated for post-completion OPT, and the student, not an employer, applies for OPT. So the timeline gate stays on post-completion OPT, and "who sponsors OPT" means "who hires on OPT and sponsors H-1B later".
+- **Inputs:**
+  - Command: `python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v2`.
+  - Persona v2, résumé v2, `rules.json` 0.2.1, `scheme.json`. Same CSV/BLS/Form D files as iteration 1 (sha256 in `pipeline-log.json`).
+- **Outputs:** `course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v2/`; terminal output `evidence/25-iteration2-final-live-run.txt`.
+- **Result:**
+  - Funnel: 40 candidates → 10 boards found → 55 AI/ML postings → 40 in the US → 4 at the right level → **1 ruled out by its description** (Databricks Federal Focus: «u.s. citizenship») → 3 kept.
+  - Buckets: **apply 0 · consider 3 · network 6 · check-by-hand 30 · skip 1**; skip share 94.5%. Tests 21/21; pii-scan `--diff main` clean.
+- **Intermediate passes (kept as evidence):**
+  - `23a`: AI-only sponsorship evidence gave 10 candidates and 0 US AI roles. Widened to software-or-AI evidence, with mismatches soft-tiered.
+  - `23b`: "Partner Engineer … AI & Apps" and "AI Automation QA Engineer" counted as AI roles. Excluded by rule.
+  - `24a`: draft rule dropped any company with one "can't sponsor" posting from networking. **Withdrawn**: `24b` shows the statements are role-specific (Verkada 156/307, Twin Health 23/39, absent on their engineering roles).
+- **Open issues:**
+  - Nothing reaches Apply, because every AI posting is tier Possible (the CSV's top-few sponsored titles rarely name AI roles; TODO 1).
+  - Board coverage is 10 of 40.
+  - Senior titles are excluded by default.
+  - No Texas AI posting appeared in this run.
+  - E-Verify data is absent (TODO 8).
+  - **Gates G1–G3 and the sample-run gate for v0.2.1 are not yet cleared.** Recipe status is DRAFT.
+
+## Gate decisions — iteration 2 (v0.2.1; to be completed by the named human)
+
+- **Sample-run gate (lifecycle):** ☐ cleared / ☐ not cleared · by: ______ · date: ______ · note: ______
+- **G1 liveness:** links checked for the 3 Consider rows (`npm run ats:liveness -- <url>` or a browser): ___ of 3 live · by/date: ______
+- **G2 timeline:** post-completion OPT start (2027-01-11, fictional stand-in) and 60-day hiring lag confirmed · by/date: ______
+- **G3 release:** rows I would act on: ______; rows rejected and why: ______; networking targets I would contact: ______ · by/date: ______
+

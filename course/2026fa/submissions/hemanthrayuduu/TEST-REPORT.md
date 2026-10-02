@@ -2,23 +2,43 @@
 
 ## Executive summary
 
-**What this is:** the record of every check run on the job-list tool before submission: the toolchain before and after, a run from a fresh copy of the branch, a run on real data, each predicted failure, and two deliberate attempts to break it.
+**What this is:** the record of every check run on the job-list tool before submission, across two iterations: toolchain checks, real-data runs, the named failure cases, deliberate break attempts, and hand comparisons with the sources.
 
 **Why read it:** to see what was actually run and observed, as opposed to what was intended.
 
 **What it found:**
-- The tool runs from a fresh copy with no installation.
-- All 16 offline tests pass.
-- Every named failure stops cleanly without inventing a value.
-- The changes stay inside the assigned folders.
+- **Iteration 1 (entry-level software/AI):** the tool runs from a fresh copy with no installation, all its tests passed, and every named failure stopped cleanly. Two real defects (a location bug and a silent wrong-file success) were fixed and covered by tests.
+- **Iteration 2 (the author's real situation: mid-level AI Engineer, Microsoft stack, Texas and remote first):** the tool reads job descriptions, and all 21 tests pass. A disabled rule is caught by the tests. Testing on real data also caught and withdrew a wrong rule before it shipped: one that treated "can't sponsor this role" as company-wide.
+- **The weakness stated plainly:** with the shipped data, no AI posting reaches "apply", because the sponsorship records rarely name AI titles.
 
-Testing also found two real defects, both fixed and now covered by tests:
-1. A location bug that put a company with a matching job on the wrong list.
-2. A silent failure: given the wrong input file, the tool reported a "successful" run with nothing in it.
+## Iteration 2 checks (code `75f3c41`, rules 0.2.1, recipe 0.2.1)
 
-It also exposed a design weakness, recorded rather than tuned away: a strong sponsorship record alone is enough for an "apply" recommendation.
+| # | Check | Command / action | Observed | Evidence |
+|---|---|---|---|---|
+| I2-1 | Offline tests | `python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v` | `Ran 21 tests … OK`; tests now use `fixtures/persona.fixture.json`, so editing the real persona can't break them | `27-iteration2-offline-tests.txt` |
+| I2-2 | Break: description rules disabled | patch `description_check` to never rule out; run `HappyPathOffline` | `FAIL: test_TODO7_description_rules_rule_out_without_scoring` (assertion; the first version only crashed with `KeyError`, so an explicit assertion was added) | `22-break-description-rules-disabled.txt` |
+| I2-3 | First live pass, AI-only sponsorship evidence | `pipeline.py --out-dir …/runs/2026-10-02-live-v2` (rules 0.2.0) | 10 candidates, 2 boards, 0 US AI roles. Only 100 of 1,552 sponsors list an AI title | `23a-iteration2-first-pass-ai-titles-only.txt` |
+| I2-4 | Second pass, software-or-AI evidence | same command | consider 4 · network 6. False positives: "Partner Engineer … AI & Apps", "AI Automation QA Engineer" | `23b-iteration2-live-run.txt`, `23b-report-rules-0.2.0.md` |
+| I2-5 | Break on real data: company-wide "can't sponsor" rule (draft 0.2.1) | same command | Twin Health dropped from networking on one posting's statement | `24a-…-WITHDRAWN.txt` |
+| I2-6 | Checking that draft rule against raw descriptions | read "unable to sponsor" contexts on two boards | role-specific: Verkada 156/307 (sales/ops, not backend), Twin Health 23/39 (not "Senior AI Engineer") → **rule withdrawn** | `24b-cant-sponsor-statements-are-role-specific.txt` |
+| I2-7 | Final live run | same command (rules 0.2.1) | 40 candidates → 10 boards → 55 AI/ML postings → 40 US → 4 right level → 1 ruled out by description → 3 kept. **apply 0 · consider 3 · network 6 · check-by-hand 30 · skip 1**; skip share 94.5%; hosts: the two named APIs | `25-iteration2-final-live-run.txt`, `runs/2026-10-02-live-v2/` |
+| I2-8 | TODO 7 handoff on real data | Federal Focus role | ruled out automatically: «u.s. citizenship». A human had to catch it in iteration 1 | report "Ruled out by the job description" |
+| I2-9 | Hand cross-check | CSV rows, Diligent posting via curl, BLS 15-1221.00 | CodaMetrix 18 approvals, "NLP Scientist"; Diligent 20, "3+ years of experience …"; median 140910, zone 5. All match the report | `26-iteration2-hand-cross-check.txt` |
+| I2-10 | Toolchain after | doctor, verify, conformance, `pii-scan --diff main`, scope | all pass; pii `clean ✓`; 85 files, all in the five assigned namespaces | `28-iteration2-toolchain-after.txt` |
+| I2-11 | Fresh clone + author re-run | *(to be run by the author before signing the iteration-2 attestation)* | — | — |
 
-## Run record
+**Iteration 2 named failure cases:**
+- F1 and F3 are unchanged code paths, and their tests pass.
+- F2 (board not found): 30 companies in check-by-hand.
+- F4 (no BLS row) and F5 (no Form D match): tests pass; F5 is seen live (all but Databricks).
+- F6 (wrong level / non-US only): 6 networking targets.
+- New for iteration 2: description rule-outs (eligibility, no-sponsorship, years). Exercised by fixtures 105, 106 and 402, and live by the Federal Focus role.
+
+---
+
+# Iteration 1 (record)
+
+## Run record (iteration 1)
 
 | Field | Value |
 |---|---|

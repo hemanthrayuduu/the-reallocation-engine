@@ -2,7 +2,7 @@
 owner: hemanthrayuduu
 term: 2026fa
 component: swe-sponsor-pipeline
-status: RUNNABLE-SAMPLE  # mirrors the recipe; sample-run gate cleared 2026-10-02 (logs/runs/2026fa-hemanthrayuduu-1.md)
+status: DRAFT  # mirrors the recipe: v0.1.2 reached RUNNABLE-SAMPLE; v0.2.1 (iteration 2) awaits the author's re-cleared sample-run gate
 promoted_to: null
 ---
 
@@ -10,12 +10,12 @@ promoted_to: null
 
 ## Executive summary
 
-**What this is:** a small program for a master's student in computer science who graduates in December, hasn't started post-graduation work authorization, and needs a visa-sponsoring employer. It starts from public records of which companies sponsored visas for software and machine-learning titles and which of them raised money recently. It then checks those companies' live job boards for entry-level US software and AI engineering openings.
+**What this is:** a small program for an international master's student in computer science on pre-completion OPT, with about 3.5 years of AI engineering experience, who wants **mid-level AI Engineer roles on the Microsoft AI stack**: anywhere in the US, Texas and remote first. It starts from public records of which companies sponsored visas and raised money recently. It then checks those companies' live job boards, reading each job description for anything that rules the student out: US citizenship, a clearance, "can't sponsor this role", or too many years asked.
 
 **Why use it:** doing this research by hand takes hours per company. This produces a sourced, labeled list in minutes.
 
-**What it decides:** nothing final. It sorts the results into four lists:
-- **apply** (tailor an application);
+**What it decides:** nothing final. It sorts the results into lists:
+- **apply** / **consider** (tailor an application);
 - **network** (strong sponsor, recently funded, but no matching opening, so reach out instead);
 - **check by hand** (its job board couldn't be found automatically);
 - **skip**.
@@ -55,12 +55,13 @@ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponso
 | Form D cross-check (samples only) | `data/sec/form-d/processed/sample/*.sample.json` | record |
 | Wage, job zone, cognitive pivot score | `data/bls/compact/soc_occupation_compact.csv` | record |
 | Live postings | Greenhouse / Ashby board APIs | record |
-| Persona and résumé (fictional) | `search/examples/kiran-rao/` | your-input |
-| Thresholds, patterns, tier p-values | `rules.json` (this folder) | your-input |
+| Persona and résumé (fictional; the tests use `fixtures/persona.fixture.json` instead) | `search/examples/kiran-rao/` | your-input |
+| Thresholds, patterns, tier p-values, description rules, stack terms | `rules.json` (this folder, v0.2.1) | your-input |
+| Fit scheme (greenhouse-watch default, location weights 0) | `scheme.json` (this folder) | your-input |
 
 **Reused code (not copied):**
 - `normalize_company_name` from `scripts/ats/scrapers/common/normalize.py`;
-- `board_url`, `fetch_board`, `normalize_jobs`, `resume_features` and `judge` from `.claude/skills/greenhouse-watch/scripts/greenhouse_watch.py`;
+- `board_url`, `fetch_board`, `normalize_jobs`, `resume_features`, `judge` and `strip_html` from `.claude/skills/greenhouse-watch/scripts/greenhouse_watch.py`;
 - the scorer `scripts/score/role-scorer.mjs`, run as a subprocess with `--out-dir`.
 
 ## What it writes (into the output folder only)

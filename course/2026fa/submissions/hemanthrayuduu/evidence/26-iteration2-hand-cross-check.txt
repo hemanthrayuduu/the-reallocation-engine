@@ -1,0 +1,9 @@
+# Hand cross-check (iteration 2), independent of the pipeline
+$ grep CSV rows for CODAMETRIX INC and DILIGENT ROBOTICS INC (approvals, sponsored titles, funding)
+   CODAMETRIX INC | approvals 18.0 | titles ['NLP Scientist'] | funding 2025-04-16 15000000.0
+   DILIGENT ROBOTICS INC | approvals 20.0 | titles ['Staff Software Engineer'] | funding 2025-02-13 20000000.0
+$ curl Diligent Robotics posting 7651459003: title, location, and the years sentence
+   ML Engineer, Manipulation | Anywhere in the US
+   years: 3+ years of experience applying ML to robotics manipulation, visuomotor control, or sequ
+$ BLS row 15-1221.00 (wage shown for AI/ML postings)
+   15-1221.00 | Computer and Information Research Scientists | median 140910.0 | zone 5

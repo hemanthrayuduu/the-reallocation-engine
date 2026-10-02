@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-This is the cover sheet for the Canvas upload. It identifies the student, the exact commit submitted, how to run the work, the lifecycle stage claimed, and its known limits. The submission is a job-search recipe and working tool that lists open entry-level software and AI jobs at companies with a public record of visa sponsorship and recent funding, for an international master's student about to start post-graduation work authorization.
+This is the cover sheet for the Canvas upload. It identifies the student, the exact commit submitted, how to run the work, the lifecycle stage claimed, and its known limits. The submission is a job-search recipe and working tool that lists open mid-level AI Engineer jobs at companies with a public record of visa sponsorship and recent funding. It reads each job description for anything that rules the student out, for an international master's student on pre-completion OPT.
 
 ## Submission record
 
@@ -10,15 +10,15 @@ This is the cover sheet for the Canvas upload. It identifies the student, the ex
 Assignment: The Reallocation Engine — Recipe Design Assignment
 Student: Hemanth Rayudu
 GitHub handle: hemanthrayuduu
-Domain / situation: International MS Computer Science student graduating December 2026, F-1 with post-completion OPT not yet started, targeting entry-level US software / AI engineering roles (SOC 15-1252, 15-1221) at H-1B-sponsoring, recently funded companies
+Domain / situation: International MS Computer Science student on F-1 pre-completion OPT (from mid-October 2026) with about 3.5 years of AI engineering experience, targeting mid-level AI Engineer roles on the Microsoft AI stack (anywhere in the US; Texas and remote first) at H-1B-sponsoring, recently funded companies
 Recipe path: recipes/cases/2026fa/hemanthrayuduu-swe-sponsor-pipeline.md (+ .card.md)
 Prototype command: python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py
 Test command: python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v
 GitHub repository / branch / PR URL: https://github.com/hemanthrayuduu/the-reallocation-engine / contrib/2026fa-hemanthrayuduu-swe-sponsor-pipeline / [PR URL after opening]
 Submitted commit SHA: [git rev-parse HEAD of the PR head, filled in at submission]
-Lifecycle stage claimed: RUNNABLE-SAMPLE (sample-run gate and G1–G3 cleared by Hemanth Rayudu, 2026-10-02, logs/runs/2026fa-hemanthrayuduu-1.md); attestation: null (not VERIFIED)
-Summary of my changes: A Python (stdlib) pipeline that filters the 80 Days CSV to companies with H-1B approvals for software/ML titles and funding in the last 24 months; finds their Greenhouse/Ashby boards by slug, through the repo's allow-listed greenhouse-watch fetcher; turns every US new-grad SWE/ML posting into a role with labelled evidence; scores the roles with the unmodified role-scorer.mjs; and writes an agent JSON log and a human Markdown report bucketing apply / consider / network / check-by-hand / skip. Includes a recipe and card, a fictional persona, 16 offline tests, and a live run on 2026-10-02 (37 candidates, 9 boards, 253 postings evaluated, apply 9, consider 2, network 4).
-Known limitations: Board discovery found 9/37 (Lever, Workday, iCIMS, SmartRecruiters not probed); sponsorship is matched by title family, not SOC; sponsorship alone clears the Apply threshold (fit floor is an open DEFINE); funding is a pre-filter because the scorer has no funding vote; Form D covers samples only (1 match); wage is national OEWS context with zero scorer weight; hiring lag is an assumption; Ashby board identity cannot be confirmed; eligibility requirements stated only in job descriptions (US citizenship, clearance, 'not for new graduates') are not read. Both AI Engineer suggestions in the live run were disqualifying this way, and gate G3 caught them.
+Lifecycle stage claimed: DRAFT for v0.2.1 (iteration 2) until the author re-clears the sample-run gate; v0.1.2 (iteration 1) reached RUNNABLE-SAMPLE, cleared by Hemanth Rayudu on 2026-10-02 (logs/runs/2026fa-hemanthrayuduu-1.md). attestation: null (not VERIFIED). [Update to RUNNABLE-SAMPLE if the author clears iteration 2 before submission.]
+Summary of my changes: A Python (stdlib) pipeline: filters the 80 Days CSV to companies with H-1B approvals for software/AI titles and funding in the last 24 months; finds their Greenhouse/Ashby boards by slug through the repo's allow-listed greenhouse-watch fetcher; keeps US AI Engineer postings at the persona's level; reads each description for citizenship/clearance, 'can't sponsor this role' and years-of-experience rule-outs; flags Microsoft AI stack terms and puts Texas/remote first; scores roles with the unmodified role-scorer.mjs; writes an agent JSON log and a human Markdown report (apply / consider / network / check-by-hand / skip). Two iterations on 2026-10-02: iteration 1 (entry-level SWE/AI): apply 9, consider 2, network 4; iteration 2 (author re-scope, mid-level AI): apply 0, consider 3, network 6, 1 ruled out by description. Includes a recipe and card, a fictional persona, 21 offline tests, and evidence for every run and break attempt.
+Known limitations: Board discovery found 10/40 (Lever, Workday, iCIMS, SmartRecruiters not probed); sponsorship history is a top-few title list, so every AI posting is the soft tier 'Possible' and nothing reaches Apply (per-petition SOC data is TODO 1); description rules match listed phrases only; 'can't sponsor' statements are role-specific and are counted, not generalised; Senior titles excluded by default; no Texas AI posting in the live run; funding is a pre-filter (the scorer has no funding vote); Form D samples only; wage is national OEWS context with zero scorer weight; hiring lag is an assumption; no E-Verify data; Ashby board identity unconfirmed.
 ```
 
 ## How to reproduce (from a fresh clone of the branch)
@@ -26,7 +26,7 @@ Known limitations: Board discovery found 9/37 (Lever, Workday, iCIMS, SmartRecru
 ```bash
 python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v   # offline, no installs
 python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --limit 5                         # quick live demo
-python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py                                   # full live run (~2 min)
+python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir /tmp/run                 # full live run (~2 min)
 ```
 
 Requires Python 3.9+ and Node 20+. No `npm install` or `pip install` is needed for the prototype.
@@ -42,5 +42,6 @@ Requires Python 3.9+ and Node 20+. No `npm install` or `pip install` is needed f
 | `FRICTIONAL.md` | session record (Part A) and author account (Part B) |
 | `SOURCES.md` | credits; AI vs author contributions |
 | `evidence/` | verbatim terminal output, numbered in run order |
-| `runs/2026-10-02-live/` | the final live run's outputs |
+| `runs/2026-10-02-live-v2/` | iteration 2 (current) live run outputs |
+| `runs/2026-10-02-live/` | iteration 1 live run outputs |
 | `runs/role-scores.*` | the warm-up `npm run score` on `data/examples/ch11-roles.json` |

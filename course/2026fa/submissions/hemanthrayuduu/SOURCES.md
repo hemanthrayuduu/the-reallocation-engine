@@ -45,6 +45,14 @@ Claude Code, in this session:
 - **Drafted** predictions P1–P3. These are labeled as Claude's in CHANGE-BRIEF.
 - **Drafted** FRICTIONAL Part B at the author's request, from the session record of his commands, output and decisions, for him to review and edit. Also wrote the gate-decision lines in the run log and the attestation line, from his stated results.
 - **Pulled** the two AI Engineer job descriptions at gate G3 (`evidence/20`). Ran the 11-link liveness check at the author's request (`evidence/19`).
+- **Iteration 2 (after the author's re-scope):**
+  - **Checked** the DHS Study in the States OPT page for the 90-day rule and for who applies for OPT.
+  - **Rewrote** the persona, résumé and rules (0.2.0 → 0.2.1); `scheme.json`; and the description rules, stack terms and location preference in `pipeline.py`. Also the fixture persona and tests (21).
+  - **Ran** every iteration-2 command in `evidence/22`–`27`.
+  - **Made and withdrew** a wrong company-wide "doesn't sponsor" rule, after checking the raw descriptions (`24a`, `24b`).
+  - **Told the author** Twin Health "won't sponsor" from one posting; corrected it.
+  - **Wrongly labeled** two drafted predictions as written before the run; corrected before commit.
+- **DHS source used:** *Study in the States*, "F-1 Optional Practical Training (OPT)", studyinthestates.dhs.gov, read 2026-10-02.
 
 ## What the author decided, checked, changed, or rejected
 
@@ -63,3 +71,5 @@ Claude Code, in this session:
   - kept 7 rows as backups.
 - **Decided** to log the description problem as TODO 7 rather than change the tested code. Promoted the recipe to RUNNABLE-SAMPLE.
 - **Signed** the attestation after my own re-runs. Reviewed and edited FRICTIONAL Part B.
+- **Re-scoped** the work after iteration 1. I corrected my situation (pre-completion OPT, about 3.5 years, mid-level AI Engineer, Microsoft AI stack) and my location priority (all US, Texas and remote first), and asked which employers hire on OPT.
+- *(Iteration 2: add what you re-run, check and decide at gates G1–G3.)*

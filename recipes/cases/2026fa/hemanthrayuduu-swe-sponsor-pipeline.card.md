@@ -1,76 +1,76 @@
-# Sponsor-ready SWE jobs — human card
+# Sponsor-ready AI Engineer jobs — human card
 
-**Audience:** an international MS CS student who graduates in December, hasn't started OPT, and must decide which software or AI engineering jobs deserve a tailored application this week.  
+**Audience:** an international MS CS student on pre-completion OPT with about 3.5 years of AI engineering experience, deciding which mid-level AI Engineer roles (Microsoft AI stack; anywhere in the US, Texas and remote first) deserve a tailored application this week.  
 **Agent twin:** `recipes/cases/2026fa/hemanthrayuduu-swe-sponsor-pipeline.md`  
-**Engine layers:** 80 Days to Stay (sponsorship and funding) · Job-Ops (live boards) · Cognitive Pivot (wage context only).
+**Engine layers:** 80 Days to Stay (sponsorship and funding) · Job-Ops (live boards and job descriptions) · Cognitive Pivot (wage context only).
 
 ## Executive summary
 
-This card explains, in one page, what the job-list tool tells you and where it can mislead you. The tool lists open entry-level US software and AI jobs at companies that sponsored H-1B visas for similar titles and raised money recently. It also lists strong sponsors to **network into** and companies it **couldn't check**. Read this card before you trust a row.
+This one-page card explains what the job-list tool tells you and where it can mislead you. The tool lists open AI Engineer jobs at companies that have sponsored work visas and raised money recently. It drops jobs whose description rules you out: US citizenship, a clearance, "can't sponsor this role", or too many years. Texas and remote jobs are listed first. It also names strong sponsors to network into and companies it couldn't check. Read this card before you trust a row.
 
 ## Purpose
 
-Answer: *which open roles are worth my two research-and-apply hours today, given that I need a sponsor?* And, for strong sponsors with nothing open right now: *who should I reach out to instead?*
+Answer: *which open AI Engineer roles are worth my research-and-apply hours today, given that I'll need H-1B sponsorship?* And, for strong sponsors with nothing open right now: *who should I reach out to instead?*
 
 ## What it can verify
 
-- The company has N H-1B approvals and these top sponsored titles in the 80 Days CSV (record).
-- Its latest recorded funding falls inside your window (record). One company in the live run also matched a Form D sample.
-- The posting was on the company's live Greenhouse or Ashby board when fetched (record). For Greenhouse, the board's name matches the company.
-- The national median wage and job zone for the posting's occupation code (record).
-- The exact arithmetic the engine's scorer used (`role-scores.json`).
+- The company has N H-1B approvals and these top sponsored titles (record).
+- Its latest funding is inside your window (record).
+- The posting was live on the company's Greenhouse or Ashby board when fetched; for Greenhouse, the board's name matches the company (record).
+- What the description says: the years asked, and phrases like "U.S. citizenship" or "unable to sponsor … for this role" (record).
+- Which Microsoft AI stack terms appear in the posting (record).
+- The national median wage for the occupation, and the scorer's exact arithmetic.
 
 ## What it cannot verify
 
-- That the company will sponsor **this** job, or sponsor next year.
-- That a "check by hand" company has no jobs. Its board just wasn't found: 28 of 37 in the live run.
-- That an Ashby board (marked ⚠) belongs to the company.
-- That the role is truly entry level. Only the title is read.
-- That you're **eligible** at all. Requirements in the description, such as US citizenship, a security clearance, or "not for new graduates", are not read. Both AI Engineer roles in the live run were disqualifying this way, and only a human reading the description caught it.
-- That your 60-day hiring-lag assumption is realistic.
-- What this employer pays. The wage is a national median for the occupation.
+- That the company will sponsor **this** job. History isn't a promise, and live postings at sponsoring companies sometimes say "unable to sponsor … for this role". The tool counts those statements and shows them; it doesn't decide for you.
+- That a "check by hand" company has no jobs. 30 of 40 boards weren't found in the live run.
+- Eligibility clauses worded differently from the tool's phrase list.
+- The real level of a role whose description gives no years.
+- Whether a job really uses the Microsoft stack. "Azure" alone may just be the company's cloud.
+- Pay at this employer. Your hiring-lag assumption.
 
 ## Dependencies
 
 - Python 3.9+ (standard library only) and Node 20+. Nothing to install.
 - Network: only `boards-api.greenhouse.io` and `api.ashbyhq.com`.
-- Your situation file: `search/examples/kiran-rao/persona.json` (fictional). Copy it and edit the OPT date and hiring lag for yourself, but **keep your copy in `private/`**.
+- Your situation file: `search/examples/kiran-rao/persona.json` (fictional). Edit `experience_years`, `preferred_locations` and the OPT dates for yourself, in a copy kept under `private/`.
 
 ## Annotated commands
 
-Offline test. Expect 16 tests passing and `OK`, with no network used:
+Offline test. Expect 21 tests and `OK`, with no network used:
 
 ```bash
 python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v
 ```
 
-Full live run. Expect about 2 minutes and a summary like `apply 9 · consider 2 · network 4 · check-by-hand 28`:
+Live run. Expect about 2 minutes. In the 2026-10-02 run: `apply 0 · consider 3 · network 6 · check-by-hand 30`.
 
 ```bash
-python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py
+python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir /tmp/my-run
 ```
 
-Check one company. A name that isn't in the CSV prints `not in the 80 Days CSV — no sponsorship record, not scored`:
+Check one company. A name not in the CSV prints `not in the 80 Days CSV — no sponsorship record, not scored`:
 
 ```bash
-python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --company "VERKADA INC"
+python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --company "DATABRICKS INC" --out-dir /tmp/one
 ```
 
-Spot-check an Apply link before tailoring (gate G1). Expect `✅ active`:
+Spot-check a link before tailoring (gate G1). Expect `✅ active`:
 
 ```bash
-npm run ats:liveness -- <url from the Apply table>
+npm run ats:liveness -- <url from the Consider table>
 ```
 
 ## What it produces
 
-- `pipeline-report.md`: your lists, each value tagged `record` or `your-input`.
-- `pipeline-log.json`: the same run for an agent, with input file hashes.
+- `pipeline-report.md`: your lists, ★ for Texas/remote, every value tagged `record` or `your-input`, plus a table of what the job descriptions ruled out and why.
+- `pipeline-log.json`: the same run for an agent, with input hashes.
 - `role-scores.json` / `.md`: the engine scorer's own output.
 
 ## Named failure modes
 
-1. **Title-family false match.** A company's "Software Engineer" sponsorships at a robotics or medical-device firm count toward a cloud-backend posting, and an embedded-firmware role reads as "software". *Hardest to catch for:* a new graduate who doesn't yet know how differently "software engineer" is used across industries. *Mitigation:* gate G3 asks you to read the sponsored titles beside each row. A `[TODO: DATA SOURCE]` asks for SOC codes per petition.
-2. **Sponsorship drowns out fit.** With a Proven sponsor, the score clears Apply even when your résumé barely matches (live run: fit 0.25, still Apply). *Hardest to catch for:* anyone who reads "Apply" as "good match". *Mitigation:* sort by the Fit column too. `[TODO: DEFINE]` a fit floor.
-3. **"Not found" read as "not hiring."** Slug guessing misses most boards. *Mitigation:* those companies are never scored; they are listed for a 2-minute manual check.
-4. **Stale sponsorship.** The CSV is history. A company that sponsored in past years may have stopped. *Mitigation:* none in this tool. Ask about sponsorship in the first recruiter call.
+1. **"Can't sponsor" read as all-or-nothing.** The statements are per role. Verkada says it on 156 of 307 postings (mostly sales), but not on its backend roles. Twin Health says it on 23 of 39, but not on "Senior AI Engineer". *Hardest to catch for:* anyone who skims one posting and writes off the company. *Mitigation:* the posting is ruled out; the company stays, with its count shown.
+2. **The sponsorship record covers software titles, not AI titles.** The CSV keeps only a company's top few sponsored titles. So an AI posting at a big software sponsor is graded "Possible": a Consider at best. *Hardest to catch for:* a student who sees no "Apply" rows and concludes nobody sponsors AI engineers. *Mitigation:* read the Consider list, and see `[TODO: DATA SOURCE]` 1.
+3. **Title words mislead.** "AI" plus "engineer" also matches partner, sales and QA roles. Those are now excluded by rule, but new variants will appear. *Mitigation:* gate G3.
+4. **Senior roles hidden by default.** With 3.5 years you may qualify for some "Senior" roles, but they're excluded by default. *Mitigation:* delete the two Senior patterns in `rules.json` if you want them, and re-run.
