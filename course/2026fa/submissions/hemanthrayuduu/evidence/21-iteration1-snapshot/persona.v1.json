@@ -1,0 +1,17 @@
+{
+  "_comment": "FICTIONAL persona for the swe-sponsor-pipeline recipe. EVERY value in this file is your-input: the student's own situation and assumptions, not a record. Edit these to run the pipeline for a different student.",
+  "persona_id": "kiran-rao",
+  "resume": "search/examples/kiran-rao/resume.example.json",
+  "location_city": "Boston",
+  "visa": {
+    "status": "F-1, post-completion OPT not yet started",
+    "needs_sponsorship": true,
+    "program_end_date": "2026-12-18",
+    "opt_start_date": "2027-01-11",
+    "unemployment_days_allowed": 90
+  },
+  "hiring_lag_days": 60,
+  "hiring_lag_note": "Assumption, not a record: the application-to-offer time this student plans around. No repo record measures hiring lag.",
+  "funding_window_months": 24,
+  "min_h1b_approvals": 1
+}

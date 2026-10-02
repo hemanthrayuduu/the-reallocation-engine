@@ -10,9 +10,20 @@
       "absolute_url": "https://job-boards.greenhouse.io/weaksponsor/jobs/401",
       "updated_at": "2026-09-20T10:00:00-04:00",
       "first_published": "2026-09-15T10:00:00-04:00"
+    },
+    {
+      "id": 402,
+      "title": "Software Engineer",
+      "location": {
+        "name": "Dallas, TX"
+      },
+      "content": "<p>Java and Spring Boot. We are unable to sponsor visas for this role.</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/weaksponsor/jobs/402",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
     }
   ],
   "meta": {
-    "total": 1
+    "total": 2
   }
 }

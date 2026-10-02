@@ -10,9 +10,20 @@
       "absolute_url": "https://job-boards.greenhouse.io/abroadonly/jobs/501",
       "updated_at": "2026-09-20T10:00:00-04:00",
       "first_published": "2026-09-15T10:00:00-04:00"
+    },
+    {
+      "id": 502,
+      "title": "Account Manager",
+      "location": {
+        "name": "Boston, MA"
+      },
+      "content": "<p>Sales role. We are unable to sponsor employment visas at this time.</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/abroadonly/jobs/502",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
     }
   ],
   "meta": {
-    "total": 1
+    "total": 2
   }
 }

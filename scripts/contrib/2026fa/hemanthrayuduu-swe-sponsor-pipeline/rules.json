@@ -1,25 +1,27 @@
 {
   "_comment": "The recipe's RULES. Every threshold, pattern, and p-value here is your-input: a stated, editable choice, not a record. The pipeline reads records (CSV rows, board responses, BLS rows) and applies these rules to them; the output labels each value accordingly.",
-  "rules_version": "0.1.1",
+  "rules_version": "0.2.1",
   "title_families": {
+    "ml_ai": {
+      "patterns": ["machine learning engineer", "ml engineer", "ai engineer", "applied ai engineer", "applied scientist", "research engineer", "llm engineer", "genai engineer", "gen ai engineer", "generative ai engineer", "ai developer", "ai software engineer", "ai/ml engineer", "ml/ai engineer", "machine learning scientist", "machine learning developer", "mlops engineer", "ai platform engineer"],
+      "soc_hint": "15-1221.00",
+      "_soc_hint_note": "your-input fallback: O*NET lists AI Engineer and Applied Scientist under 15-1221.00",
+      "also_if_title_has_role_word_and_ai_word": {
+        "role_words": ["engineer", "developer", "scientist"],
+        "ai_words": ["ai", "ml", "machine learning", "llm", "llms", "genai", "generative ai", "deep learning", "nlp", "computer vision", "agents", "agentic"],
+        "not_if_title_has": ["partner", "sales", "solutions", "support", "customer", "qa", "quality", "test", "field", "recruiter", "marketing"],
+        "_note": "Catches titles like 'Software Engineer, Machine Learning' or 'Software Engineer - AI Platform'. Skipped when the title has a not_if_title_has word (0.2.1: 'Partner Engineer: Partner Intelligence, AI & Apps' and 'AI Automation QA Engineer' were false positives in the first iteration-2 run). Families are checked in file order, so ml_ai (first) wins over software."
+      }
+    },
     "software": {
       "patterns": ["software engineer", "software developer", "software development engineer", "backend engineer", "back-end engineer", "back end engineer", "full stack engineer", "full-stack engineer", "fullstack engineer", "full stack developer", "frontend engineer", "front-end engineer", "platform engineer", "application engineer", "applications engineer"],
       "soc_hint": "15-1252.00",
       "_soc_hint_note": "your-input fallback used only when no O*NET title in the BLS file matches the posting title"
-    },
-    "ml_ai": {
-      "patterns": ["machine learning engineer", "ml engineer", "ai engineer", "applied scientist", "research engineer", "llm engineer", "ai/ml engineer", "ml/ai engineer", "machine learning scientist"],
-      "soc_hint": "15-1221.00",
-      "_soc_hint_note": "your-input fallback: O*NET lists AI Engineer and Applied Scientist under 15-1221.00"
     }
   },
-  "seniority_exclude_patterns": [
-    "\\bsenior\\b", "\\bsr\\b\\.?", "\\bstaff\\b", "\\bprincipal\\b", "\\blead\\b", "\\bmanager\\b",
-    "\\bdirector\\b", "\\bhead of\\b", "\\bvp\\b", "\\bintern(ship)?\\b", "\\barchitect\\b",
-    "\\b(iii|iv|v)\\b", "\\b(level|l)\\s?[4-9]\\b", "\\bdistinguished\\b", "\\bfellow\\b", "\\bph\\.?d\\b"
-  ],
-  "_seniority_note": "New-grad persona: these title words mark roles a December MS graduate is not hired into. II is deliberately allowed (often 0-2 years).",
-  "_changelog": ["0.1.1 (2026-10-02): added \\bph.?d\\b after the first live pass put two 'Systems PhD - Software Engineer' postings on an MS student's Apply list (evidence/05-first-live-smoke)."],
+  "seniority_exclude_patterns": ["\\bsenior\\b", "\\bsr\\b\\.?", "\\bstaff\\b", "\\bprincipal\\b", "\\blead\\b", "\\bmanager\\b", "\\bdirector\\b", "\\bhead of\\b", "\\bvp\\b", "\\bintern(ship)?\\b", "\\bco-?op\\b", "\\barchitect\\b", "\\b(iv|v)\\b", "\\b(level|l)\\s?[5-9]\\b", "\\bdistinguished\\b", "\\bfellow\\b", "\\bph\\.?d\\b"],
+  "_seniority_note": "Mid-level persona (about 3.5 years): excludes staff / principal / lead / manager and above, interns and co-ops, and PhD-titled roles. 'Senior' stays EXCLUDED by default because it usually asks for 5+ years; delete the first two patterns to include Senior titles. II and III are allowed.",
+  "_changelog": ["0.1.1 (2026-10-02): added \\bph.?d\\b after the first live pass put two 'Systems PhD - Software Engineer' postings on an MS student's Apply list (evidence/05-first-live-smoke).", "0.2.0 (2026-10-02): author re-scoped to mid-level AI Engineer roles on the Microsoft AI stack. ml_ai family first and widened (composite role-word + AI-word titles); seniority rules re-cut for ~3.5 years; added description_rules (TODO 7, from the G3 finding that both AI Engineer rows were disqualified only in their job descriptions) and microsoft_ai_stack_terms.", "0.2.1 (2026-10-02): composite AI-title rule ignores partner/sales/solutions/support/QA/test titles; 'can't sponsor' statements are now counted on every posting of a found board and shown per company. They are NOT used to drop a company: a first draft of 0.2.1 dropped any company with one such posting from the networking list, but the live run showed the statements are role-specific ('for this role, at this time'). Verkada: 156 of 307 postings, mostly sales/ops, not its backend roles. Twin Health: 23 of 39, but not 'Senior AI Engineer'. So that draft rule was withdrawn before commit. Evidence: evidence/24-*."],
   "us_location": {
     "country_terms": ["united states", "usa", "u.s.", "us-remote", "remote - us", "remote (us)", "remote, us", "us remote", "remote us", "north america"],
     "state_names": ["alabama", "alaska", "arizona", "arkansas", "california", "colorado", "connecticut", "delaware", "florida", "georgia", "hawaii", "idaho", "illinois", "indiana", "iowa", "kansas", "kentucky", "louisiana", "maine", "maryland", "massachusetts", "michigan", "minnesota", "mississippi", "missouri", "montana", "nebraska", "nevada", "new hampshire", "new jersey", "new mexico", "new york", "north carolina", "north dakota", "ohio", "oklahoma", "oregon", "pennsylvania", "rhode island", "south carolina", "south dakota", "tennessee", "texas", "utah", "vermont", "virginia", "washington", "west virginia", "wisconsin", "wyoming", "district of columbia", "washington d.c."],
@@ -28,15 +30,30 @@
     "_note": "A posting is kept when ANY part of its location string names the US by one of these terms. A bare 'Remote' with no country is kept but flagged 'remote, country unstated' for the human gate."
   },
   "sponsorship_tiers": [
-    {"tier": "Proven", "min_approvals": 10, "requires_same_family": true, "p": 0.9},
-    {"tier": "Likely", "min_approvals": 3, "requires_same_family": true, "p": 0.7},
-    {"tier": "Possible", "min_approvals": 1, "requires_same_family": false, "p": 0.4}
+    {
+      "tier": "Proven",
+      "min_approvals": 10,
+      "requires_same_family": true,
+      "p": 0.9
+    },
+    {
+      "tier": "Likely",
+      "min_approvals": 3,
+      "requires_same_family": true,
+      "p": 0.7
+    },
+    {
+      "tier": "Possible",
+      "min_approvals": 1,
+      "requires_same_family": false,
+      "p": 0.4
+    }
   ],
   "_sponsorship_note": "same_family = the company's sponsored job titles (80 Days CSV, record) include a title from the SAME family as the posting. Tiers are checked top to bottom; first match wins. Likely/Possible are soft tiers in role-scorer.mjs and demote Apply to Consider.",
   "fit": {
-    "scheme": ".claude/skills/greenhouse-watch/scheme.default.json",
+    "scheme": "scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/scheme.json",
     "full_score": 8.0,
-    "_note": "fit p = min(1, scheme score / full_score). The scheme is deterministic phrase matching between the persona résumé and the posting text — no model judgment."
+    "_note": "fit p = min(1, scheme score / full_score). The scheme (a copy of greenhouse-watch default-0.1 with location weights set to 0, since location is a persona preference) is deterministic phrase matching between the persona résumé and the posting text — no model judgment."
   },
   "timeline": {
     "full_margin_days": 30,
@@ -50,5 +67,18 @@
     "ats_order": ["greenhouse", "ashby"],
     "probe_delay_seconds": 0.2,
     "_note": "Slugs are guessed from the CSV company name and website. Lever, Workday, iCIMS and SmartRecruiters are not probed ([TODO: DEV] in the recipe)."
-  }
+  },
+  "_title_families_note": "Which families are TARGETED is the persona's choice (persona.json target_families). Families not targeted are still recognised, so their postings are counted as 'other family'.",
+  "description_rules": {
+    "_note": "Read the posting DESCRIPTION, not just the title. Each phrase is matched case-insensitively against the posting text (record); the choice of phrases is your-input. A match rules the posting out before scoring and the report lists it with the matched phrase.",
+    "eligibility_exclude_phrases": ["u.s. citizenship", "us citizenship", "united states citizenship", "must be a u.s. citizen", "must be a us citizen", "security clearance", "secret clearance", "top secret", "ts/sci", "active clearance"],
+    "no_sponsorship_phrases": ["unable to sponsor", "not able to sponsor", "will not sponsor", "cannot sponsor", "can not sponsor", "does not sponsor", "do not sponsor", "not eligible for visa sponsorship", "no visa sponsorship", "without sponsorship", "without visa sponsorship", "sponsorship is not available", "not provide sponsorship", "not offer sponsorship", "not offering sponsorship"],
+    "years_of_experience": {
+      "tolerance_years": 1,
+      "_note": "Every 'N+ years' / 'N-M years' / 'N to M years' followed within 60 characters by 'experience' is read. The LOWEST lower bound is taken as the requirement, which is the lenient reading. The posting is ruled out when that bound is greater than persona experience_years + tolerance_years. No years mentioned means kept, labelled 'not stated'."
+    },
+    "_company_wide_note": "no_sponsorship_phrases are ALSO counted on every posting of a found board, whatever its family, and the report shows 'N of M postings say they can't sponsor that role' per company. The statements are role-specific, so they rule out the posting that carries them, never the whole company."
+  },
+  "microsoft_ai_stack_terms": ["azure openai", "azure ai foundry", "ai foundry", "azure ai studio", "azure machine learning", "azure ml", "azure ai search", "azure cognitive search", "cognitive services", "azure ai services", "semantic kernel", "autogen", "prompt flow", "copilot studio", "microsoft copilot", "microsoft fabric", "azure functions", "azure databricks", "azure", "c#", ".net"],
+  "_stack_note": "Reported per posting as 'Microsoft AI stack terms found' (record text match). Not a vote and not a filter: the fit scheme already rewards résumé skills found in the posting, and this persona's résumé lists the stack."
 }

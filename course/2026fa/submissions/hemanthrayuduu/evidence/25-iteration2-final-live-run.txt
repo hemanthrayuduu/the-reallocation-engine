@@ -1,0 +1,46 @@
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v2
+  [1/40] INTEL CORP: not-found
+  [2/40] DATABRICKS INC: found greenhouse:databricks (885 postings)
+  [3/40] VERKADA INC: found greenhouse:verkada (307 postings)
+  [4/40] CCC INTELLIGENT SOLUTIONS HOLDINGS INC: not-found
+  [5/40] GRAMMARLY INC: not-found
+  [6/40] WHATNOT INC: not-found
+  [7/40] COHERE HEALTH INC: found greenhouse:coherehealth (76 postings)
+  [8/40] AIERA INC: not-found
+  [9/40] APEX TECHNOLOGY INC: not-found
+  [10/40] APPTRONIK INC: found greenhouse:apptronik (80 postings)
+  [11/40] CELESTIAL AI INC: not-found
+  [12/40] FOURSQUARE LABS INC: not-found
+  [13/40] SPANIO INC: not-found
+  [14/40] HIGHNOTE PLATFORM INC: not-found
+  [15/40] MERCURY TECHNOLOGIES INC: not-found
+  [16/40] TWIN HEALTH INC: found greenhouse:twinhealth (39 postings)
+  [17/40] CYNGN INC: not-found
+  [18/40] PSIQUANTUM CORP: found greenhouse:psiquantum (74 postings)
+  [19/40] CENTIFIC GLOBAL SOLUTIONS INC: not-found
+  [20/40] VIDMOB INC: found ashby:vidmob (3 postings)
+  [21/40] AEYE INC: not-found
+  [22/40] BLUECORE INC: not-found
+  [23/40] DILIGENT ROBOTICS INC: found greenhouse:diligentrobotics (9 postings)
+  [24/40] OBSERVE INC: not-found
+  [25/40] CODAMETRIX INC: found ashby:codametrix (2 postings)
+  [26/40] BUTLR TECHNOLOGIES INC: not-found
+  [27/40] VOUCH INC: not-found
+  [28/40] AIM INTELLIGENT MACHINES INC: not-found
+  [29/40] FEMTOSENSE INC: not-found
+  [30/40] MEMBRION INC: not-found
+  [31/40] IFOODDECISIONSCIENCES INC: not-found
+  [32/40] SWING THERAPEUTICS INC: not-found
+  [33/40] UNDERDOG SPORTS HOLDINGS INC: not-found
+  [34/40] BELFRY SOFTWARE INC: not-found
+  [35/40] HALCYON TECH INC: not-found
+  [36/40] LUMEN ENERGY INC: not-found
+  [37/40] MISO ROBOTICS INC: not-found
+  [38/40] PLEXIUM INC: found greenhouse:plexium (0 postings)
+  [39/40] RAISE ROBOTICS INC: not-found
+  [40/40] SERVICENOW INC: not-found
+✓ swe-sponsor-pipeline (live): 40 candidates, 40 probed, 10 boards found, 10 roles scored
+  apply 0 · consider 3 · network 6 · check-by-hand 30 · skip 1
+  scorer: ✓ scored 10 roles → Apply 0 · Consider 3 · Skip 7 (skip 70%)
+  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v2/pipeline-report.md  +  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v2/pipeline-log.json
+exit=0

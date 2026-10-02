@@ -43,9 +43,42 @@
       "absolute_url": "https://job-boards.greenhouse.io/lumenbyte/jobs/104",
       "updated_at": "2026-09-20T10:00:00-04:00",
       "first_published": "2026-09-15T10:00:00-04:00"
+    },
+    {
+      "id": 105,
+      "title": "AI Engineer",
+      "location": {
+        "name": "Boston, MA"
+      },
+      "content": "<p>Build LLM features. Requires U.S. citizenship and an active secret clearance.</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/lumenbyte/jobs/105",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
+    },
+    {
+      "id": 106,
+      "title": "AI Engineer II",
+      "location": {
+        "name": "Austin, TX"
+      },
+      "content": "<p>7+ years of experience building ML systems with Azure OpenAI and Semantic Kernel.</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/lumenbyte/jobs/106",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
+    },
+    {
+      "id": 107,
+      "title": "Applied AI Engineer",
+      "location": {
+        "name": "Austin, TX"
+      },
+      "content": "<p>3+ years of experience with Azure OpenAI, Semantic Kernel and Python.</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/lumenbyte/jobs/107",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
     }
   ],
   "meta": {
-    "total": 4
+    "total": 7
   }
 }

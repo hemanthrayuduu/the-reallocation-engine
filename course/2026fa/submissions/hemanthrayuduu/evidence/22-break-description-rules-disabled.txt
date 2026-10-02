@@ -1,0 +1,18 @@
+# break check (iteration 2): description_check patched to never rule anything out; the TODO 7 test must FAIL
+$ python3 - <<EOF   (patch P.description_check -> (None, info), run HappyPathOffline)
+======================================================================
+FAIL: test_TODO7_description_rules_rule_out_without_scoring (test_pipeline.HappyPathOffline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/HemanthRayudu/Profession/Assignments/Prompt Engineering/the-reallocation-engine/scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/test_pipeline.py", line 140, in test_TODO7_description_rules_rule_out_without_scoring
+    self.assertEqual(set(ruled), {"105", "106", "402"}, "description rules did not rule out the expected postings")
+AssertionError: Items in the second set but not the first:
+'106'
+'402'
+'105' : description rules did not rule out the expected postings
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.057s
+
+FAILED (failures=1)
+failed tests: ['test_TODO7_description_rules_rule_out_without_scoring']

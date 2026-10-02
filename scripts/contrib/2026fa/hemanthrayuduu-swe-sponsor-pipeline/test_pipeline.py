@@ -24,7 +24,7 @@ _spec.loader.exec_module(P)
 
 BASE = ["--offline", str(FIX / "boards"), "--csv", str(FIX / "80days.fixture.csv"),
         "--bls", str(FIX / "bls.fixture.csv"), "--formd", str(FIX / "formd.fixture.json"),
-        "--today", "2026-10-01"]
+        "--today", "2026-10-01", "--persona", str(FIX / "persona.fixture.json")]
 LABELS = {"record", "your-input", "model-judgment"}
 
 
@@ -80,7 +80,7 @@ class HappyPathOffline(unittest.TestCase):
         self.assertEqual(self.log["scorer"]["exit_code"], 0)
         self.assertEqual({r["role_id"] for r in scores["roles"]}, {r["role_id"] for r in self.roles_json})
 
-    def test_live_new_grad_posting_at_proven_sponsor_is_apply(self):
+    def test_live_posting_at_proven_sponsor_is_apply(self):
         self.assertIn("greenhouse:lumenbyte:101", self.b["apply"])
 
     def test_soft_sponsorship_tier_is_demoted_to_consider(self):
@@ -131,6 +131,66 @@ class HappyPathOffline(unittest.TestCase):
     def test_no_network_host_was_contacted(self):
         self.assertEqual(self.log["hosts_contacted"], [])
         self.assertEqual(self.log["http_calls"], 0)
+
+
+    def test_TODO7_description_rules_rule_out_without_scoring(self):
+        ids = {r["role_id"] for r in self.roles_json}
+        ruled = {x["url"]["value"].rsplit("/", 1)[1]: x["reason"]["value"]
+                 for c in self.log["companies"] for x in c.get("ruled_out_by_description", [])}
+        self.assertEqual(set(ruled), {"105", "106", "402"}, "description rules did not rule out the expected postings")
+        self.assertTrue(ruled["105"].startswith("eligibility:"), ruled)      # U.S. citizenship + clearance
+        self.assertTrue(ruled["106"].startswith("experience:"), ruled)       # 7+ years vs persona 3.5 (+1)
+        self.assertTrue(ruled["402"].startswith("no-sponsorship:"), ruled)   # "unable to sponsor"
+        for jid in ("105", "106", "402"):
+            self.assertFalse(any(i.endswith(":" + jid) for i in ids), f"{jid} reached the scorer")
+        self.assertEqual(self.log["funnel"]["postings_ruled_out_by_description"], 3)
+
+    def test_cant_sponsor_statements_are_counted_per_company_not_used_to_drop_it(self):
+        # live run 2026-10-02: the statements were role-specific ("for this role"), so they count, they don't remove a company
+        comp = {c["company"]["value"]: c for c in self.log["companies"]}
+        self.assertEqual([x["phrase"]["value"] for x in comp["Abroad Only Inc"]["no_sponsorship_statements"]], ["unable to sponsor"])
+        self.assertEqual(comp["Abroad Only Inc"]["bucket"], "network")                # non-target posting 502 doesn't drop it
+        self.assertEqual(len(comp["Weak Sponsor Inc"]["no_sponsorship_statements"]), 1)  # posting 402
+        self.assertIn("greenhouse:weaksponsor:401", self.b["consider"])                 # 401 has no statement: still listed
+        self.assertIn("1 of 2 postings here say they can't sponsor that role", (self.out / "pipeline-report.md").read_text())
+
+    def test_stack_terms_years_and_preferred_location_are_labelled_records(self):
+        m = next(r for r in self.log["roles"] if r["role_id"] == "greenhouse:lumenbyte:107")["result"]
+        self.assertIn("azure openai", m["microsoft_ai_stack_terms"]["value"])
+        self.assertIn("semantic kernel", m["microsoft_ai_stack_terms"]["value"])
+        self.assertEqual(m["years_required"]["value"], 3)
+        self.assertEqual(m["preferred_location"]["value"], True)              # Austin, TX
+        self.assertEqual(m["preferred_location"]["source"], "your-input")
+        boston = next(r for r in self.log["roles"] if r["role_id"] == "greenhouse:lumenbyte:101")["result"]
+        self.assertEqual(boston["preferred_location"]["value"], False)
+
+
+class TitleAndDescriptionRules(unittest.TestCase):
+    rules = json.loads((HERE / "rules.json").read_text())
+
+    def test_family_of(self):
+        cases = {"Software Engineer, Machine Learning": "ml_ai",   # role word + AI word → ml_ai wins (checked first)
+                 "Software Engineer - AI Platform": "ml_ai",
+                 "AI Engineer – Forward Deployed Engineering": "ml_ai",
+                 "Generative AI Engineer": "ml_ai",
+                 "Software Engineer II": "software",
+                 "Backend Engineer - Connectivity": "software",
+                 "Account Executive": None,
+                 "AI Product Manager": None,                        # AI word but no role word
+                 "Partner Engineer: Partner Intelligence, AI & Apps": None,   # 0.2.1 false positive, now excluded
+                 "AI Automation QA Engineer": None}
+        for title, want in cases.items():
+            self.assertEqual(P.family_of(title, self.rules), want, title)
+
+    def test_years_parse_reads_only_experience_requirements(self):
+        persona = {"experience_years": 3.5}
+        def years(text):
+            return P.description_check({"title": "AI Engineer", "content": text}, self.rules, persona)
+        self.assertEqual(years("5+ years of relevant experience")[1]["years_required"], 5)
+        self.assertEqual(years("3-5 years of professional experience with LLMs")[1]["years_required"], 3)
+        self.assertIsNone(years("Founded 10+ years ago; we value curiosity.")[1]["years_required"])
+        self.assertTrue(years("6+ years of industry experience")[0].startswith("experience:"))
+        self.assertIsNone(years("4+ years of experience")[0])               # 4 <= 3.5 + 1 tolerance
 
 
 class LocationRule(unittest.TestCase):

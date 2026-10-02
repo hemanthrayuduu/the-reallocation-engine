@@ -8,7 +8,8 @@ For one persona (an MS CS student graduating in December, OPT not yet started) t
   2. cross-checks each against the shipped Form D samples              (record)
   3. guesses each company's Greenhouse / Ashby board from its name and website,
      fetches it through greenhouse-watch's allow-listed fetcher        (record)
-  4. turns every US, new-grad, target-family posting into one role and labels its
+  4. turns every US, right-level, target-family posting whose DESCRIPTION does not rule the
+     persona out (citizenship / clearance / no-sponsorship / too many years) into one role, and labels its
      evidence: sponsorship tier, fit, liveness, timeline               (record / your-input)
   5. scores the roles with the REAL scripts/score/role-scorer.mjs (subprocess, --out-dir)
   6. buckets the scorer's output: apply · consider · network · check-by-hand · skip
@@ -156,11 +157,58 @@ def money(v):
 
 # ───────────────────────────────────────────────────────────── rules applied to records
 def family_of(title, rules):
+    """First family (in rules.json order) whose phrase, or role-word + AI-word pair, is in the title."""
     t = (title or "").lower()
     for fam, spec in rules["title_families"].items():
         if any(GW.phrase_in(p, t) for p in spec["patterns"]):
             return fam
+        combo = spec.get("also_if_title_has_role_word_and_ai_word")
+        if (combo and any(GW.phrase_in(w, t) for w in combo["role_words"]) and any(GW.phrase_in(w, t) for w in combo["ai_words"])
+                and not any(GW.phrase_in(w, t) for w in combo.get("not_if_title_has", []))):
+            return fam
     return None
+
+
+def target_families(persona, rules):
+    fams = persona.get("target_families") or list(rules["title_families"])
+    unknown = [f for f in fams if f not in rules["title_families"]]
+    if unknown:
+        raise InputError(f"persona target_families {unknown} are not families in rules.json {list(rules['title_families'])}")
+    return fams
+
+
+def no_sponsorship_phrase(job, rules):
+    text = (GW.strip_html(job.get("content") or "") + " " + (job.get("title") or "")).lower()
+    for ph in (rules.get("description_rules") or {}).get("no_sponsorship_phrases", []):
+        if GW.phrase_in(ph, text):
+            return ph
+    return None
+
+
+def description_check(job, rules, persona):
+    """Rules applied to the posting text (record). Returns (ruled_out_reason or None, info)."""
+    d = rules.get("description_rules") or {}
+    text = (GW.strip_html(job.get("content") or "") + " " + (job.get("title") or "")).lower()
+    info = {"years_required": None, "years_mentions": [], "matched_phrase": None,
+            "stack_terms": [s for s in rules.get("microsoft_ai_stack_terms", []) if GW.phrase_in(s, text)]}
+    for key, label in (("eligibility_exclude_phrases", "eligibility"), ("no_sponsorship_phrases", "no-sponsorship")):
+        for ph in d.get(key, []):
+            if GW.phrase_in(ph, text):
+                info["matched_phrase"] = ph
+                return f"{label}: description says «{ph}»", info
+    y = d.get("years_of_experience")
+    if y is not None and persona.get("experience_years") is not None:
+        lows = []
+        for m in re.finditer(r"(\d{1,2})\s*\+?\s*(?:(?:-|–|to)\s*(\d{1,2})\s*\+?\s*)?years?\b(?=[^.;]{0,60}?experience)", text):
+            lows.append(int(m.group(1)))
+            info["years_mentions"].append(m.group(0).strip())
+        if lows:
+            info["years_required"] = min(lows)
+            limit = persona["experience_years"] + y.get("tolerance_years", 0)
+            if min(lows) > limit:
+                return (f"experience: description asks for {min(lows)}+ years (lowest stated), "
+                        f"above persona {persona['experience_years']} + tolerance {y.get('tolerance_years', 0)}"), info
+    return None, info
 
 
 def sponsored_titles(raw):
@@ -200,6 +248,19 @@ def seniority_hit(title, rules):
     for pat in rules["seniority_exclude_patterns"]:
         if re.search(pat, title or "", re.I):
             return pat
+    return None
+
+
+def preferred_location(loc, persona):
+    """your-input preference (persona.preferred_locations) applied to the posting location (record)."""
+    pref = persona.get("preferred_locations") or {}
+    s = loc or ""
+    for term in pref.get("terms", []):
+        if GW.phrase_in(term, s.lower()):
+            return term
+    abbr = "|".join(pref.get("state_abbreviations", []))
+    if abbr and re.search(rf"(?:,|\s-|\()\s*(?:{abbr})\b", s):
+        return abbr
     return None
 
 
@@ -390,6 +451,12 @@ def discover(company, fetcher, rules):
 # ───────────────────────────────────────────────────────────── candidates from the CSV
 def load_candidates(csv_path, persona, rules, today, only):
     window_start = months_before(today, int(persona["funding_window_months"]))
+    targets = target_families(persona, rules)
+    # which sponsored-title families count as sponsorship EVIDENCE (persona); postings must still be in `targets`
+    evidence = persona.get("sponsorship_evidence_families") or targets
+    unknown = [f for f in evidence if f not in rules["title_families"]]
+    if unknown:
+        raise InputError(f"persona sponsorship_evidence_families {unknown} are not families in rules.json")
     funnel = {"csv_rows": 0, "with_approvals": 0, "target_family_sponsored": 0, "funded_in_window": 0}
     cands, named = [], {}
     wanted = {NORM.normalize_company_name(n): n for n in (only or [])}
@@ -404,7 +471,7 @@ def load_candidates(csv_path, persona, rules, today, only):
                 continue
             approvals = to_num(r.get("Total Approvals")) or 0
             titles = sponsored_titles(r.get("top_job_titles_sponsored"))
-            fams = sorted({fam for t in titles if (fam := family_of(t, rules))})
+            fams = sorted({fam for t in titles if (fam := family_of(t, rules)) and fam in evidence})
             fdate = (r.get("latest_funding_date") or "").strip()
             reason = None
             if approvals < persona["min_h1b_approvals"] or approvals <= 0:
@@ -412,7 +479,7 @@ def load_candidates(csv_path, persona, rules, today, only):
             else:
                 funnel["with_approvals"] += 1
                 if not fams:
-                    reason = "sponsored titles on record are not software / ML titles"
+                    reason = f"sponsored titles on record are not in the sponsorship-evidence families {evidence}"
                 else:
                     funnel["target_family_sponsored"] += 1
                     try:
@@ -465,6 +532,7 @@ def run(args):
     scheme = GW.load_scheme(str(scheme_path))
     feats = GW.resume_features(resume)
     timeline = timeline_gate(persona, today, rules)  # F3 raises here, before any fetch
+    targets = target_families(persona, rules)
 
     mode = "offline" if args.offline else "live"
     out_dir = Path(args.out_dir) if args.out_dir else REPO / f"course/2026fa/submissions/hemanthrayuduu/runs/{today}-{mode}"
@@ -485,7 +553,8 @@ def run(args):
                "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"}
     companies, roles, role_meta = [], [], {}
     counts = {k: 0 for k in ("board_found", "board_not_found", "fetch_failed", "identity_mismatch",
-                             "postings_seen", "postings_target_family", "postings_us", "postings_new_grad")}
+                             "postings_seen", "postings_target_family", "postings_us", "postings_level_ok",
+                             "postings_ruled_out_by_description", "postings_kept")}
 
     for i, c in enumerate(cands, 1):
         disc = discover(c, fetcher, rules)
@@ -514,13 +583,17 @@ def run(args):
             continue
         counts["board_found"] += 1
         comp["board"].update({"ats": disc["ats"], "slug": disc["slug"], "url": disc["url"], "identity": disc["identity"]})
-        pc = {"seen": 0, "other_family": 0, "non_us": 0, "seniority": 0, "kept": 0}
-        excluded_examples = []
+        pc = {"seen": 0, "other_family": 0, "non_us": 0, "seniority": 0, "description": 0, "kept": 0}
+        excluded_examples, ruled_out, no_sponsor = [], [], []
         for job in disc["jobs"]:
             pc["seen"] += 1
+            nsp = no_sponsorship_phrase(job, rules)  # company-wide: any posting, any family
+            if nsp:
+                no_sponsor.append({"title": lab(job.get("title"), REC), "url": lab(job.get("absolute_url"), REC),
+                                   "phrase": lab(nsp, REC, note="no_sponsorship_phrases rule (your-input) matched in the posting text")})
             title = job.get("title") or ""
             fam = family_of(title, rules)
-            if not fam:
+            if fam not in targets:
                 pc["other_family"] += 1
                 continue
             loc = (job.get("location") or {}).get("name") or ""
@@ -533,6 +606,14 @@ def run(args):
             if sh:
                 pc["seniority"] += 1
                 excluded_examples.append(f"{title} (seniority /{sh}/)")
+                continue
+            dreason, dinfo = description_check(job, rules, persona)
+            if dreason:
+                pc["description"] += 1
+                excluded_examples.append(f"{title} ({dreason})")
+                ruled_out.append({"title": lab(title, REC), "url": lab(job.get("absolute_url"), REC),
+                                  "reason": lab(dreason, INP, note="description_rules phrase/years rule applied to the posting text (record)"),
+                                  "years_mentions": lab(dinfo["years_mentions"], REC)})
                 continue
             pc["kept"] += 1
             same = fam in c["families"]
@@ -553,25 +634,35 @@ def run(args):
                 "timeline": tl_term,
             })
             soc = soc_for(title, fam, bls, rules)
+            pref_hit = preferred_location(loc, persona)
             role_meta[rid] = {"url": job.get("absolute_url"), "location": lab(loc, REC, location_class=lclass),
+                              "preferred_location": lab(bool(pref_hit), INP, matched=pref_hit,
+                                                        note="persona preferred_locations applied to the posting location"),
                               "posted": lab(job.get("first_published") or job.get("updated_at") or None, REC),
                               "family": lab(fam, INP), "fit_lines": why, "fit_note": freason,
+                              "years_required": lab(dinfo["years_required"], REC,
+                                                    note="lowest 'N+ years … experience' in the description" if dinfo["years_mentions"] else "not stated in the description"),
+                              "microsoft_ai_stack_terms": lab(dinfo["stack_terms"], REC, note="microsoft_ai_stack_terms found in the posting text"),
                               "wage_context": wage_context(soc), "company_key": c["name"]}
         counts["postings_seen"] += pc["seen"]
         counts["postings_target_family"] += pc["seen"] - pc["other_family"]
         counts["postings_us"] += pc["seen"] - pc["other_family"] - pc["non_us"]
-        counts["postings_new_grad"] += pc["kept"]
+        counts["postings_level_ok"] += pc["kept"] + pc["description"]
+        counts["postings_ruled_out_by_description"] += pc["description"]
+        counts["postings_kept"] += pc["kept"]
         comp["postings"] = lab(pc, REC, note="counts of board postings; filters are rules.json (your-input)")
         comp["excluded_examples"] = excluded_examples[:5]
+        comp["ruled_out_by_description"] = ruled_out
+        comp["no_sponsorship_statements"] = no_sponsor
         if pc["kept"] == 0:
             # the engine's reject: board live, nothing for this persona → liveness gate closed for the company
             rid = f"company:{disc['ats']}:{disc['slug']}"
             roles.append({
-                "role_id": rid, "company": c["name"], "title": "(no US new-grad SWE/ML posting on board)",
+                "role_id": rid, "company": c["name"], "title": f"(no qualifying US {'/'.join(targets)} posting on board)",
                 "sponsorship": {"p": cp, "tier": ctier, "source": INP,
                                 "basis": f"{c['approvals']:.0f} H-1B approvals for {c['families']} titles (record); tier rule rules.json"},
                 "liveness": {"factor": 0.0, "source": REC,
-                             "basis": f"board fetched {today}: {pc['seen']} postings, 0 passed family+US+seniority filters"},
+                             "basis": f"board fetched {today}: {pc['seen']} postings, 0 passed family+US+seniority+description rules"},
                 "timeline": tl_term,
             })
             role_meta[rid] = {"company_key": c["name"], "company_level": True}
@@ -646,7 +737,8 @@ def run(args):
         },
         "hosts_contacted": sorted(fetcher.hosts), "http_calls": fetcher.calls,
         "raw_responses": fetcher.raw_index,
-        "persona": {k: lab(persona[k], INP) for k in ("persona_id", "funding_window_months", "min_h1b_approvals", "hiring_lag_days") if k in persona}
+        "persona": {k: lab(persona[k], INP) for k in ("persona_id", "summary", "target_families", "experience_years", "preferred_locations",
+                                        "funding_window_months", "min_h1b_approvals", "hiring_lag_days") if k in persona}
                    | {"visa": lab(persona.get("visa"), INP)},
         "funding_window_start": lab(str(window_start), INP, note="today − funding_window_months"),
         "timeline": {**timeline, "source": INP},
@@ -670,7 +762,9 @@ CANNOT_VERIFY = [
     "That a company sponsors H-1B for THIS posting: the record is company-level approvals and its top sponsored titles, matched to the posting by title family.",
     "That a board found by slug guessing belongs to the company, for Ashby boards (no company name in the API); Greenhouse boards are name-checked.",
     "That a company with no board found has no openings: Lever, Workday, iCIMS and SmartRecruiters are not probed, and slugs are guesses.",
-    "That a posting is genuinely entry level: seniority is read from the title only.",
+    "That a posting is at the right level: seniority words are read from the title, and years of experience only when the description states them in an 'N+ years … experience' form.",
+    "That the student is eligible: citizenship, clearance and no-sponsorship requirements are caught only when the description uses one of the listed phrases; other wording passes through.",
+    "That a posting really uses the Microsoft AI stack: the stack column is a word match on the posting text, not a reading of the job.",
     "That the hiring lag (persona) is realistic: it is the student's assumption; no record measures it.",
     "That the company will sponsor in the next H-1B cycle: history is not a promise.",
     "Funding beyond the 80 Days CSV columns: the Form D cross-check covers only the shipped samples.",
@@ -689,9 +783,10 @@ def render_report(log, meta, roles, companies):
     tl = log["timeline"]
 
     def role_rows(ids):
-        rows = ["| # | Company | Posting | Score | Sponsorship evidence | Fit | Wage context (SOC) |",
-                "|---:|---|---|---:|---|---:|---|"]
-        for n, rid in enumerate(sorted(ids, key=lambda x: -(meta[x]["composite"] or 0)), 1):
+        rows = ["| # | ★ | Company | Posting | Score | Sponsorship evidence | Fit | Years asked | Microsoft AI stack terms | Wage context (SOC) |",
+                "|---:|---|---|---|---:|---|---:|---|---|---|"]
+        order = sorted(ids, key=lambda x: (not meta[x]["preferred_location"]["value"], -(meta[x]["composite"] or 0)))
+        for n, rid in enumerate(order, 1):
             r, m = by_id[rid], meta[rid]
             c = comp[r["company"]]
             w = m["wage_context"]
@@ -703,24 +798,34 @@ def render_report(log, meta, roles, companies):
             lc = m["location"]["location_class"]
             flag = " ⚠ remote, country unstated" if lc == "remote-unstated" else (" ⚠ location unstated" if lc == "unstated" else "")
             ident = c["board"]["identity"]["value"]
+            nn = len(c.get("no_sponsorship_statements") or [])
+            nos = f" ⚠ {nn} of {c['postings']['value']['seen']} postings here say they can't sponsor that role" if nn else ""
+            star = f"★ {meta[rid]['preferred_location']['matched']}" if meta[rid]["preferred_location"]["value"] else ""
+            yrs = m["years_required"]["value"]
+            stack = ", ".join(m["microsoft_ai_stack_terms"]["value"][:5]) or "none found"
             rows.append(
-                f"| {n} | {r['company']}{' ⚠ board identity unverified' if ident != 'confirmed' else ''} | "
+                f"| {n} | {star} | {r['company']}{' ⚠ board identity unverified' if ident != 'confirmed' else ''}{nos} | "
                 f"[{r['title']}]({m['url']}) — {m['location']['value'] or 'no location'}{flag} {tag('record')} | "
                 f"{m['composite']:.3f} | {c['h1b_total_approvals']['value']:.0f} approvals {tag('record')}; tier **{r['sponsorship']['tier']}** "
-                f"(p {r['sponsorship']['p']}) {tag('your-input')} | {r['fit']['p']:.2f} {tag('your-input')} | {wage} |")
+                f"(p {r['sponsorship']['p']}) {tag('your-input')} | {r['fit']['p']:.2f} {tag('your-input')} | "
+                f"{(str(yrs) + '+') if yrs is not None else 'not stated'} {tag('record')} | {stack} {tag('record')} | {wage} |")
         return rows
 
     L = []
     n_apply, n_cons, n_net, n_hand = len(b["apply"]), len(b["consider"]), len(b["network"]), len(b["check-by-hand"])
-    L += ["# Sponsor-ready software jobs — run report", "",
+    who = log["persona"].get("summary", {}).get("value") or "a student who needs a visa-sponsoring employer"
+    fams = " / ".join(log["persona"].get("target_families", {}).get("value") or [])
+    L += ["# Sponsor-ready jobs — run report", "",
           "## Executive summary", "",
-          f"This report is for a master's student in computer science who graduates in December, hasn't started post-graduation work "
-          f"authorization yet, and needs an employer that will sponsor a work visa. It looked at {f['candidates']} companies that, by public "
-          f"records, have sponsored visas for software or machine-learning titles and raised money recently, and checked "
-          f"{f['probed']} of their job boards for open entry-level software and AI engineering roles in the US.",
+          f"This report is for {who}. It looked at {f['candidates']} companies that, by public records, have sponsored visas "
+          f"for {fams} titles and raised money recently, and checked {f['probed']} of their job boards for open US roles at the "
+          f"right level. Postings whose description rules the student out (citizenship, clearance, \"no sponsorship\", or too many "
+          f"years of experience) were set aside: {f.get('postings_ruled_out_by_description', 0)} of them. "
+          f"Within each list, postings in the student's preferred locations come first (★).",
           "",
           f"- **Apply now — tailor an application:** {n_apply} posting(s).",
           f"- **Worth applying if time allows:** {n_cons} posting(s). These score lower, usually because the company's sponsorship record is for a different kind of title.",
+          f"- **Preferred location (★):** {sum(1 for x in b['apply'] + b['consider'] if meta[x]['preferred_location']['value'])} of the apply / consider postings.",
           f"- **Reach out instead of applying:** {n_net} company(ies). Each is a strong sponsor and recently funded, but had no matching opening today. Ask for an informational chat now and check back later.",
           f"- **Check by hand:** {n_hand} company(ies). Their job board couldn't be found automatically. That does **not** mean they have no jobs.",
           "",
@@ -733,17 +838,19 @@ def render_report(log, meta, roles, companies):
     L += role_rows(b["consider"]) if b["consider"] else ["_None._"]
     L += ["", "## Network — reach out, don't apply (yet)", ""]
     if b["network"]:
-        L += ["| Company | H-1B approvals | Sponsored titles | Latest funding | Board checked | Why no posting qualified |",
-              "|---|---:|---|---|---|---|"]
+        L += ["| Company | H-1B approvals | Sponsored titles | Latest funding | Board checked | Why no posting qualified | Postings saying \"can't sponsor this role\" |",
+              "|---|---:|---|---|---|---|---|"]
         for rid in b["network"]:
             c = comp[by_id[rid]["company"]]
             pc = c["postings"]["value"]
-            why = (f"{pc['seen']} postings: {pc['other_family']} other roles, {pc['non_us']} non-US, {pc['seniority']} senior"
+            why = (f"{pc['seen']} postings: {pc['other_family']} other roles, {pc['non_us']} non-US, {pc['seniority']} wrong level, "
+                   f"{pc.get('description', 0)} ruled out by description"
                    + (f" (e.g. {c['excluded_examples'][0]})" if c["excluded_examples"] else ""))
             L.append(f"| {c['company']['value']} | {c['h1b_total_approvals']['value']:.0f} {tag('record')} | "
                      f"{', '.join(c['sponsored_titles']['value'][:3])} {tag('record')} | "
                      f"{c['latest_funding_date']['value']} · {money(c['latest_funding_amount']['value'])} {tag('record')} | "
-                     f"{c['board']['ats']}:{c['board']['slug']} {tag('record')} | {why} |")
+                     f"{c['board']['ats']}:{c['board']['slug']} {tag('record')} | {why} | "
+                     f"{len(c.get('no_sponsorship_statements') or [])} of {pc['seen']} {tag('record')} |")
     else:
         L += ["_None._"]
     L += ["", "## Check by hand — board not found automatically", ""]
@@ -757,12 +864,36 @@ def render_report(log, meta, roles, companies):
                      f"{c['latest_funding_date']['value']} {tag('record')} | {tried} | {res} |")
     else:
         L += ["_None._"]
+    nos = [c for c in companies if c.get("no_sponsorship_statements")]
+    L += ["", "## \"Can't sponsor this role\" statements on live boards", ""]
+    if nos:
+        L += ["Sponsorship history is not a promise, and it is also not all-or-nothing. These companies have H-1B approvals on record, "
+              "but some of their live postings say they cannot sponsor *that role*. Such a posting is ruled out; the company is not. "
+              "Check whether the roles you want carry the statement.", "",
+              "| Company | H-1B approvals | Postings with the statement | Examples |", "|---|---:|---:|---|"]
+        for c in nos:
+            xs = c["no_sponsorship_statements"]
+            ex = "; ".join(x["title"]["value"].strip() for x in xs[:3])
+            L.append(f"| {c['company']['value']} | {c['h1b_total_approvals']['value']:.0f} {tag('record')} | "
+                     f"{len(xs)} of {c['postings']['value']['seen']} {tag('record')} | {ex} {tag('record')} |")
+    else:
+        L += ["_None found._"]
+    ruled = [(c["company"]["value"], x) for c in companies for x in c.get("ruled_out_by_description", [])]
+    L += ["", "## Ruled out by the job description", ""]
+    if ruled:
+        L += ["| Company | Posting | Why (phrase or years found in the description) |", "|---|---|---|"]
+        for name, x in ruled[:40]:
+            L.append(f"| {name} | [{x['title']['value']}]({x['url']['value']}) {tag('record')} | {x['reason']['value']} {tag('your-input')} |")
+        if len(ruled) > 40:
+            L.append(f"| … | {len(ruled) - 40} more | see the JSON log |")
+    else:
+        L += ["_None._"]
     skipped = [rid for rid in b["skip"]]
     pss = log["pipeline_skip_share"]["value"]
     L += ["", "## Skipped", "",
-          f"Of {f['postings_target_family']} software / ML postings evaluated on the boards found, "
+          f"Of {f['postings_target_family']} {fams} postings evaluated on the boards found, "
           f"{f['advanced_to_apply_or_consider']} reached Apply or Consider"
-          + (f": an overall skip share of **{pss:.0%}**. The rest were dropped as non-US or senior-level before scoring, or skipped by the scorer." if pss is not None else ".")
+          + (f": an overall skip share of **{pss:.0%}**. The rest were dropped before scoring (non-US, wrong level, or ruled out by the description), or skipped by the scorer." if pss is not None else ".")
           + " The engine expects a healthy run to skip at least half.",
           "",
           f"The scorer itself returned Skip for {sum(1 for r in roles if meta[r['role_id']]['recommendation'] == 'Skip')} "
@@ -783,7 +914,7 @@ def render_report(log, meta, roles, companies):
     L += ["", "## Gates a person must clear", "",
           "- **G1 Liveness:** open each Apply or Consider link, or run `npm run ats:liveness -- <url>`, and confirm the posting is live and belongs to the named company (⚠ marks unverified board identity).",
           f"- **G2 Timeline:** confirm the OPT start date and hiring-lag assumption. This run used: {tl['arithmetic']}.",
-          "- **G3 Release:** for each item, check that the sponsored-title evidence fits the posting and that the role is really entry level, before applying or reaching out.",
+          "- **G3 Release:** for each item, read the job description. Check that the sponsored-title evidence fits the posting, that the level and years match, and that nothing in it rules you out, before applying or reaching out.",
           "", "## Run record (technical)", "",
           f"- Command: `{log['command']}`",
           f"- Mode: {log['mode']} · today: {log['today']['value']} ({log['today']['note']}) · rules {log['rules_version']} · generated {log['generated']}",
@@ -795,8 +926,10 @@ def render_report(log, meta, roles, companies):
               ("target_family_sponsored", "…sponsored a software / ML title"), ("funded_in_window", "…funded inside the window"),
               ("candidates", "candidates"), ("probed", "boards probed"), ("board_found", "board found"),
               ("board_not_found", "board not found"), ("fetch_failed", "fetch failed"), ("identity_mismatch", "board name mismatch"),
-              ("postings_seen", "postings seen"), ("postings_target_family", "…software / ML family"),
-              ("postings_us", "…US or unstated location"), ("postings_new_grad", "…not senior (kept)"), ("roles_scored", "roles sent to scorer")]
+              ("postings_seen", "postings seen"), ("postings_target_family", "…in a targeted family"),
+              ("postings_us", "…US or unstated location"), ("postings_level_ok", "…right level by title"),
+              ("postings_ruled_out_by_description", "…ruled out by the description"), ("postings_kept", "…kept"),
+              ("roles_scored", "roles sent to scorer")]
     L += [f"| {lbl} | {f.get(k, '—')} |" for k, lbl in labels]
     L += ["", "| Input | Path | sha256 |", "|---|---|---|"]
     for k, v in log["inputs"].items():

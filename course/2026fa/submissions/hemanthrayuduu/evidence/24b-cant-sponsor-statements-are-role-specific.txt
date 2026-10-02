@@ -1,0 +1,7 @@
+# Why the company-wide rule was withdrawn: context of "unable to sponsor" on the two boards (raw responses from runs/2026-10-02-live-v2/.build/raw, rules draft 0.2.1)
+== verkada: 156 of 307 postings contain 'unable to sponsor'
+  most common wording (117x): …aily Commuter benefits Additional Information You must be independently authorized to work in the U.S. We are unable to sponsor or take over sponsorship of an employment visa for this role, at this…
+  engineering titles WITHOUT the statement (first 8): ['AI Marketing Engineer', 'AV Engineer - East Coast (NYC)', 'AV Engineer - London & United States East Coast', 'Backend Engineer - Connectivity', 'Backend Software Engineering Intern 2027', 'Business Systems Support Engineer', 'Director of Firmware Engineering, Cameras', 'Embedded Automated Test & Test System Engineer']
+== twinhealth: 23 of 39 postings contain 'unable to sponsor'
+  most common wording (16x): …e opportunity based out of the U.S. Applicants must be authorized to work for any employer in the U.S. We are unable to sponsor or take over sponsorship of an employment Visa at this time. Compensa…
+  engineering titles WITHOUT the statement (first 8): ['Lead Software Engineer', 'Senior AI Engineer', 'Senior AI Platform Engineer']

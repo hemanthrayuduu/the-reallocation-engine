@@ -1,0 +1,34 @@
+{
+  "_comment": "FICTIONAL test persona. Kept separate from search/examples/kiran-rao so editing the real persona never breaks the tests.",
+  "persona_id": "fixture-both-families",
+  "summary": "a fictional test persona targeting software and AI roles",
+  "resume": "scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/fixtures/fixture-applicant.json",
+  "location_city": "Boston",
+  "target_families": [
+    "ml_ai",
+    "software"
+  ],
+  "experience_years": 3.5,
+  "preferred_locations": {
+    "terms": [
+      "texas",
+      "austin",
+      "dallas",
+      "remote",
+      "anywhere in the us"
+    ],
+    "state_abbreviations": [
+      "TX"
+    ]
+  },
+  "visa": {
+    "status": "F-1 (fixture)",
+    "needs_sponsorship": true,
+    "program_end_date": "2026-12-18",
+    "opt_start_date": "2027-01-11",
+    "unemployment_days_allowed": 90
+  },
+  "hiring_lag_days": 60,
+  "funding_window_months": 24,
+  "min_h1b_approvals": 1
+}

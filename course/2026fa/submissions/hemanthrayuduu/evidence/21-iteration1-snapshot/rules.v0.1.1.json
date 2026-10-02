@@ -1,0 +1,54 @@
+{
+  "_comment": "The recipe's RULES. Every threshold, pattern, and p-value here is your-input: a stated, editable choice, not a record. The pipeline reads records (CSV rows, board responses, BLS rows) and applies these rules to them; the output labels each value accordingly.",
+  "rules_version": "0.1.1",
+  "title_families": {
+    "software": {
+      "patterns": ["software engineer", "software developer", "software development engineer", "backend engineer", "back-end engineer", "back end engineer", "full stack engineer", "full-stack engineer", "fullstack engineer", "full stack developer", "frontend engineer", "front-end engineer", "platform engineer", "application engineer", "applications engineer"],
+      "soc_hint": "15-1252.00",
+      "_soc_hint_note": "your-input fallback used only when no O*NET title in the BLS file matches the posting title"
+    },
+    "ml_ai": {
+      "patterns": ["machine learning engineer", "ml engineer", "ai engineer", "applied scientist", "research engineer", "llm engineer", "ai/ml engineer", "ml/ai engineer", "machine learning scientist"],
+      "soc_hint": "15-1221.00",
+      "_soc_hint_note": "your-input fallback: O*NET lists AI Engineer and Applied Scientist under 15-1221.00"
+    }
+  },
+  "seniority_exclude_patterns": [
+    "\\bsenior\\b", "\\bsr\\b\\.?", "\\bstaff\\b", "\\bprincipal\\b", "\\blead\\b", "\\bmanager\\b",
+    "\\bdirector\\b", "\\bhead of\\b", "\\bvp\\b", "\\bintern(ship)?\\b", "\\barchitect\\b",
+    "\\b(iii|iv|v)\\b", "\\b(level|l)\\s?[4-9]\\b", "\\bdistinguished\\b", "\\bfellow\\b", "\\bph\\.?d\\b"
+  ],
+  "_seniority_note": "New-grad persona: these title words mark roles a December MS graduate is not hired into. II is deliberately allowed (often 0-2 years).",
+  "_changelog": ["0.1.1 (2026-10-02): added \\bph.?d\\b after the first live pass put two 'Systems PhD - Software Engineer' postings on an MS student's Apply list (evidence/05-first-live-smoke)."],
+  "us_location": {
+    "country_terms": ["united states", "usa", "u.s.", "us-remote", "remote - us", "remote (us)", "remote, us", "us remote", "remote us", "north america"],
+    "state_names": ["alabama", "alaska", "arizona", "arkansas", "california", "colorado", "connecticut", "delaware", "florida", "georgia", "hawaii", "idaho", "illinois", "indiana", "iowa", "kansas", "kentucky", "louisiana", "maine", "maryland", "massachusetts", "michigan", "minnesota", "mississippi", "missouri", "montana", "nebraska", "nevada", "new hampshire", "new jersey", "new mexico", "new york", "north carolina", "north dakota", "ohio", "oklahoma", "oregon", "pennsylvania", "rhode island", "south carolina", "south dakota", "tennessee", "texas", "utah", "vermont", "virginia", "washington", "west virginia", "wisconsin", "wyoming", "district of columbia", "washington d.c."],
+    "state_abbreviations": ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC"],
+    "city_names": ["new york city", "nyc", "san francisco", "bay area", "boston", "seattle", "austin", "chicago", "los angeles", "san jose", "san diego", "denver", "atlanta", "palo alto", "mountain view", "sunnyvale", "menlo park", "redwood city", "cambridge, ma", "pittsburgh", "philadelphia", "dallas", "houston", "miami", "portland", "salt lake city", "raleigh", "minneapolis", "detroit", "phoenix"],
+    "_note": "A posting is kept when ANY part of its location string names the US by one of these terms. A bare 'Remote' with no country is kept but flagged 'remote, country unstated' for the human gate."
+  },
+  "sponsorship_tiers": [
+    {"tier": "Proven", "min_approvals": 10, "requires_same_family": true, "p": 0.9},
+    {"tier": "Likely", "min_approvals": 3, "requires_same_family": true, "p": 0.7},
+    {"tier": "Possible", "min_approvals": 1, "requires_same_family": false, "p": 0.4}
+  ],
+  "_sponsorship_note": "same_family = the company's sponsored job titles (80 Days CSV, record) include a title from the SAME family as the posting. Tiers are checked top to bottom; first match wins. Likely/Possible are soft tiers in role-scorer.mjs and demote Apply to Consider.",
+  "fit": {
+    "scheme": ".claude/skills/greenhouse-watch/scheme.default.json",
+    "full_score": 8.0,
+    "_note": "fit p = min(1, scheme score / full_score). The scheme is deterministic phrase matching between the persona résumé and the posting text — no model judgment."
+  },
+  "timeline": {
+    "full_margin_days": 30,
+    "_note": "available_days = (opt_start_date - today) + unemployment_days_allowed; margin = available_days - hiring_lag_days; factor = 1.0 if margin >= full_margin_days, margin / full_margin_days if 0 < margin < full_margin_days, 0.0 (gate closed) if margin <= 0."
+  },
+  "network": {
+    "eligible_tiers": ["Proven", "Likely"],
+    "_note": "A company goes on the networking list only when its board WAS found and fetched, zero postings passed the family + US + seniority filters, and its company-level sponsorship tier is one of these."
+  },
+  "discovery": {
+    "ats_order": ["greenhouse", "ashby"],
+    "probe_delay_seconds": 0.2,
+    "_note": "Slugs are guessed from the CSV company name and website. Lever, Workday, iCIMS and SmartRecruiters are not probed ([TODO: DEV] in the recipe)."
+  }
+}

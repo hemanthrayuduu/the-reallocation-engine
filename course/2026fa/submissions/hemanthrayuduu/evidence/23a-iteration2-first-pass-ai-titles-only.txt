@@ -1,0 +1,16 @@
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v2
+  [1/10] COHERE HEALTH INC: found greenhouse:coherehealth (76 postings)
+  [2/10] AIERA INC: not-found
+  [3/10] CELESTIAL AI INC: not-found
+  [4/10] CYNGN INC: not-found
+  [5/10] CODAMETRIX INC: found ashby:codametrix (2 postings)
+  [6/10] BUTLR TECHNOLOGIES INC: not-found
+  [7/10] AIM INTELLIGENT MACHINES INC: not-found
+  [8/10] FEMTOSENSE INC: not-found
+  [9/10] MEMBRION INC: not-found
+  [10/10] UNDERDOG SPORTS HOLDINGS INC: not-found
+✓ swe-sponsor-pipeline (live): 10 candidates, 10 probed, 2 boards found, 2 roles scored
+  apply 0 · consider 0 · network 2 · check-by-hand 8 · skip 0
+  scorer: ✓ scored 2 roles → Apply 0 · Consider 0 · Skip 2 (skip 100%)
+  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v2/pipeline-report.md  +  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v2/pipeline-log.json
+exit=0
