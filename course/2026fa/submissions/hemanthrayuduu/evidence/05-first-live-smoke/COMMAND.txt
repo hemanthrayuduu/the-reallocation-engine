@@ -1,0 +1,2 @@
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --limit 3 --out-dir /tmp/ssp-smoke
+(first live pass, rules 0.1.0, 2026-10-02 — kept as evidence of the PhD-role miss; see FRICTIONAL.md)

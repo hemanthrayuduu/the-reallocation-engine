@@ -1,0 +1,18 @@
+{
+  "jobs": [
+    {
+      "id": 301,
+      "title": "Software Engineer",
+      "location": {
+        "name": "New York, NY"
+      },
+      "content": "<p>Python</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/mismatchname/jobs/301",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
+    }
+  ],
+  "meta": {
+    "total": 1
+  }
+}

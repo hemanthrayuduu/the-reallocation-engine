@@ -1,0 +1,18 @@
+{
+  "jobs": [
+    {
+      "id": 501,
+      "title": "Software Engineer",
+      "location": {
+        "name": "Bengaluru, India"
+      },
+      "content": "<p>Python, AWS</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/abroadonly/jobs/501",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
+    }
+  ],
+  "meta": {
+    "total": 1
+  }
+}

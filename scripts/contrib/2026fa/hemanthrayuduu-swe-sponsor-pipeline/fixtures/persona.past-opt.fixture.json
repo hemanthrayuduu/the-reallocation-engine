@@ -1,0 +1,16 @@
+{
+  "visa": {
+    "status": "F-1, post-completion OPT (fixture: window already closed)",
+    "needs_sponsorship": true,
+    "program_end_date": "2025-12-15",
+    "opt_start_date": "2026-01-05",
+    "unemployment_days_allowed": 90
+  },
+  "_comment": "FICTIONAL fixture persona: OPT window closed before --today 2026-10-01 -> must fail (F3).",
+  "persona_id": "fixture-past-opt",
+  "resume": "search/examples/kiran-rao/resume.example.json",
+  "location_city": "Boston",
+  "hiring_lag_days": 60,
+  "funding_window_months": 24,
+  "min_h1b_approvals": 1
+}

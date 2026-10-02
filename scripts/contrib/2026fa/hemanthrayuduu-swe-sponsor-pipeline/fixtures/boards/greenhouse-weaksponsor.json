@@ -1,0 +1,18 @@
+{
+  "jobs": [
+    {
+      "id": 401,
+      "title": "Software Engineer I",
+      "location": {
+        "name": "Remote - US"
+      },
+      "content": "<p>Java, Spring Boot, PostgreSQL, REST APIs.</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/weaksponsor/jobs/401",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
+    }
+  ],
+  "meta": {
+    "total": 1
+  }
+}

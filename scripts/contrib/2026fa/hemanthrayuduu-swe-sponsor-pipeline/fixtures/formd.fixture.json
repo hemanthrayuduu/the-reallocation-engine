@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "note": "FICTIONAL Form D sample fixture"
+  },
+  "companies": [
+    {
+      "company": {
+        "name": "Lumen Byte, Inc."
+      },
+      "funding": {
+        "total_offering_amount": 12000000,
+        "total_amount_sold": 12000000,
+        "stage_estimate": "Series A"
+      },
+      "filing": {
+        "date_filed": "2025-06-20"
+      }
+    }
+  ]
+}

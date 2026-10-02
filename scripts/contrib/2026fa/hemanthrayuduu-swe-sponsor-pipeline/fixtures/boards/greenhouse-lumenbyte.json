@@ -1,0 +1,51 @@
+{
+  "jobs": [
+    {
+      "id": 101,
+      "title": "Software Engineer, New Grad",
+      "location": {
+        "name": "Boston, MA"
+      },
+      "content": "<p>Build services in Python on AWS and Kubernetes. MS in Computer Science preferred.</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/lumenbyte/jobs/101",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
+    },
+    {
+      "id": 102,
+      "title": "Senior Software Engineer",
+      "location": {
+        "name": "Boston, MA"
+      },
+      "content": "<p>Python, AWS, 7+ years.</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/lumenbyte/jobs/102",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
+    },
+    {
+      "id": 103,
+      "title": "Machine Learning Engineer",
+      "location": {
+        "name": "Remote"
+      },
+      "content": "<p>Train models in PyTorch and Python.</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/lumenbyte/jobs/103",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
+    },
+    {
+      "id": 104,
+      "title": "Account Executive",
+      "location": {
+        "name": "Boston, MA"
+      },
+      "content": "<p>Sales.</p>",
+      "absolute_url": "https://job-boards.greenhouse.io/lumenbyte/jobs/104",
+      "updated_at": "2026-09-20T10:00:00-04:00",
+      "first_published": "2026-09-15T10:00:00-04:00"
+    }
+  ],
+  "meta": {
+    "total": 4
+  }
+}

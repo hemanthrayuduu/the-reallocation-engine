@@ -1,0 +1,77 @@
+{
+  "_comment": "FICTIONAL EXAMPLE PERSONA - safe to commit. Built for the 2026fa swe-sponsor-pipeline recipe (hemanthrayuduu). Every field is invented; the 555 phone and @example.com email are deliberate.",
+  "attested": true,
+  "attested_date": "2026-10-02",
+  "attestation_note": "Example data: fictional and internally consistent. Not a real person.",
+  "personal": {
+    "name": "Kiran Rao",
+    "location": "Boston, MA",
+    "phone": "(617) 555-0193",
+    "email": "kiran.rao@example.com",
+    "linkedin": "linkedin.com/in/kiranrao-example",
+    "github": "github.com/kiranrao-example"
+  },
+  "education": [
+    {
+      "institution": "Commonwealth Institute of Technology (fictional)",
+      "location": "Boston, MA",
+      "degree": "MS, Computer Science",
+      "gpa": "3.7/4.0",
+      "start_date": "2025-01",
+      "end_date": "2026-12",
+      "status": "in progress",
+      "coursework": ["Distributed Systems", "Machine Learning", "Cloud Computing", "Algorithms"]
+    },
+    {
+      "institution": "Fictional Engineering College",
+      "location": "Hyderabad, India",
+      "degree": "BS, Computer Science and Engineering",
+      "start_date": "2018-08",
+      "end_date": "2022-05",
+      "status": "completed"
+    }
+  ],
+  "experience": [
+    {
+      "company": "Harborline Analytics (fictional)",
+      "location": "Boston, MA",
+      "title": "Software Engineer (Co-op)",
+      "start_date": "2026-01",
+      "end_date": "2026-06",
+      "bullets": [
+        "Built a Python and FastAPI service that batches model-inference requests; p95 latency fell from 900 ms to 310 ms in load tests.",
+        "Containerized three services with Docker and deployed them to Kubernetes on AWS."
+      ],
+      "attestation_correction": ""
+    },
+    {
+      "company": "Deccan Softworks (fictional)",
+      "location": "Hyderabad, India",
+      "title": "Software Developer",
+      "start_date": "2022-07",
+      "end_date": "2024-12",
+      "bullets": [
+        "Maintained Java and Spring Boot REST APIs backed by PostgreSQL for a logistics client.",
+        "Wrote CI pipelines in GitHub Actions that cut release time from a day to two hours."
+      ],
+      "attestation_correction": ""
+    }
+  ],
+  "projects": [
+    {
+      "name": "rag-eval-harness",
+      "start_date": "2026-03",
+      "end_date": "2026-05",
+      "type": "course project",
+      "team_size": "3",
+      "bullets": ["Evaluation harness for retrieval-augmented generation over course notes using PyTorch embeddings and a vector index."]
+    }
+  ],
+  "skills": {
+    "languages": ["Python", "Java", "TypeScript", "SQL", "Go"],
+    "frameworks": ["FastAPI", "Spring Boot", "React", "Node.js", "PyTorch"],
+    "infrastructure": ["AWS", "Docker", "Kubernetes", "PostgreSQL", "Redis", "GitHub Actions"],
+    "concepts": ["distributed systems", "REST APIs", "machine learning", "LLM"],
+    "familiar_with_not_shipped": ["Terraform", "Kafka", "Rust"]
+  }
+}
