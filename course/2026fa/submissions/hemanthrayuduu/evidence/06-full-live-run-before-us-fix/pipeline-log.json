@@ -1,0 +1,4688 @@
+{
+  "_tool": "swe-sponsor-pipeline",
+  "rules_version": "0.1.1",
+  "generated": "2026-10-02T22:13:20+00:00",
+  "today": {
+    "value": "2026-10-02",
+    "source": "record",
+    "note": "system clock"
+  },
+  "mode": "live",
+  "command": "python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py",
+  "inputs": {
+    "csv": {
+      "path": "data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv",
+      "sha256": "eccdee2addf472b1639269f42eec693b083b7ce251347d5fd0b2856cfdae6270"
+    },
+    "bls": {
+      "path": "data/bls/compact/soc_occupation_compact.csv",
+      "sha256": "bac5acf77ca2d25268c75b3706084f7f67bcc0c6e3cc68cd03e0ebd2598343d1"
+    },
+    "form_d_samples": [
+      "data/sec/form-d/processed/sample/companies-sec-2025q2-d.sample.json",
+      "data/sec/form-d/processed/sample/companies-sec-2025q3-d.sample.json",
+      "data/sec/form-d/processed/sample/companies-sec-2025q4-d.sample.json",
+      "data/sec/form-d/processed/sample/companies-sec-2026q1-d.sample.json"
+    ],
+    "persona": {
+      "path": "search/examples/kiran-rao/persona.json",
+      "sha256": "958ac2a329baf39467ce8c6f377c0a89484a6992ca57b81caaae9c51b268c9f2"
+    },
+    "resume": {
+      "path": "search/examples/kiran-rao/resume.example.json",
+      "sha256": "4a209425d5139a689cfd6db2992e325f0f7a56488f85a6217ecc63fdb71e0b5d"
+    },
+    "rules": {
+      "path": "scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/rules.json",
+      "sha256": "981995a97e9180f5809462f6411fd45f9dbd9b6e6729155b6d40f8e73762f4e9"
+    },
+    "scheme": {
+      "path": ".claude/skills/greenhouse-watch/scheme.default.json",
+      "version": "default-0.1"
+    },
+    "offline_fixtures": null
+  },
+  "hosts_contacted": [
+    "api.ashbyhq.com",
+    "boards-api.greenhouse.io"
+  ],
+  "http_calls": 108,
+  "persona": {
+    "persona_id": {
+      "value": "kiran-rao",
+      "source": "your-input"
+    },
+    "funding_window_months": {
+      "value": 24,
+      "source": "your-input"
+    },
+    "min_h1b_approvals": {
+      "value": 1,
+      "source": "your-input"
+    },
+    "hiring_lag_days": {
+      "value": 60,
+      "source": "your-input"
+    },
+    "visa": {
+      "value": {
+        "status": "F-1, post-completion OPT not yet started",
+        "needs_sponsorship": true,
+        "program_end_date": "2026-12-18",
+        "opt_start_date": "2027-01-11",
+        "unemployment_days_allowed": 90
+      },
+      "source": "your-input"
+    }
+  },
+  "funding_window_start": {
+    "value": "2024-10-02",
+    "source": "your-input",
+    "note": "today − funding_window_months"
+  },
+  "timeline": {
+    "factor": 1.0,
+    "opt_start_date": "2027-01-11",
+    "window_end": "2027-04-11",
+    "available_days": 191,
+    "hiring_lag_days": 60,
+    "margin_days": 131,
+    "arithmetic": "available = (2027-01-11 − 2026-10-02) + 90 = 191 d; margin = 191 − 60 = 131 d; factor = 1.0 (margin ≥ 30) = 1.0",
+    "source": "your-input"
+  },
+  "funnel": {
+    "csv_rows": 30369,
+    "with_approvals": 1552,
+    "target_family_sponsored": 557,
+    "funded_in_window": 37,
+    "candidates": 37,
+    "probed": 37,
+    "board_found": 9,
+    "board_not_found": 28,
+    "fetch_failed": 0,
+    "identity_mismatch": 0,
+    "postings_seen": 1472,
+    "postings_target_family": 253,
+    "postings_us": 160,
+    "postings_new_grad": 11,
+    "roles_scored": 17,
+    "advanced_to_apply_or_consider": 11
+  },
+  "named_companies": null,
+  "companies": [
+    {
+      "company": {
+        "value": "INTEL CORP",
+        "source": "record"
+      },
+      "website": {
+        "value": "intel.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 13318.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 366.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 97.32534346682256,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Component Design Engineer",
+          "Software Engineer",
+          "Process Engineer",
+          "Engineering Manager",
+          "Product Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-03-18",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 25000008.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series B",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 35000008.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "intel",
+            "url": "https://boards-api.greenhouse.io/v1/boards/intel/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "intel",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/intel?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "DATABRICKS INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "databricks.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 1640.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 8.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 99.51456310679612,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Engineer",
+          "Senior Software Engineer",
+          "Solutions Architect",
+          "Specialist Solutions Architect",
+          "Senior Solutions Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-09-08",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 1074999900.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 18421062869.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": [
+          {
+            "file": "data/sec/form-d/processed/sample/companies-sec-2025q4-d.sample.json",
+            "name": "Databricks, Inc.",
+            "date_filed": "31-DEC-2025",
+            "total_offering_amount": 5000000000.0,
+            "total_amount_sold": 4082050250.0,
+            "stage_estimate": "Series D+"
+          },
+          {
+            "file": "data/sec/form-d/processed/sample/companies-sec-2025q4-d.sample.json",
+            "name": "Databricks, Inc.",
+            "date_filed": "31-DEC-2025",
+            "total_offering_amount": 23017200.0,
+            "total_amount_sold": 23017200.0,
+            "stage_estimate": "Series B"
+          }
+        ],
+        "source": "record"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "databricks",
+            "url": "https://boards-api.greenhouse.io/v1/boards/databricks/jobs?content=true",
+            "status": "ok"
+          }
+        ],
+        "ats": "greenhouse",
+        "slug": "databricks",
+        "url": "https://boards-api.greenhouse.io/v1/boards/databricks/jobs?content=true",
+        "identity": {
+          "value": "confirmed",
+          "source": "record",
+          "note": "board name «Databricks» matches CSV name"
+        }
+      },
+      "postings": {
+        "value": {
+          "seen": 886,
+          "other_family": 703,
+          "non_us": 79,
+          "seniority": 100,
+          "kept": 4
+        },
+        "source": "record",
+        "note": "counts of board postings; filters are rules.json (your-input)"
+      },
+      "excluded_examples": [
+        "AI Engineer - FDE (Forward Deployed Engineer) — Remote - India (non-US)",
+        "AI Engineer - FDE (Forward Deployed Engineer) — Seoul, South Korea (non-US)",
+        "AI Engineer, FDE (Forward Deployed Engineer) — Bengaluru, India; Delhi, India; Mumbai, India; Pune, India (non-US)",
+        "Applied AI Engineer — Belgrade, Serbia (non-US)",
+        "IT Software Engineer, Infrastructure — Bengaluru, India (non-US)"
+      ],
+      "bucket": "has-postings"
+    },
+    {
+      "company": {
+        "value": "VERKADA INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "verkada.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 272.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 4.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 98.55072463768116,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Engineer ",
+          "Sales Strategy and Operations Manager",
+          "Software Engineer",
+          "Business Systems Software Engineer",
+          "Product Manager "
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2024-12-20",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 199999910.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 573504242.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "verkada",
+            "url": "https://boards-api.greenhouse.io/v1/boards/verkada/jobs?content=true",
+            "status": "ok"
+          }
+        ],
+        "ats": "greenhouse",
+        "slug": "verkada",
+        "url": "https://boards-api.greenhouse.io/v1/boards/verkada/jobs?content=true",
+        "identity": {
+          "value": "confirmed",
+          "source": "record",
+          "note": "board name «Verkada» matches CSV name"
+        }
+      },
+      "postings": {
+        "value": {
+          "seen": 307,
+          "other_family": 265,
+          "non_us": 2,
+          "seniority": 34,
+          "kept": 6
+        },
+        "source": "record",
+        "note": "counts of board postings; filters are rules.json (your-input)"
+      },
+      "excluded_examples": [
+        "Go Software Engineer — Poland (non-US)",
+        "Linux Embedded Software Engineer — Poland (non-US)",
+        "Senior Backend Engineer (seniority /\\bsenior\\b/)",
+        "Senior Backend Engineer - Access Control (seniority /\\bsenior\\b/)",
+        "Senior Backend Engineer - Device Platform (seniority /\\bsenior\\b/)"
+      ],
+      "bucket": "has-postings"
+    },
+    {
+      "company": {
+        "value": "CCC INTELLIGENT SOLUTIONS HOLDINGS INC",
+        "source": "record"
+      },
+      "website": {
+        "value": null,
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 240.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Engineer",
+          "Senior Software Engineer",
+          "Associate Manager",
+          "Software Engineer ",
+          "Associate Manager, Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-01-06",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 295650000.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 295650000.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "cccintelligentsolutionsholdings",
+            "url": "https://boards-api.greenhouse.io/v1/boards/cccintelligentsolutionsholdings/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "ccc-intelligent-solutions-holdings",
+            "url": "https://boards-api.greenhouse.io/v1/boards/ccc-intelligent-solutions-holdings/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "cccintelligentsolutionsholdings",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/cccintelligentsolutionsholdings?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "ccc-intelligent-solutions-holdings",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/ccc-intelligent-solutions-holdings?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "GRAMMARLY INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "grammarly.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 156.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 6.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 96.29629629629628,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Engineer",
+          "Senior Security Engineer, Enterprise Security",
+          "Marketing Analytics Manager"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-07-17",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 672376700.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 1040418941.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "grammarly",
+            "url": "https://boards-api.greenhouse.io/v1/boards/grammarly/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "grammarly",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/grammarly?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "WHATNOT INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "whatnot.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 134.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 2.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 98.52941176470588,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2024-12-24",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 264999980.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 722499977.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "whatnot",
+            "url": "https://boards-api.greenhouse.io/v1/boards/whatnot/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "whatnot",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/whatnot?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "COHERE HEALTH INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "cohere-health.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 104.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 2.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 98.1132075471698,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Engineering Manager ",
+          "Senior Software Engineer, Platform",
+          "Senior Machine Learning DevOps Engineer",
+          "Software Engineer II",
+          "Machine Learning Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "ml_ai",
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-05-07",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 89999876.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series C",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 166099835.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "coherehealth",
+            "url": "https://boards-api.greenhouse.io/v1/boards/coherehealth/jobs?content=true",
+            "status": "ok"
+          }
+        ],
+        "ats": "greenhouse",
+        "slug": "coherehealth",
+        "url": "https://boards-api.greenhouse.io/v1/boards/coherehealth/jobs?content=true",
+        "identity": {
+          "value": "confirmed",
+          "source": "record",
+          "note": "board name «Cohere Health» matches CSV name"
+        }
+      },
+      "postings": {
+        "value": {
+          "seen": 76,
+          "other_family": 61,
+          "non_us": 11,
+          "seniority": 3,
+          "kept": 1
+        },
+        "source": "record",
+        "note": "counts of board postings; filters are rules.json (your-input)"
+      },
+      "excluded_examples": [
+        "Associate Software Engineer — Hyderabad, Telangana, India (non-US)",
+        "Lead Applied Scientist — Hyderabad, Telangana, India (non-US)",
+        "Lead Software Engineer - Integrations  (seniority /\\blead\\b/)",
+        "Software Engineer — Hyderabad, Telangana, India (non-US)",
+        "Software Engineer II, BI — Hyderabad, Telangana, India (non-US)"
+      ],
+      "bucket": "has-postings"
+    },
+    {
+      "company": {
+        "value": "APEX TECHNOLOGY INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "apextechnology.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 62.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Developer",
+          "Business Analyst",
+          "Lead Engineer",
+          "RPA Developer",
+          "SAS Analyst"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-04-16",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 158150000.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 253401182.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "apextechnology",
+            "url": "https://boards-api.greenhouse.io/v1/boards/apextechnology/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "apex-technology",
+            "url": "https://boards-api.greenhouse.io/v1/boards/apex-technology/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "apextechnology",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/apextechnology?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "apex-technology",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/apex-technology?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "APPTRONIK INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "apptronik.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 56.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 2.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 96.55172413793105,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Senior Electrical Engineer",
+          "Software Engineer III"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-01-31",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 415000000.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 446694038.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "apptronik",
+            "url": "https://boards-api.greenhouse.io/v1/boards/apptronik/jobs?content=true",
+            "status": "ok"
+          }
+        ],
+        "ats": "greenhouse",
+        "slug": "apptronik",
+        "url": "https://boards-api.greenhouse.io/v1/boards/apptronik/jobs?content=true",
+        "identity": {
+          "value": "confirmed",
+          "source": "record",
+          "note": "board name «Apptronik» matches CSV name"
+        }
+      },
+      "postings": {
+        "value": {
+          "seen": 80,
+          "other_family": 73,
+          "non_us": 0,
+          "seniority": 7,
+          "kept": 0
+        },
+        "source": "record",
+        "note": "counts of board postings; filters are rules.json (your-input)"
+      },
+      "excluded_examples": [
+        "Lead Software Engineer - Dexterous Manipulation (seniority /\\blead\\b/)",
+        "Lead Software Engineer - Dexterous Manipulation (seniority /\\blead\\b/)",
+        "Principal Robotics Machine Learning Engineer (seniority /\\bprincipal\\b/)",
+        "Senior Application Engineer - Customer Experience (seniority /\\bsenior\\b/)",
+        "Senior Software Engineer, ML Infrastructure (seniority /\\bsenior\\b/)"
+      ],
+      "bucket": "network"
+    },
+    {
+      "company": {
+        "value": "CELESTIAL AI INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "celestial-ai.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 56.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "RTL Design Engineer",
+          "Machine Learning Engineer",
+          "Machine Learning Engineer ",
+          "Photonics Engineer "
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "ml_ai"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-02-25",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 152935067.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 483934959.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "celestialai",
+            "url": "https://boards-api.greenhouse.io/v1/boards/celestialai/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "celestial-ai",
+            "url": "https://boards-api.greenhouse.io/v1/boards/celestial-ai/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "celestialai",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/celestialai?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "celestial-ai",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/celestial-ai?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "FOURSQUARE LABS INC",
+        "source": "record"
+      },
+      "website": {
+        "value": null,
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 56.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Data Scientist",
+          "Senior Manager (Data Platform)",
+          "Software Engineer",
+          "Senior Manager, Engineering",
+          "Staff Engineer (Full Stack)"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-04-07",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 3801879.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Seed",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 340864461.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "foursquarelabs",
+            "url": "https://boards-api.greenhouse.io/v1/boards/foursquarelabs/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "foursquare-labs",
+            "url": "https://boards-api.greenhouse.io/v1/boards/foursquare-labs/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "foursquarelabs",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/foursquarelabs?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "foursquare-labs",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/foursquare-labs?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "SPANIO INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "spanio.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 56.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Engineering Program Manager",
+          "Mobile Software Engineer",
+          "Digital Experience Marketing Lead",
+          "Senior Modeling Engineer",
+          "Senior Device Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-09-11",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 70065785.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series B",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 305765643.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "spanio",
+            "url": "https://boards-api.greenhouse.io/v1/boards/spanio/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "spanio",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/spanio?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "HIGHNOTE PLATFORM INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "highnoteplatform.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 48.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Senior Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2024-12-16",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 99999966.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series C",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 142574897.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "highnoteplatform",
+            "url": "https://boards-api.greenhouse.io/v1/boards/highnoteplatform/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "highnote-platform",
+            "url": "https://boards-api.greenhouse.io/v1/boards/highnote-platform/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "highnoteplatform",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/highnoteplatform?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "highnote-platform",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/highnote-platform?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "MERCURY TECHNOLOGIES INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "mercurytechnologies.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 40.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Product Designer",
+          "Senior Product Manager - Growth ",
+          "Senior Product Designer",
+          "Senior Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-03-21",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 199999195.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 221289195.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "mercurytechnologies",
+            "url": "https://boards-api.greenhouse.io/v1/boards/mercurytechnologies/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "mercury-technologies",
+            "url": "https://boards-api.greenhouse.io/v1/boards/mercury-technologies/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "mercurytechnologies",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/mercurytechnologies?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "mercury-technologies",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/mercury-technologies?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "TWIN HEALTH INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "twin-health.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 40.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Salesforce Administrator",
+          "Sr. Data Integration Engineer",
+          "Senior Backend Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-05-07",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 55000000.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series C",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 253397496.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "twinhealth",
+            "url": "https://boards-api.greenhouse.io/v1/boards/twinhealth/jobs?content=true",
+            "status": "ok"
+          }
+        ],
+        "ats": "greenhouse",
+        "slug": "twinhealth",
+        "url": "https://boards-api.greenhouse.io/v1/boards/twinhealth/jobs?content=true",
+        "identity": {
+          "value": "confirmed",
+          "source": "record",
+          "note": "board name «Twin Health» matches CSV name"
+        }
+      },
+      "postings": {
+        "value": {
+          "seen": 37,
+          "other_family": 33,
+          "non_us": 0,
+          "seniority": 4,
+          "kept": 0
+        },
+        "source": "record",
+        "note": "counts of board postings; filters are rules.json (your-input)"
+      },
+      "excluded_examples": [
+        "Lead Software Engineer (seniority /\\blead\\b/)",
+        "Senior AI Engineer (seniority /\\bsenior\\b/)",
+        "Senior AI Platform Engineer  (seniority /\\bsenior\\b/)",
+        "Staff AI Engineer (seniority /\\bstaff\\b/)"
+      ],
+      "bucket": "network"
+    },
+    {
+      "company": {
+        "value": "CYNGN INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "cyngn.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 36.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Sr. Software Engineer - Vehicle & Hardware",
+          "Autonomy Senior Software Engineer – Mapping and Localization",
+          "Senior Software Engineer – Machine Learning Data Infrastruct",
+          "Senior Software Engineer – Perception CV",
+          "Software Engineer - Perception ML"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2024-11-12",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 3500000.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Seed",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 23497939.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "cyngn",
+            "url": "https://boards-api.greenhouse.io/v1/boards/cyngn/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "cyngn",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/cyngn?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "PSIQUANTUM CORP",
+        "source": "record"
+      },
+      "website": {
+        "value": "psiquantum.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 26.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Senior Software Engineer, Generalist",
+          "R&D Engineer, SC Devices - Device Design",
+          "Mixed Signal Integration Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-05-15",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 22000008.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series B",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 22000008.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "psiquantum",
+            "url": "https://boards-api.greenhouse.io/v1/boards/psiquantum/jobs?content=true",
+            "status": "ok"
+          }
+        ],
+        "ats": "greenhouse",
+        "slug": "psiquantum",
+        "url": "https://boards-api.greenhouse.io/v1/boards/psiquantum/jobs?content=true",
+        "identity": {
+          "value": "confirmed",
+          "source": "record",
+          "note": "board name «PsiQuantum» matches CSV name"
+        }
+      },
+      "postings": {
+        "value": {
+          "seen": 74,
+          "other_family": 73,
+          "non_us": 0,
+          "seniority": 1,
+          "kept": 0
+        },
+        "source": "record",
+        "note": "counts of board postings; filters are rules.json (your-input)"
+      },
+      "excluded_examples": [
+        "Staff Software Engineer, Photonics (seniority /\\bstaff\\b/)"
+      ],
+      "bucket": "network"
+    },
+    {
+      "company": {
+        "value": "CENTIFIC GLOBAL SOLUTIONS INC",
+        "source": "record"
+      },
+      "website": {
+        "value": null,
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 22.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Data Engineer",
+          "Information Technology Project Manager",
+          "Software Development Engineer",
+          "Software Test Engineer",
+          "Technical Lead"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-06-10",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 79999980.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series C",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 79999980.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "centificglobalsolutions",
+            "url": "https://boards-api.greenhouse.io/v1/boards/centificglobalsolutions/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "centific-global-solutions",
+            "url": "https://boards-api.greenhouse.io/v1/boards/centific-global-solutions/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "centificglobalsolutions",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/centificglobalsolutions?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "centific-global-solutions",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/centific-global-solutions?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "VIDMOB INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "vidmob.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 22.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-04-24",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 14999999.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series A",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 258131198.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "vidmob",
+            "url": "https://boards-api.greenhouse.io/v1/boards/vidmob/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "vidmob",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/vidmob?includeCompensation=true",
+            "status": "ok"
+          }
+        ],
+        "ats": "ashby",
+        "slug": "vidmob",
+        "url": "https://api.ashbyhq.com/posting-api/job-board/vidmob?includeCompensation=true",
+        "identity": {
+          "value": "unverified",
+          "source": "your-input",
+          "note": "Ashby's board API returns no company name; a human confirms at gate G1"
+        }
+      },
+      "postings": {
+        "value": {
+          "seen": 3,
+          "other_family": 3,
+          "non_us": 0,
+          "seniority": 0,
+          "kept": 0
+        },
+        "source": "record",
+        "note": "counts of board postings; filters are rules.json (your-input)"
+      },
+      "excluded_examples": [],
+      "bucket": "network"
+    },
+    {
+      "company": {
+        "value": "AEYE INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "aeye.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 20.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Sr. Perception Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-01-03",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 3240000.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Seed",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 178472327.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "aeye",
+            "url": "https://boards-api.greenhouse.io/v1/boards/aeye/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "aeye",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/aeye?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "BLUECORE INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "bluecore.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 20.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Engineer "
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2024-10-29",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 24945670.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series B",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 235997252.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "bluecore",
+            "url": "https://boards-api.greenhouse.io/v1/boards/bluecore/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "bluecore",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/bluecore?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "DILIGENT ROBOTICS INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "diligent-robotics.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 20.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 2.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 90.9090909090909,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Staff Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-02-13",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 20000000.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series A",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 110617435.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "diligentrobotics",
+            "url": "https://boards-api.greenhouse.io/v1/boards/diligentrobotics/jobs?content=true",
+            "status": "ok"
+          }
+        ],
+        "ats": "greenhouse",
+        "slug": "diligentrobotics",
+        "url": "https://boards-api.greenhouse.io/v1/boards/diligentrobotics/jobs?content=true",
+        "identity": {
+          "value": "confirmed",
+          "source": "record",
+          "note": "board name «Diligent Robotics» matches CSV name"
+        }
+      },
+      "postings": {
+        "value": {
+          "seen": 9,
+          "other_family": 8,
+          "non_us": 1,
+          "seniority": 0,
+          "kept": 0
+        },
+        "source": "record",
+        "note": "counts of board postings; filters are rules.json (your-input)"
+      },
+      "excluded_examples": [
+        "ML Engineer, Manipulation — Anywhere in the US (non-US)"
+      ],
+      "bucket": "network"
+    },
+    {
+      "company": {
+        "value": "OBSERVE INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "observe.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 20.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Senior Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-05-22",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 190530438.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 343030417.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "observe",
+            "url": "https://boards-api.greenhouse.io/v1/boards/observe/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "observe",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/observe?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "BUTLR TECHNOLOGIES INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "butlr.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 14.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Applied Scientist II  "
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "ml_ai"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2024-12-19",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 9316000.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series A",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 62448110.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "butlrtechnologies",
+            "url": "https://boards-api.greenhouse.io/v1/boards/butlrtechnologies/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "butlr-technologies",
+            "url": "https://boards-api.greenhouse.io/v1/boards/butlr-technologies/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "butlr",
+            "url": "https://boards-api.greenhouse.io/v1/boards/butlr/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "butlrtechnologies",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/butlrtechnologies?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "butlr-technologies",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/butlr-technologies?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "butlr",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/butlr?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "VOUCH INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "vouch.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 12.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Engineer 2",
+          "Enterprise Business Operations Manager - AI"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2024-11-07",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 27500001.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series B",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 211926471.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "vouch",
+            "url": "https://boards-api.greenhouse.io/v1/boards/vouch/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "vouch",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/vouch?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "AIM INTELLIGENT MACHINES INC",
+        "source": "record"
+      },
+      "website": {
+        "value": null,
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 10.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Machine Learning Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "ml_ai"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2024-12-19",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 41069962.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series C",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 41069962.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Proven",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "aimintelligentmachines",
+            "url": "https://boards-api.greenhouse.io/v1/boards/aimintelligentmachines/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "aim-intelligent-machines",
+            "url": "https://boards-api.greenhouse.io/v1/boards/aim-intelligent-machines/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "aimintelligentmachines",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/aimintelligentmachines?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "aim-intelligent-machines",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/aim-intelligent-machines?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "MEMBRION INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "membrion.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 6.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Senior Research Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "ml_ai"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-06-16",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 17113979.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series A",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 34098976.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Likely",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "membrion",
+            "url": "https://boards-api.greenhouse.io/v1/boards/membrion/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "membrion",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/membrion?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "IFOODDECISIONSCIENCES INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "ifooddecisionsciences.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 4.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Developer",
+          "Engineering Lead "
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-06-02",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 26489315.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series B",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 78739315.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Likely",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "ifooddecisionsciences",
+            "url": "https://boards-api.greenhouse.io/v1/boards/ifooddecisionsciences/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "ifooddecisionsciences",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/ifooddecisionsciences?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "SWING THERAPEUTICS INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "swingtherapeutics.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 4.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-08-05",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 3300000.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Seed",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 39600155.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Likely",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "swingtherapeutics",
+            "url": "https://boards-api.greenhouse.io/v1/boards/swingtherapeutics/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "swing-therapeutics",
+            "url": "https://boards-api.greenhouse.io/v1/boards/swing-therapeutics/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "swingtherapeutics",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/swingtherapeutics?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "swing-therapeutics",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/swing-therapeutics?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "UNDERDOG SPORTS HOLDINGS INC",
+        "source": "record"
+      },
+      "website": {
+        "value": null,
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 4.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Senior Machine Learning Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "ml_ai"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-01-28",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 175000001.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series C",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 175000001.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Likely",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "underdogsportsholdings",
+            "url": "https://boards-api.greenhouse.io/v1/boards/underdogsportsholdings/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "underdog-sports-holdings",
+            "url": "https://boards-api.greenhouse.io/v1/boards/underdog-sports-holdings/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "underdogsportsholdings",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/underdogsportsholdings?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "underdog-sports-holdings",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/underdog-sports-holdings?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "BELFRY SOFTWARE INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "belfrysoftware.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 2.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Senior Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2024-10-28",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 16066665.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series B",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 18566663.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Possible",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "belfrysoftware",
+            "url": "https://boards-api.greenhouse.io/v1/boards/belfrysoftware/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "belfry-software",
+            "url": "https://boards-api.greenhouse.io/v1/boards/belfry-software/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "belfrysoftware",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/belfrysoftware?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "belfry-software",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/belfry-software?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "HALCYON TECH INC",
+        "source": "record"
+      },
+      "website": {
+        "value": null,
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 2.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Cloud QA and Test Automation Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2024-10-31",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 127793981.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 211543981.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Possible",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "halcyontech",
+            "url": "https://boards-api.greenhouse.io/v1/boards/halcyontech/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "halcyon-tech",
+            "url": "https://boards-api.greenhouse.io/v1/boards/halcyon-tech/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "halcyontech",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/halcyontech?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "halcyon-tech",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/halcyon-tech?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "LUMEN ENERGY INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "lumen-energy.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 2.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Engineer (Backend)"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-05-08",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 2499999.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Seed",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 19016904.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Possible",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "lumenenergy",
+            "url": "https://boards-api.greenhouse.io/v1/boards/lumenenergy/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "lumen-energy",
+            "url": "https://boards-api.greenhouse.io/v1/boards/lumen-energy/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "lumenenergy",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/lumenenergy?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "lumen-energy",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/lumen-energy?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "MISO ROBOTICS INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "miso-robotics.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 2.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Software Engineer",
+          "Support Engineer",
+          "Sr. Electrical Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-02-21",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 1500000.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Pre-Seed",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 72848172.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Possible",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "misorobotics",
+            "url": "https://boards-api.greenhouse.io/v1/boards/misorobotics/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "miso-robotics",
+            "url": "https://boards-api.greenhouse.io/v1/boards/miso-robotics/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "misorobotics",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/misorobotics?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "miso-robotics",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/miso-robotics?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "PLEXIUM INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "plexium.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 2.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Applications Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-07-14",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 60115703.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series C",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 60115703.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Possible",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "plexium",
+            "url": "https://boards-api.greenhouse.io/v1/boards/plexium/jobs?content=true",
+            "status": "ok"
+          }
+        ],
+        "ats": "greenhouse",
+        "slug": "plexium",
+        "url": "https://boards-api.greenhouse.io/v1/boards/plexium/jobs?content=true",
+        "identity": {
+          "value": "confirmed",
+          "source": "record",
+          "note": "board name «Plexium Careers» matches CSV name"
+        }
+      },
+      "postings": {
+        "value": {
+          "seen": 0,
+          "other_family": 0,
+          "non_us": 0,
+          "seniority": 0,
+          "kept": 0
+        },
+        "source": "record",
+        "note": "counts of board postings; filters are rules.json (your-input)"
+      },
+      "excluded_examples": [],
+      "bucket": "skip"
+    },
+    {
+      "company": {
+        "value": "RAISE ROBOTICS INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "raiserobotics.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 2.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Robotics Software Engineer",
+          "Principal Mechanical Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-03-06",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 6249991.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series A",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 10837531.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Possible",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "raiserobotics",
+            "url": "https://boards-api.greenhouse.io/v1/boards/raiserobotics/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "greenhouse",
+            "slug": "raise-robotics",
+            "url": "https://boards-api.greenhouse.io/v1/boards/raise-robotics/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "raiserobotics",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/raiserobotics?includeCompensation=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "raise-robotics",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/raise-robotics?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    },
+    {
+      "company": {
+        "value": "SERVICENOW INC",
+        "source": "record"
+      },
+      "website": {
+        "value": "servicenow.com",
+        "source": "record"
+      },
+      "h1b_total_approvals": {
+        "value": 2.0,
+        "source": "record"
+      },
+      "h1b_total_denials": {
+        "value": 0.0,
+        "source": "record"
+      },
+      "h1b_approval_rate": {
+        "value": 100.0,
+        "source": "record"
+      },
+      "sponsored_titles": {
+        "value": [
+          "Senior Software Engineer",
+          "Staff Software Engineer",
+          "Senior Software QA Engineer",
+          "Senior Tech Support Engineer",
+          "Senior Staff Software Engineer"
+        ],
+        "source": "record"
+      },
+      "sponsored_families": {
+        "value": [
+          "software"
+        ],
+        "source": "your-input",
+        "note": "title_families rule applied to the record"
+      },
+      "latest_funding_date": {
+        "value": "2025-05-30",
+        "source": "record"
+      },
+      "latest_funding_amount": {
+        "value": 389064101.0,
+        "source": "record"
+      },
+      "latest_funding_stage": {
+        "value": "Series D+",
+        "source": "record"
+      },
+      "total_funding": {
+        "value": 389064101.0,
+        "source": "record"
+      },
+      "form_d_sample": {
+        "value": null,
+        "source": "record",
+        "note": "no Form D sample match — funding from 80 Days CSV only"
+      },
+      "company_tier": {
+        "value": "Possible",
+        "source": "your-input",
+        "note": "sponsorship_tiers rule applied to approvals (record)"
+      },
+      "board": {
+        "status": "not-found",
+        "attempts": [
+          {
+            "ats": "greenhouse",
+            "slug": "servicenow",
+            "url": "https://boards-api.greenhouse.io/v1/boards/servicenow/jobs?content=true",
+            "status": "not-found"
+          },
+          {
+            "ats": "ashby",
+            "slug": "servicenow",
+            "url": "https://api.ashbyhq.com/posting-api/job-board/servicenow?includeCompensation=true",
+            "status": "not-found"
+          }
+        ],
+        "mismatch": null
+      },
+      "bucket": "check-by-hand"
+    }
+  ],
+  "roles": [
+    {
+      "role_id": "greenhouse:databricks:8546367002",
+      "company": "DATABRICKS INC",
+      "title": "AI Engineer – Forward Deployed Engineering (AI FDE)",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "1640 H-1B approvals (record); posting family 'ml_ai' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.438,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 3.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8546367002",
+        "location": {
+          "value": "United States",
+          "source": "record",
+          "location_class": "us"
+        },
+        "posted": {
+          "value": "2026-05-13T08:21:01-04:00",
+          "source": "record"
+        },
+        "family": {
+          "value": "ml_ai",
+          "source": "your-input"
+        },
+        "fit_lines": [
+          "skill «PyTorch» (skills.frameworks[4]) appears in posting content +1.0",
+          "skill «AWS» (skills.infrastructure[0]) appears in posting content +1.0",
+          "skill «machine learning» (skills.concepts[2]) appears in posting content +1.0",
+          "skill «LLM» (skills.concepts[3]) appears in posting content +1.0",
+          "at least one résumé skill appears in the posting (scheme.weights.skill_any) +0.5",
+          "location «United States» is neither remote nor «Boston» -1.0"
+        ],
+        "fit_note": null,
+        "wage_context": {
+          "status": "mapped",
+          "soc": {
+            "value": "15-1221.00",
+            "source": "record",
+            "via": "posting title contains O*NET title «AI Engineer»"
+          },
+          "soc_title": {
+            "value": "Computer and Information Research Scientists",
+            "source": "record"
+          },
+          "annual_median_wage": {
+            "value": 140910.0,
+            "source": "record"
+          },
+          "job_zone": {
+            "value": 5.0,
+            "source": "record"
+          },
+          "cognitive_pivot_score": {
+            "value": 4.516,
+            "source": "record"
+          },
+          "oews_year": {
+            "value": 2024.0,
+            "source": "record"
+          }
+        },
+        "company_key": "DATABRICKS INC",
+        "bucket": "consider",
+        "recommendation": "Consider",
+        "composite": 0.2714,
+        "reason": "composite 0.271 in the Consider band [0.2, 0.3)"
+      }
+    },
+    {
+      "role_id": "greenhouse:databricks:8760167002",
+      "company": "DATABRICKS INC",
+      "title": "AI Engineer – Forward Deployed Engineering (AI FDE), U.S. Public Sector (Federal Focus)",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "1640 H-1B approvals (record); posting family 'ml_ai' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.312,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 2.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8760167002",
+        "location": {
+          "value": "Maryland; Virginia; Washington, D.C.",
+          "source": "record",
+          "location_class": "us"
+        },
+        "posted": {
+          "value": "2026-08-28T10:56:31-04:00",
+          "source": "record"
+        },
+        "family": {
+          "value": "ml_ai",
+          "source": "your-input"
+        },
+        "fit_lines": [
+          "skill «PyTorch» (skills.frameworks[4]) appears in posting content +1.0",
+          "skill «AWS» (skills.infrastructure[0]) appears in posting content +1.0",
+          "skill «machine learning» (skills.concepts[2]) appears in posting content +1.0",
+          "at least one résumé skill appears in the posting (scheme.weights.skill_any) +0.5",
+          "location «Maryland; Virginia; Washington, D.C.» is neither remote nor «Boston» -1.0"
+        ],
+        "fit_note": "score 2.5 below threshold 3.0",
+        "wage_context": {
+          "status": "mapped",
+          "soc": {
+            "value": "15-1221.00",
+            "source": "record",
+            "via": "posting title contains O*NET title «AI Engineer»"
+          },
+          "soc_title": {
+            "value": "Computer and Information Research Scientists",
+            "source": "record"
+          },
+          "annual_median_wage": {
+            "value": 140910.0,
+            "source": "record"
+          },
+          "job_zone": {
+            "value": 5.0,
+            "source": "record"
+          },
+          "cognitive_pivot_score": {
+            "value": 4.516,
+            "source": "record"
+          },
+          "oews_year": {
+            "value": 2024.0,
+            "source": "record"
+          }
+        },
+        "company_key": "DATABRICKS INC",
+        "bucket": "consider",
+        "recommendation": "Consider",
+        "composite": 0.2336,
+        "reason": "composite 0.234 in the Consider band [0.2, 0.3)"
+      }
+    },
+    {
+      "role_id": "greenhouse:databricks:8560779002",
+      "company": "DATABRICKS INC",
+      "title": "Software Engineer, Web Products",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "1640 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.25,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 2.00 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8560779002",
+        "location": {
+          "value": "Mountain View, California",
+          "source": "record",
+          "location_class": "us"
+        },
+        "posted": {
+          "value": "2026-06-23T14:22:46-04:00",
+          "source": "record"
+        },
+        "family": {
+          "value": "software",
+          "source": "your-input"
+        },
+        "fit_lines": [
+          "title «Software Engineer, Web Products» contains résumé title «Software Engineer» (experience[0].title) +3.0",
+          "location «Mountain View, California» is neither remote nor «Boston» -1.0"
+        ],
+        "fit_note": "no résumé skill appears in the posting",
+        "wage_context": {
+          "status": "mapped",
+          "soc": {
+            "value": "15-1252.00",
+            "source": "your-input",
+            "via": "no O*NET title matched; family 'software' soc_hint from rules.json"
+          },
+          "soc_title": {
+            "value": "Software Developers",
+            "source": "record"
+          },
+          "annual_median_wage": {
+            "value": 133080.0,
+            "source": "record"
+          },
+          "job_zone": {
+            "value": 4.0,
+            "source": "record"
+          },
+          "cognitive_pivot_score": {
+            "value": 3.834,
+            "source": "record"
+          },
+          "oews_year": {
+            "value": 2024.0,
+            "source": "record"
+          }
+        },
+        "company_key": "DATABRICKS INC",
+        "bucket": "apply",
+        "recommendation": "Apply",
+        "composite": 0.39,
+        "reason": "composite 0.390 ≥ 0.3, gates healthy"
+      }
+    },
+    {
+      "role_id": "greenhouse:databricks:8635225002",
+      "company": "DATABRICKS INC",
+      "title": "Software Engineer, Web Products",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "1640 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.25,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 2.00 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8635225002",
+        "location": {
+          "value": "Mountain View, California",
+          "source": "record",
+          "location_class": "us"
+        },
+        "posted": {
+          "value": "2026-07-15T19:15:33-04:00",
+          "source": "record"
+        },
+        "family": {
+          "value": "software",
+          "source": "your-input"
+        },
+        "fit_lines": [
+          "title «Software Engineer, Web Products» contains résumé title «Software Engineer» (experience[0].title) +3.0",
+          "location «Mountain View, California» is neither remote nor «Boston» -1.0"
+        ],
+        "fit_note": "no résumé skill appears in the posting",
+        "wage_context": {
+          "status": "mapped",
+          "soc": {
+            "value": "15-1252.00",
+            "source": "your-input",
+            "via": "no O*NET title matched; family 'software' soc_hint from rules.json"
+          },
+          "soc_title": {
+            "value": "Software Developers",
+            "source": "record"
+          },
+          "annual_median_wage": {
+            "value": 133080.0,
+            "source": "record"
+          },
+          "job_zone": {
+            "value": 4.0,
+            "source": "record"
+          },
+          "cognitive_pivot_score": {
+            "value": 3.834,
+            "source": "record"
+          },
+          "oews_year": {
+            "value": 2024.0,
+            "source": "record"
+          }
+        },
+        "company_key": "DATABRICKS INC",
+        "bucket": "apply",
+        "recommendation": "Apply",
+        "composite": 0.39,
+        "reason": "composite 0.390 ≥ 0.3, gates healthy"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5194598007",
+      "company": "VERKADA INC",
+      "title": "Backend Engineer - Connectivity",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.812,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 6.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "url": "https://job-boards.greenhouse.io/verkada/jobs/5194598007",
+        "location": {
+          "value": "San Mateo, CA United States",
+          "source": "record",
+          "location_class": "us"
+        },
+        "posted": {
+          "value": "2026-07-24T13:18:48-04:00",
+          "source": "record"
+        },
+        "family": {
+          "value": "software",
+          "source": "your-input"
+        },
+        "fit_lines": [
+          "skill «Python» (skills.languages[0]) appears in posting content +1.0",
+          "skill «Go» (skills.languages[4]) appears in posting content +1.0",
+          "skill «Kubernetes» (skills.infrastructure[2]) appears in posting content +1.0",
+          "skill «Redis» (skills.infrastructure[4]) appears in posting content +1.0",
+          "skill «distributed systems» (skills.concepts[0]) appears in posting content +1.0",
+          "skill «REST APIs» (skills.concepts[1]) appears in posting content +1.0",
+          "skill «Terraform» (skills.familiar_with_not_shipped[0]) appears in posting content +0.25",
+          "skill «Kafka» (skills.familiar_with_not_shipped[1]) appears in posting content +0.25",
+          "at least one résumé skill appears in the posting (scheme.weights.skill_any) +0.5",
+          "degree term «MS» (education[0].degree) appears in posting content +0.5",
+          "location «San Mateo, CA United States» is neither remote nor «Boston» -1.0"
+        ],
+        "fit_note": null,
+        "wage_context": {
+          "status": "mapped",
+          "soc": {
+            "value": "15-1252.00",
+            "source": "your-input",
+            "via": "no O*NET title matched; family 'software' soc_hint from rules.json"
+          },
+          "soc_title": {
+            "value": "Software Developers",
+            "source": "record"
+          },
+          "annual_median_wage": {
+            "value": 133080.0,
+            "source": "record"
+          },
+          "job_zone": {
+            "value": 4.0,
+            "source": "record"
+          },
+          "cognitive_pivot_score": {
+            "value": 3.834,
+            "source": "record"
+          },
+          "oews_year": {
+            "value": 2024.0,
+            "source": "record"
+          }
+        },
+        "company_key": "VERKADA INC",
+        "bucket": "apply",
+        "recommendation": "Apply",
+        "composite": 0.5586,
+        "reason": "composite 0.559 ≥ 0.3, gates healthy"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5233102007",
+      "company": "VERKADA INC",
+      "title": "Embedded Software Engineer - Access Control",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.75,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 6.00 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "url": "https://job-boards.greenhouse.io/verkada/jobs/5233102007",
+        "location": {
+          "value": "San Mateo, CA United States",
+          "source": "record",
+          "location_class": "us"
+        },
+        "posted": {
+          "value": "2026-09-08T22:42:04-04:00",
+          "source": "record"
+        },
+        "family": {
+          "value": "software",
+          "source": "your-input"
+        },
+        "fit_lines": [
+          "title «Embedded Software Engineer - Access Control» contains résumé title «Software Engineer» (experience[0].title) +3.0",
+          "skill «Python» (skills.languages[0]) appears in posting content +1.0",
+          "skill «Go» (skills.languages[4]) appears in posting content +1.0",
+          "skill «distributed systems» (skills.concepts[0]) appears in posting content +1.0",
+          "at least one résumé skill appears in the posting (scheme.weights.skill_any) +0.5",
+          "degree term «BS» (education[1].degree) appears in posting content +0.5",
+          "location «San Mateo, CA United States» is neither remote nor «Boston» -1.0"
+        ],
+        "fit_note": null,
+        "wage_context": {
+          "status": "mapped",
+          "soc": {
+            "value": "15-1252.00",
+            "source": "your-input",
+            "via": "no O*NET title matched; family 'software' soc_hint from rules.json"
+          },
+          "soc_title": {
+            "value": "Software Developers",
+            "source": "record"
+          },
+          "annual_median_wage": {
+            "value": 133080.0,
+            "source": "record"
+          },
+          "job_zone": {
+            "value": 4.0,
+            "source": "record"
+          },
+          "cognitive_pivot_score": {
+            "value": 3.834,
+            "source": "record"
+          },
+          "oews_year": {
+            "value": 2024.0,
+            "source": "record"
+          }
+        },
+        "company_key": "VERKADA INC",
+        "bucket": "apply",
+        "recommendation": "Apply",
+        "composite": 0.54,
+        "reason": "composite 0.540 ≥ 0.3, gates healthy"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5194716007",
+      "company": "VERKADA INC",
+      "title": "Embedded Software Engineer, Access Control",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.75,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 6.00 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "url": "https://job-boards.greenhouse.io/verkada/jobs/5194716007",
+        "location": {
+          "value": "San Mateo, CA United States",
+          "source": "record",
+          "location_class": "us"
+        },
+        "posted": {
+          "value": "2026-07-23T19:42:32-04:00",
+          "source": "record"
+        },
+        "family": {
+          "value": "software",
+          "source": "your-input"
+        },
+        "fit_lines": [
+          "title «Embedded Software Engineer, Access Control» contains résumé title «Software Engineer» (experience[0].title) +3.0",
+          "skill «Python» (skills.languages[0]) appears in posting content +1.0",
+          "skill «Go» (skills.languages[4]) appears in posting content +1.0",
+          "skill «distributed systems» (skills.concepts[0]) appears in posting content +1.0",
+          "at least one résumé skill appears in the posting (scheme.weights.skill_any) +0.5",
+          "degree term «BS» (education[1].degree) appears in posting content +0.5",
+          "location «San Mateo, CA United States» is neither remote nor «Boston» -1.0"
+        ],
+        "fit_note": null,
+        "wage_context": {
+          "status": "mapped",
+          "soc": {
+            "value": "15-1252.00",
+            "source": "your-input",
+            "via": "no O*NET title matched; family 'software' soc_hint from rules.json"
+          },
+          "soc_title": {
+            "value": "Software Developers",
+            "source": "record"
+          },
+          "annual_median_wage": {
+            "value": 133080.0,
+            "source": "record"
+          },
+          "job_zone": {
+            "value": 4.0,
+            "source": "record"
+          },
+          "cognitive_pivot_score": {
+            "value": 3.834,
+            "source": "record"
+          },
+          "oews_year": {
+            "value": 2024.0,
+            "source": "record"
+          }
+        },
+        "company_key": "VERKADA INC",
+        "bucket": "apply",
+        "recommendation": "Apply",
+        "composite": 0.54,
+        "reason": "composite 0.540 ≥ 0.3, gates healthy"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5195995007",
+      "company": "VERKADA INC",
+      "title": "Software Engineer - Computer Vision",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.562,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 4.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "url": "https://job-boards.greenhouse.io/verkada/jobs/5195995007",
+        "location": {
+          "value": "San Mateo, CA United States",
+          "source": "record",
+          "location_class": "us"
+        },
+        "posted": {
+          "value": "2026-07-27T13:40:21-04:00",
+          "source": "record"
+        },
+        "family": {
+          "value": "software",
+          "source": "your-input"
+        },
+        "fit_lines": [
+          "title «Software Engineer - Computer Vision» contains résumé title «Software Engineer» (experience[0].title) +3.0",
+          "skill «PyTorch» (skills.frameworks[4]) appears in posting content +1.0",
+          "skill «machine learning» (skills.concepts[2]) appears in posting content +1.0",
+          "at least one résumé skill appears in the posting (scheme.weights.skill_any) +0.5",
+          "location «San Mateo, CA United States» is neither remote nor «Boston» -1.0"
+        ],
+        "fit_note": null,
+        "wage_context": {
+          "status": "mapped",
+          "soc": {
+            "value": "15-1252.00",
+            "source": "your-input",
+            "via": "no O*NET title matched; family 'software' soc_hint from rules.json"
+          },
+          "soc_title": {
+            "value": "Software Developers",
+            "source": "record"
+          },
+          "annual_median_wage": {
+            "value": 133080.0,
+            "source": "record"
+          },
+          "job_zone": {
+            "value": 4.0,
+            "source": "record"
+          },
+          "cognitive_pivot_score": {
+            "value": 3.834,
+            "source": "record"
+          },
+          "oews_year": {
+            "value": 2024.0,
+            "source": "record"
+          }
+        },
+        "company_key": "VERKADA INC",
+        "bucket": "apply",
+        "recommendation": "Apply",
+        "composite": 0.4836,
+        "reason": "composite 0.484 ≥ 0.3, gates healthy"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:4129304007",
+      "company": "VERKADA INC",
+      "title": "Software Engineer - Data Platform",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.562,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 4.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "url": "https://job-boards.greenhouse.io/verkada/jobs/4129304007",
+        "location": {
+          "value": "San Mateo, CA United States",
+          "source": "record",
+          "location_class": "us"
+        },
+        "posted": {
+          "value": "2023-11-10T11:24:28-05:00",
+          "source": "record"
+        },
+        "family": {
+          "value": "software",
+          "source": "your-input"
+        },
+        "fit_lines": [
+          "title «Software Engineer - Data Platform» contains résumé title «Software Engineer» (experience[0].title) +3.0",
+          "skill «Python» (skills.languages[0]) appears in posting content +1.0",
+          "skill «Go» (skills.languages[4]) appears in posting content +1.0",
+          "at least one résumé skill appears in the posting (scheme.weights.skill_any) +0.5",
+          "location «San Mateo, CA United States» is neither remote nor «Boston» -1.0"
+        ],
+        "fit_note": null,
+        "wage_context": {
+          "status": "mapped",
+          "soc": {
+            "value": "15-1252.00",
+            "source": "your-input",
+            "via": "no O*NET title matched; family 'software' soc_hint from rules.json"
+          },
+          "soc_title": {
+            "value": "Software Developers",
+            "source": "record"
+          },
+          "annual_median_wage": {
+            "value": 133080.0,
+            "source": "record"
+          },
+          "job_zone": {
+            "value": 4.0,
+            "source": "record"
+          },
+          "cognitive_pivot_score": {
+            "value": 3.834,
+            "source": "record"
+          },
+          "oews_year": {
+            "value": 2024.0,
+            "source": "record"
+          }
+        },
+        "company_key": "VERKADA INC",
+        "bucket": "apply",
+        "recommendation": "Apply",
+        "composite": 0.4836,
+        "reason": "composite 0.484 ≥ 0.3, gates healthy"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:4134234007",
+      "company": "VERKADA INC",
+      "title": "Software Engineer - Imaging Systems",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.312,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 2.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "url": "https://job-boards.greenhouse.io/verkada/jobs/4134234007",
+        "location": {
+          "value": "San Mateo, CA United States",
+          "source": "record",
+          "location_class": "us"
+        },
+        "posted": {
+          "value": "2023-11-10T11:19:42-05:00",
+          "source": "record"
+        },
+        "family": {
+          "value": "software",
+          "source": "your-input"
+        },
+        "fit_lines": [
+          "title «Software Engineer - Imaging Systems» contains résumé title «Software Engineer» (experience[0].title) +3.0",
+          "degree term «MS» (education[0].degree) appears in posting content +0.5",
+          "location «San Mateo, CA United States» is neither remote nor «Boston» -1.0"
+        ],
+        "fit_note": "no résumé skill appears in the posting",
+        "wage_context": {
+          "status": "mapped",
+          "soc": {
+            "value": "15-1252.00",
+            "source": "your-input",
+            "via": "no O*NET title matched; family 'software' soc_hint from rules.json"
+          },
+          "soc_title": {
+            "value": "Software Developers",
+            "source": "record"
+          },
+          "annual_median_wage": {
+            "value": 133080.0,
+            "source": "record"
+          },
+          "job_zone": {
+            "value": 4.0,
+            "source": "record"
+          },
+          "cognitive_pivot_score": {
+            "value": 3.834,
+            "source": "record"
+          },
+          "oews_year": {
+            "value": 2024.0,
+            "source": "record"
+          }
+        },
+        "company_key": "VERKADA INC",
+        "bucket": "apply",
+        "recommendation": "Apply",
+        "composite": 0.4086,
+        "reason": "composite 0.409 ≥ 0.3, gates healthy"
+      }
+    },
+    {
+      "role_id": "greenhouse:coherehealth:7930480003",
+      "company": "COHERE HEALTH INC",
+      "title": "Software Engineer II",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "104 H-1B approvals (record); posting family 'software' IS among sponsored families ['ml_ai', 'software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.844,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 6.75 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "url": "https://job-boards.greenhouse.io/coherehealth/jobs/7930480003",
+        "location": {
+          "value": "United States",
+          "source": "record",
+          "location_class": "us"
+        },
+        "posted": {
+          "value": "2026-08-21T16:30:45-04:00",
+          "source": "record"
+        },
+        "family": {
+          "value": "software",
+          "source": "your-input"
+        },
+        "fit_lines": [
+          "title «Software Engineer II» contains résumé title «Software Engineer» (experience[0].title) +3.0",
+          "skill «Java» (skills.languages[1]) appears in posting content +1.0",
+          "skill «TypeScript» (skills.languages[2]) appears in posting content +1.0",
+          "skill «React» (skills.frameworks[2]) appears in posting content +1.0",
+          "skill «AWS» (skills.infrastructure[0]) appears in posting content +1.0",
+          "skill «Kafka» (skills.familiar_with_not_shipped[1]) appears in posting content +0.25",
+          "at least one résumé skill appears in the posting (scheme.weights.skill_any) +0.5",
+          "location «United States» is neither remote nor «Boston» -1.0"
+        ],
+        "fit_note": null,
+        "wage_context": {
+          "status": "mapped",
+          "soc": {
+            "value": "15-1252.00",
+            "source": "your-input",
+            "via": "no O*NET title matched; family 'software' soc_hint from rules.json"
+          },
+          "soc_title": {
+            "value": "Software Developers",
+            "source": "record"
+          },
+          "annual_median_wage": {
+            "value": 133080.0,
+            "source": "record"
+          },
+          "job_zone": {
+            "value": 4.0,
+            "source": "record"
+          },
+          "cognitive_pivot_score": {
+            "value": 3.834,
+            "source": "record"
+          },
+          "oews_year": {
+            "value": 2024.0,
+            "source": "record"
+          }
+        },
+        "company_key": "COHERE HEALTH INC",
+        "bucket": "apply",
+        "recommendation": "Apply",
+        "composite": 0.5682,
+        "reason": "composite 0.568 ≥ 0.3, gates healthy"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:apptronik",
+      "company": "APPTRONIK INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "56 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 80 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "company_key": "APPTRONIK INC",
+        "company_level": true,
+        "bucket": "network",
+        "recommendation": "Skip",
+        "composite": 0,
+        "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:twinhealth",
+      "company": "TWIN HEALTH INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "40 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 37 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "company_key": "TWIN HEALTH INC",
+        "company_level": true,
+        "bucket": "network",
+        "recommendation": "Skip",
+        "composite": 0,
+        "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:psiquantum",
+      "company": "PSIQUANTUM CORP",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "26 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 74 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "company_key": "PSIQUANTUM CORP",
+        "company_level": true,
+        "bucket": "network",
+        "recommendation": "Skip",
+        "composite": 0,
+        "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)"
+      }
+    },
+    {
+      "role_id": "company:ashby:vidmob",
+      "company": "VIDMOB INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "22 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 3 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "company_key": "VIDMOB INC",
+        "company_level": true,
+        "bucket": "network",
+        "recommendation": "Skip",
+        "composite": 0,
+        "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:diligentrobotics",
+      "company": "DILIGENT ROBOTICS INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "20 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 9 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "company_key": "DILIGENT ROBOTICS INC",
+        "company_level": true,
+        "bucket": "network",
+        "recommendation": "Skip",
+        "composite": 0,
+        "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:plexium",
+      "company": "PLEXIUM INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "2 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 0 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      },
+      "result": {
+        "company_key": "PLEXIUM INC",
+        "company_level": true,
+        "bucket": "skip",
+        "recommendation": "Skip",
+        "composite": 0,
+        "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)"
+      }
+    }
+  ],
+  "buckets": {
+    "apply": [
+      "greenhouse:databricks:8560779002",
+      "greenhouse:databricks:8635225002",
+      "greenhouse:verkada:5194598007",
+      "greenhouse:verkada:5233102007",
+      "greenhouse:verkada:5194716007",
+      "greenhouse:verkada:5195995007",
+      "greenhouse:verkada:4129304007",
+      "greenhouse:verkada:4134234007",
+      "greenhouse:coherehealth:7930480003"
+    ],
+    "consider": [
+      "greenhouse:databricks:8546367002",
+      "greenhouse:databricks:8760167002"
+    ],
+    "network": [
+      "company:greenhouse:apptronik",
+      "company:greenhouse:twinhealth",
+      "company:greenhouse:psiquantum",
+      "company:ashby:vidmob",
+      "company:greenhouse:diligentrobotics"
+    ],
+    "check-by-hand": [
+      "INTEL CORP",
+      "CCC INTELLIGENT SOLUTIONS HOLDINGS INC",
+      "GRAMMARLY INC",
+      "WHATNOT INC",
+      "APEX TECHNOLOGY INC",
+      "CELESTIAL AI INC",
+      "FOURSQUARE LABS INC",
+      "SPANIO INC",
+      "HIGHNOTE PLATFORM INC",
+      "MERCURY TECHNOLOGIES INC",
+      "CYNGN INC",
+      "CENTIFIC GLOBAL SOLUTIONS INC",
+      "AEYE INC",
+      "BLUECORE INC",
+      "OBSERVE INC",
+      "BUTLR TECHNOLOGIES INC",
+      "VOUCH INC",
+      "AIM INTELLIGENT MACHINES INC",
+      "MEMBRION INC",
+      "IFOODDECISIONSCIENCES INC",
+      "SWING THERAPEUTICS INC",
+      "UNDERDOG SPORTS HOLDINGS INC",
+      "BELFRY SOFTWARE INC",
+      "HALCYON TECH INC",
+      "LUMEN ENERGY INC",
+      "MISO ROBOTICS INC",
+      "RAISE ROBOTICS INC",
+      "SERVICENOW INC"
+    ],
+    "skip": [
+      "company:greenhouse:plexium"
+    ]
+  },
+  "scorer": {
+    "command": "node scripts/score/role-scorer.mjs course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/roles.json --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live",
+    "exit_code": 0,
+    "stdout": "✓ scored 17 roles → Apply 9 · Consider 2 · Skip 6 (skip 35%)\n  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/role-scores.json  +  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/role-scores.md",
+    "stderr": "",
+    "scorer_id": "bayesian-role-scorer",
+    "role_scores_json": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/role-scores.json",
+    "skip_share": 0.35294117647058826
+  },
+  "pipeline_skip_share": {
+    "value": 0.9565217391304348,
+    "source": "record",
+    "note": "1 − (apply + consider) / target-family postings evaluated"
+  },
+  "cannot_verify": [
+    "That a company sponsors H-1B for THIS posting: the record is company-level approvals and its top sponsored titles, matched to the posting by title family.",
+    "That a board found by slug guessing belongs to the company, for Ashby boards (no company name in the API); Greenhouse boards are name-checked.",
+    "That a company with no board found has no openings: Lever, Workday, iCIMS and SmartRecruiters are not probed, and slugs are guesses.",
+    "That a posting is genuinely entry level: seniority is read from the title only.",
+    "That the hiring lag (persona) is realistic: it is the student's assumption; no record measures it.",
+    "That the company will sponsor in the next H-1B cycle: history is not a promise.",
+    "Funding beyond the 80 Days CSV columns: the Form D cross-check covers only the shipped samples."
+  ]
+}

@@ -1,0 +1,24 @@
+# offline test suite
+$ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v
+test_F1_and_window_filters_drop_companies_without_a_record (test_pipeline.HappyPathOffline) ... ok
+test_F2_missing_or_failed_board_is_check_by_hand_and_never_scored (test_pipeline.HappyPathOffline) ... ok
+test_F4_soc_without_bls_row_shows_no_wage (test_pipeline.HappyPathOffline) ... ok
+test_F5_form_d_match_and_miss_are_both_labelled (test_pipeline.HappyPathOffline) ... ok
+test_F6_senior_only_or_non_us_board_becomes_network_target (test_pipeline.HappyPathOffline) ... ok
+test_completes_and_writes_both_outputs (test_pipeline.HappyPathOffline) ... ok
+test_every_value_carries_one_of_the_three_labels (test_pipeline.HappyPathOffline) ... ok
+test_live_new_grad_posting_at_proven_sponsor_is_apply (test_pipeline.HappyPathOffline) ... ok
+test_no_network_host_was_contacted (test_pipeline.HappyPathOffline) ... ok
+test_real_scorer_produced_the_decisions (test_pipeline.HappyPathOffline) ... ok
+test_soft_sponsorship_tier_is_demoted_to_consider (test_pipeline.HappyPathOffline) ... ok
+test_location_classes (test_pipeline.LocationRule) ... ok
+test_F1_named_company_not_in_csv_is_reported_not_scored (test_pipeline.NamedFailures) ... ok
+test_F3_closed_opt_window_fails_without_a_timeline_value (test_pipeline.NamedFailures) ... ok
+test_missing_csv_fails_clearly (test_pipeline.NamedFailures) ... ok
+test_wrong_schema_csv_halts_instead_of_reporting_zero_candidates (test_pipeline.NamedFailures) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.062s
+
+OK
+exit=0

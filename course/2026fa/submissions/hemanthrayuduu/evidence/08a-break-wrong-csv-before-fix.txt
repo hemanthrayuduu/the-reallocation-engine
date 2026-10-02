@@ -1,0 +1,6 @@
+# break attempt: wrong CSV (BLS file passed as the 80 Days CSV) — BEFORE schema check
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --csv data/bls/compact/soc_occupation_compact.csv --out-dir /tmp/ssp-break
+✓ swe-sponsor-pipeline (live): 0 candidates, 0 probed, 0 boards found, 0 roles scored
+  apply 0 · consider 0 · network 0 · check-by-hand 0 · skip 0
+  /tmp/ssp-break/pipeline-report.md  +  /tmp/ssp-break/pipeline-log.json
+exit=0

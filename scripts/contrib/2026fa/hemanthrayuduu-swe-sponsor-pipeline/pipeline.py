@@ -133,6 +133,18 @@ def to_num(x):
         return None
 
 
+CSV_COLUMNS = ("company_name", "website", "Total Approvals", "Total Denials", "Approval_Rate",
+               "top_job_titles_sponsored", "latest_funding_date", "latest_funding_amount", "latest_funding_stage", "total_funding")
+BLS_COLUMNS = ("onet_soc_code", "title", "alternate_titles_sample", "annual_median_wage", "job_zone", "cognitive_pivot_score", "oews_year")
+
+
+def require_columns(found, needed, path, what):
+    """A conformance check, not an audit: a wrong-schema file halts the run instead of yielding '0 candidates'."""
+    missing = [c for c in needed if c not in (found or [])]
+    if missing:
+        raise InputError(f"{what} {rel(path)} is missing columns {missing} — wrong file or schema change; nothing scored")
+
+
 def lab(value, source, **extra):
     """Every value in the log is {value, source[, note…]}."""
     return {"value": value, "source": source, **extra}
@@ -170,6 +182,8 @@ def location_class(loc, rules):
         return "unstated"
     lc = s.lower()
     if any(t in lc for t in u["country_terms"]):
+        return "us"
+    if re.search(r"\bU\.?S\.?(A\.?)?(?![A-Za-z])", s):  # "Anywhere in the US", "U.S.", "USA" (case-sensitive: not "us")
         return "us"
     if any(GW.phrase_in(n, lc) for n in u["state_names"] + u["city_names"]):
         return "us"
@@ -224,7 +238,9 @@ def timeline_gate(persona, today, rules):
 def load_bls(path):
     rows, phrases = {}, []
     with open(path, newline="", encoding="utf-8") as f:
-        for r in csv.DictReader(f):
+        reader = csv.DictReader(f)
+        require_columns(reader.fieldnames, BLS_COLUMNS, path, "BLS compact CSV")
+        for r in reader:
             code = r.get("onet_soc_code", "")
             rows[code] = r
             names = [re.sub(r"s$", "", (r.get("title") or "").strip())]
@@ -374,7 +390,9 @@ def load_candidates(csv_path, persona, rules, today, only):
     cands, named = [], {}
     wanted = {NORM.normalize_company_name(n): n for n in (only or [])}
     with open(csv_path, newline="", encoding="utf-8") as f:
-        for r in csv.DictReader(f):
+        reader = csv.DictReader(f)
+        require_columns(reader.fieldnames, CSV_COLUMNS, csv_path, "80 Days CSV")
+        for r in reader:
             funnel["csv_rows"] += 1
             name = (r.get("company_name") or "").strip()
             key = NORM.normalize_company_name(name)
@@ -742,8 +760,11 @@ def render_report(log, meta, roles, companies):
           + (f": an overall skip share of **{pss:.0%}**. The rest were dropped as non-US or senior-level before scoring, or skipped by the scorer." if pss is not None else ".")
           + " The engine expects a healthy run to skip at least half.",
           "",
-          f"{len(skipped)} scored item(s) were skipped by the scorer itself"
-          + (f" ({log['scorer']['skip_share']:.0%} of what it scored)." if log["scorer"]["skip_share"] is not None else ".")]
+          f"The scorer itself returned Skip for {sum(1 for r in roles if meta[r['role_id']]['recommendation'] == 'Skip')} "
+          f"of the {len(roles)} items it scored"
+          + (f" ({log['scorer']['skip_share']:.0%})" if log["scorer"]["skip_share"] is not None else "")
+          + f"; {len(b['network'])} of those are the networking targets above (closed liveness gate, strong sponsor). "
+          f"The {len(skipped)} remaining skip(s):"]
     for rid in skipped[:15]:
         L.append(f"- {by_id[rid]['company']} — {by_id[rid]['title']}: {meta[rid]['reason']}")
     if len(skipped) > 15:

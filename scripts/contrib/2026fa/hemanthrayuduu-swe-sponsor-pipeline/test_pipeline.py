@@ -133,6 +133,30 @@ class HappyPathOffline(unittest.TestCase):
         self.assertEqual(self.log["http_calls"], 0)
 
 
+class LocationRule(unittest.TestCase):
+    """Regression: the first full live run (2026-10-02) classed 'Anywhere in the US' as non-US and
+    sent a company with a matching posting to the networking list (evidence/06-full-live-run-before-us-fix)."""
+
+    def test_location_classes(self):
+        rules = json.loads((HERE / "rules.json").read_text())
+        cases = {
+            "ML Engineer, Manipulation — Anywhere in the US": "us",   # the live string that broke
+            "San Mateo, CA United States": "us",
+            "Mountain View, California": "us",
+            "Remote - US": "us",
+            "U.S. Remote": "us",
+            "Boston, MA": "us",
+            "Remote": "remote-unstated",
+            "": "unstated",
+            "Bengaluru, India": "non-us",
+            "London, United Kingdom": "non-us",
+            "Toronto, Canada": "non-us",
+            "Remote - Europe (join us)": "non-us",                   # lowercase "us" is not the country
+        }
+        for loc, want in cases.items():
+            self.assertEqual(P.location_class(loc, rules), want, loc)
+
+
 class NamedFailures(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -152,6 +176,13 @@ class NamedFailures(unittest.TestCase):
         rc, _, err = run(BASE + ["--csv", str(FIX / "does-not-exist.csv"), "--out-dir", str(self.out)])
         self.assertEqual(rc, 1)
         self.assertIn("80 Days CSV not found", err)
+
+    def test_wrong_schema_csv_halts_instead_of_reporting_zero_candidates(self):
+        # regression: before the column check, passing the BLS file here printed "✓ … 0 candidates" and exited 0
+        rc, _, err = run(BASE + ["--csv", str(FIX / "bls.fixture.csv"), "--out-dir", str(self.out)])
+        self.assertEqual(rc, 1)
+        self.assertIn("missing columns", err)
+        self.assertFalse((self.out / "pipeline-log.json").exists())
 
     def test_F1_named_company_not_in_csv_is_reported_not_scored(self):
         rc, out, _ = run(BASE + ["--company", "Imaginary Rocket Co", "--out-dir", str(self.out)])

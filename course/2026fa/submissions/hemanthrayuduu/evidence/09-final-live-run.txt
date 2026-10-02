@@ -1,0 +1,43 @@
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py
+  [1/37] INTEL CORP: not-found
+  [2/37] DATABRICKS INC: found greenhouse:databricks (886 postings)
+  [3/37] VERKADA INC: found greenhouse:verkada (307 postings)
+  [4/37] CCC INTELLIGENT SOLUTIONS HOLDINGS INC: not-found
+  [5/37] GRAMMARLY INC: not-found
+  [6/37] WHATNOT INC: not-found
+  [7/37] COHERE HEALTH INC: found greenhouse:coherehealth (76 postings)
+  [8/37] APEX TECHNOLOGY INC: not-found
+  [9/37] APPTRONIK INC: found greenhouse:apptronik (80 postings)
+  [10/37] CELESTIAL AI INC: not-found
+  [11/37] FOURSQUARE LABS INC: not-found
+  [12/37] SPANIO INC: not-found
+  [13/37] HIGHNOTE PLATFORM INC: not-found
+  [14/37] MERCURY TECHNOLOGIES INC: not-found
+  [15/37] TWIN HEALTH INC: found greenhouse:twinhealth (37 postings)
+  [16/37] CYNGN INC: not-found
+  [17/37] PSIQUANTUM CORP: found greenhouse:psiquantum (74 postings)
+  [18/37] CENTIFIC GLOBAL SOLUTIONS INC: not-found
+  [19/37] VIDMOB INC: found ashby:vidmob (3 postings)
+  [20/37] AEYE INC: not-found
+  [21/37] BLUECORE INC: not-found
+  [22/37] DILIGENT ROBOTICS INC: found greenhouse:diligentrobotics (9 postings)
+  [23/37] OBSERVE INC: not-found
+  [24/37] BUTLR TECHNOLOGIES INC: not-found
+  [25/37] VOUCH INC: not-found
+  [26/37] AIM INTELLIGENT MACHINES INC: not-found
+  [27/37] MEMBRION INC: not-found
+  [28/37] IFOODDECISIONSCIENCES INC: not-found
+  [29/37] SWING THERAPEUTICS INC: not-found
+  [30/37] UNDERDOG SPORTS HOLDINGS INC: not-found
+  [31/37] BELFRY SOFTWARE INC: not-found
+  [32/37] HALCYON TECH INC: not-found
+  [33/37] LUMEN ENERGY INC: not-found
+  [34/37] MISO ROBOTICS INC: not-found
+  [35/37] PLEXIUM INC: found greenhouse:plexium (0 postings)
+  [36/37] RAISE ROBOTICS INC: not-found
+  [37/37] SERVICENOW INC: not-found
+✓ swe-sponsor-pipeline (live): 37 candidates, 37 probed, 9 boards found, 17 roles scored
+  apply 9 · consider 2 · network 4 · check-by-hand 28 · skip 2
+  scorer: ✓ scored 17 roles → Apply 9 · Consider 2 · Skip 6 (skip 35%)
+  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/pipeline-report.md  +  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/pipeline-log.json
+exit=0

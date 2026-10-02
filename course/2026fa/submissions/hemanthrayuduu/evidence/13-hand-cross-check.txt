@@ -1,0 +1,19 @@
+# Hand cross-check 1: report row "COHERE HEALTH INC — 104 approvals" vs the raw 80 Days CSV row
+$ grep "^COHERE HEALTH INC," data/80-days-to-stay/80-days-csv/mapped_student_employment_targets_v3.csv | cut -d, -f1,15-
+  company_name: COHERE HEALTH INC
+  latest_funding_date: 2025-05-07
+  latest_funding_amount: 89999876.0
+  Total Approvals: 104.0
+  Total Denials: 2.0
+  Approval_Rate: 98.1132075471698
+  top_job_titles_sponsored: ['Engineering Manager ', 'Senior Software Engineer, Platform', 'Senior Machine Learning DevOps Engineer', 'Software Engineer II', 'Machine Learning Engineer']
+$ grep -o "COHERE HEALTH INC.*" pipeline-report.md (Apply row, first 260 chars)
+COHERE HEALTH INC | [Software Engineer II](https://job-boards.greenhouse.io/coherehealth/jobs/7930480003) — United States `record` | 0.568 | 104 approvals `record`; tier **Proven** (p 0.9) `your-input` | 0.84 `your-input` | $133,080 median, job zone 4 `record`
+
+# Hand cross-check 2: wage context "$133,080 median, job zone 4 · SOC 15-1252.00" vs the BLS compact CSV
+$ python3 -c (print onet_soc_code, title, annual_median_wage, job_zone, oews_year for 15-1252.00)
+   15-1252.00 | Software Developers | median 133080.0 | zone 4 | oews_year 2024
+
+# Hand cross-check 3: posting is really on the live board (independent of the pipeline, via curl)
+$ curl -s https://boards-api.greenhouse.io/v1/boards/coherehealth/jobs/7930480003 | python3 -c "print title, location"
+   Software Engineer II | United States | updated 2026-08-21T16:30:45-04:00

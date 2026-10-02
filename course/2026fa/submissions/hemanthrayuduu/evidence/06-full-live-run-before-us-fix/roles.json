@@ -1,0 +1,416 @@
+{
+  "roles": [
+    {
+      "role_id": "greenhouse:databricks:8546367002",
+      "company": "DATABRICKS INC",
+      "title": "AI Engineer – Forward Deployed Engineering (AI FDE)",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "1640 H-1B approvals (record); posting family 'ml_ai' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.438,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 3.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:databricks:8760167002",
+      "company": "DATABRICKS INC",
+      "title": "AI Engineer – Forward Deployed Engineering (AI FDE), U.S. Public Sector (Federal Focus)",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "1640 H-1B approvals (record); posting family 'ml_ai' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.312,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 2.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:databricks:8560779002",
+      "company": "DATABRICKS INC",
+      "title": "Software Engineer, Web Products",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "1640 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.25,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 2.00 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:databricks:8635225002",
+      "company": "DATABRICKS INC",
+      "title": "Software Engineer, Web Products",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "1640 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.25,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 2.00 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5194598007",
+      "company": "VERKADA INC",
+      "title": "Backend Engineer - Connectivity",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.812,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 6.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5233102007",
+      "company": "VERKADA INC",
+      "title": "Embedded Software Engineer - Access Control",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.75,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 6.00 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5194716007",
+      "company": "VERKADA INC",
+      "title": "Embedded Software Engineer, Access Control",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.75,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 6.00 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5195995007",
+      "company": "VERKADA INC",
+      "title": "Software Engineer - Computer Vision",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.562,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 4.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:4129304007",
+      "company": "VERKADA INC",
+      "title": "Software Engineer - Data Platform",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.562,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 4.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:4134234007",
+      "company": "VERKADA INC",
+      "title": "Software Engineer - Imaging Systems",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'software' IS among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.312,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 2.50 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:coherehealth:7930480003",
+      "company": "COHERE HEALTH INC",
+      "title": "Software Engineer II",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "104 H-1B approvals (record); posting family 'software' IS among sponsored families ['ml_ai', 'software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.844,
+        "source": "your-input",
+        "basis": "scheme default-0.1 score 6.75 / full_score 8.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-02"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:apptronik",
+      "company": "APPTRONIK INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "56 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 80 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:twinhealth",
+      "company": "TWIN HEALTH INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "40 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 37 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:psiquantum",
+      "company": "PSIQUANTUM CORP",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "26 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 74 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:ashby:vidmob",
+      "company": "VIDMOB INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "22 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 3 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:diligentrobotics",
+      "company": "DILIGENT ROBOTICS INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "20 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 9 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:plexium",
+      "company": "PLEXIUM INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "2 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-02: 0 postings, 0 passed family+US+seniority filters"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    }
+  ]
+}

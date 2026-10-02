@@ -1,0 +1,6 @@
+# F3 on real data: persona whose OPT window closed before --today
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --persona scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/fixtures/persona.past-opt.fixture.json --today 2026-10-01 --out-dir /tmp/ssp-f3
+ERROR: OPT window already closed: opt_start_date 2026-01-05 + 90 unemployment days = 2026-04-05, which is before today 2026-10-01. No timeline factor computed.
+exit=1
+$ ls /tmp/ssp-f3
+ls: /tmp/ssp-f3: No such file or directory

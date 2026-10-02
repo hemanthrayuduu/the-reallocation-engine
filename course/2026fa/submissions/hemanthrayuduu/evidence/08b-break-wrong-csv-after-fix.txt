@@ -1,0 +1,4 @@
+# break attempt: wrong CSV — AFTER schema check
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --csv data/bls/compact/soc_occupation_compact.csv --out-dir /tmp/ssp-break2
+ERROR: 80 Days CSV data/bls/compact/soc_occupation_compact.csv is missing columns ['company_name', 'website', 'Total Approvals', 'Total Denials', 'Approval_Rate', 'top_job_titles_sponsored', 'latest_funding_date', 'latest_funding_amount', 'latest_funding_stage', 'total_funding'] — wrong file or schema change; nothing scored
+exit=1

@@ -1,0 +1,712 @@
+{
+  "_scorer": "bayesian-role-scorer",
+  "_chapter": 11,
+  "generated": "2026-10-02",
+  "config": {
+    "weights": {
+      "sponsorship": 0.35,
+      "fit": 0.3,
+      "role_quality": 0
+    },
+    "apply_threshold": 0.3,
+    "consider_floor": 0.2,
+    "gate_zero": 0.05,
+    "soft_sponsorship_tiers": [
+      "likely",
+      "possible",
+      "unknown"
+    ]
+  },
+  "profile_needs_sponsorship": true,
+  "roles": [
+    {
+      "role_id": "greenhouse:databricks:8546367002",
+      "company": "DATABRICKS INC",
+      "title": "AI Engineer – Forward Deployed Engineering (AI FDE)",
+      "composite": 0.2714,
+      "recommendation": "Consider",
+      "machine_recommendation": "Consider",
+      "reason": "composite 0.271 in the Consider band [0.2, 0.3)",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.4,
+            "weight": 0.35,
+            "contribution": 0.14,
+            "source": "your-input"
+          },
+          {
+            "factor": "fit",
+            "value": 0.438,
+            "weight": 0.3,
+            "contribution": 0.1314,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.2714,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 1,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 1,
+        "arithmetic": "(0.4·0.35 + 0.438·0.3) × 1 × 1 = 0.271"
+      }
+    },
+    {
+      "role_id": "greenhouse:databricks:8760167002",
+      "company": "DATABRICKS INC",
+      "title": "AI Engineer – Forward Deployed Engineering (AI FDE), U.S. Public Sector (Federal Focus)",
+      "composite": 0.2336,
+      "recommendation": "Consider",
+      "machine_recommendation": "Consider",
+      "reason": "composite 0.234 in the Consider band [0.2, 0.3)",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.4,
+            "weight": 0.35,
+            "contribution": 0.14,
+            "source": "your-input"
+          },
+          {
+            "factor": "fit",
+            "value": 0.312,
+            "weight": 0.3,
+            "contribution": 0.0936,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.2336,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 1,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 1,
+        "arithmetic": "(0.4·0.35 + 0.312·0.3) × 1 × 1 = 0.234"
+      }
+    },
+    {
+      "role_id": "greenhouse:databricks:8560779002",
+      "company": "DATABRICKS INC",
+      "title": "Software Engineer, Web Products",
+      "composite": 0.39,
+      "recommendation": "Apply",
+      "machine_recommendation": "Apply",
+      "reason": "composite 0.390 ≥ 0.3, gates healthy",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          },
+          {
+            "factor": "fit",
+            "value": 0.25,
+            "weight": 0.3,
+            "contribution": 0.075,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.39,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 1,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 1,
+        "arithmetic": "(0.9·0.35 + 0.25·0.3) × 1 × 1 = 0.390"
+      }
+    },
+    {
+      "role_id": "greenhouse:databricks:8635225002",
+      "company": "DATABRICKS INC",
+      "title": "Software Engineer, Web Products",
+      "composite": 0.39,
+      "recommendation": "Apply",
+      "machine_recommendation": "Apply",
+      "reason": "composite 0.390 ≥ 0.3, gates healthy",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          },
+          {
+            "factor": "fit",
+            "value": 0.25,
+            "weight": 0.3,
+            "contribution": 0.075,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.39,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 1,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 1,
+        "arithmetic": "(0.9·0.35 + 0.25·0.3) × 1 × 1 = 0.390"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5194598007",
+      "company": "VERKADA INC",
+      "title": "Backend Engineer - Connectivity",
+      "composite": 0.5586,
+      "recommendation": "Apply",
+      "machine_recommendation": "Apply",
+      "reason": "composite 0.559 ≥ 0.3, gates healthy",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          },
+          {
+            "factor": "fit",
+            "value": 0.812,
+            "weight": 0.3,
+            "contribution": 0.2436,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.5586,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 1,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 1,
+        "arithmetic": "(0.9·0.35 + 0.812·0.3) × 1 × 1 = 0.559"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5233102007",
+      "company": "VERKADA INC",
+      "title": "Embedded Software Engineer - Access Control",
+      "composite": 0.54,
+      "recommendation": "Apply",
+      "machine_recommendation": "Apply",
+      "reason": "composite 0.540 ≥ 0.3, gates healthy",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          },
+          {
+            "factor": "fit",
+            "value": 0.75,
+            "weight": 0.3,
+            "contribution": 0.225,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.54,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 1,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 1,
+        "arithmetic": "(0.9·0.35 + 0.75·0.3) × 1 × 1 = 0.540"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5194716007",
+      "company": "VERKADA INC",
+      "title": "Embedded Software Engineer, Access Control",
+      "composite": 0.54,
+      "recommendation": "Apply",
+      "machine_recommendation": "Apply",
+      "reason": "composite 0.540 ≥ 0.3, gates healthy",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          },
+          {
+            "factor": "fit",
+            "value": 0.75,
+            "weight": 0.3,
+            "contribution": 0.225,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.54,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 1,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 1,
+        "arithmetic": "(0.9·0.35 + 0.75·0.3) × 1 × 1 = 0.540"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5195995007",
+      "company": "VERKADA INC",
+      "title": "Software Engineer - Computer Vision",
+      "composite": 0.4836,
+      "recommendation": "Apply",
+      "machine_recommendation": "Apply",
+      "reason": "composite 0.484 ≥ 0.3, gates healthy",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          },
+          {
+            "factor": "fit",
+            "value": 0.562,
+            "weight": 0.3,
+            "contribution": 0.1686,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.4836,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 1,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 1,
+        "arithmetic": "(0.9·0.35 + 0.562·0.3) × 1 × 1 = 0.484"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:4129304007",
+      "company": "VERKADA INC",
+      "title": "Software Engineer - Data Platform",
+      "composite": 0.4836,
+      "recommendation": "Apply",
+      "machine_recommendation": "Apply",
+      "reason": "composite 0.484 ≥ 0.3, gates healthy",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          },
+          {
+            "factor": "fit",
+            "value": 0.562,
+            "weight": 0.3,
+            "contribution": 0.1686,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.4836,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 1,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 1,
+        "arithmetic": "(0.9·0.35 + 0.562·0.3) × 1 × 1 = 0.484"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:4134234007",
+      "company": "VERKADA INC",
+      "title": "Software Engineer - Imaging Systems",
+      "composite": 0.4086,
+      "recommendation": "Apply",
+      "machine_recommendation": "Apply",
+      "reason": "composite 0.409 ≥ 0.3, gates healthy",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          },
+          {
+            "factor": "fit",
+            "value": 0.312,
+            "weight": 0.3,
+            "contribution": 0.0936,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.4086,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 1,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 1,
+        "arithmetic": "(0.9·0.35 + 0.312·0.3) × 1 × 1 = 0.409"
+      }
+    },
+    {
+      "role_id": "greenhouse:coherehealth:7930480003",
+      "company": "COHERE HEALTH INC",
+      "title": "Software Engineer II",
+      "composite": 0.5682,
+      "recommendation": "Apply",
+      "machine_recommendation": "Apply",
+      "reason": "composite 0.568 ≥ 0.3, gates healthy",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          },
+          {
+            "factor": "fit",
+            "value": 0.844,
+            "weight": 0.3,
+            "contribution": 0.2532,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.5682,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 1,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 1,
+        "arithmetic": "(0.9·0.35 + 0.844·0.3) × 1 × 1 = 0.568"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:apptronik",
+      "company": "APPTRONIK INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "composite": 0,
+      "recommendation": "Skip",
+      "machine_recommendation": "Skip",
+      "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.315,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 0,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 0,
+        "arithmetic": "(0.9·0.35) × 0 × 1 = 0.000"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:twinhealth",
+      "company": "TWIN HEALTH INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "composite": 0,
+      "recommendation": "Skip",
+      "machine_recommendation": "Skip",
+      "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.315,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 0,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 0,
+        "arithmetic": "(0.9·0.35) × 0 × 1 = 0.000"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:psiquantum",
+      "company": "PSIQUANTUM CORP",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "composite": 0,
+      "recommendation": "Skip",
+      "machine_recommendation": "Skip",
+      "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.315,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 0,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 0,
+        "arithmetic": "(0.9·0.35) × 0 × 1 = 0.000"
+      }
+    },
+    {
+      "role_id": "company:ashby:vidmob",
+      "company": "VIDMOB INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "composite": 0,
+      "recommendation": "Skip",
+      "machine_recommendation": "Skip",
+      "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.315,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 0,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 0,
+        "arithmetic": "(0.9·0.35) × 0 × 1 = 0.000"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:diligentrobotics",
+      "company": "DILIGENT ROBOTICS INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "composite": 0,
+      "recommendation": "Skip",
+      "machine_recommendation": "Skip",
+      "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.9,
+            "weight": 0.35,
+            "contribution": 0.315,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.315,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 0,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 0,
+        "arithmetic": "(0.9·0.35) × 0 × 1 = 0.000"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:plexium",
+      "company": "PLEXIUM INC",
+      "title": "(no US new-grad SWE/ML posting on board)",
+      "composite": 0,
+      "recommendation": "Skip",
+      "machine_recommendation": "Skip",
+      "reason": "gated: liveness ≈ 0.000 (a closed gate zeroes the composite regardless of votes)",
+      "override": null,
+      "trace": {
+        "votes": [
+          {
+            "factor": "sponsorship",
+            "value": 0.4,
+            "weight": 0.35,
+            "contribution": 0.14,
+            "source": "your-input"
+          }
+        ],
+        "vote_sum": 0.14,
+        "gates": [
+          {
+            "factor": "liveness",
+            "multiplier": 0,
+            "source": "record"
+          },
+          {
+            "factor": "timeline",
+            "multiplier": 1,
+            "source": "your-input"
+          }
+        ],
+        "gate_product": 0,
+        "arithmetic": "(0.4·0.35) × 0 × 1 = 0.000"
+      }
+    }
+  ]
+}

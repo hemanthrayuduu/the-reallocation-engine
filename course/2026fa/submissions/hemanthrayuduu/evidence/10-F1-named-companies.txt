@@ -1,0 +1,10 @@
+# F1 on real data: a company not in the CSV, a CSV company with no H-1B record, and a real candidate
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --company "Imaginary Rocket Co" --company "10000 INC" --company "VERKADA INC" --out-dir /tmp/ssp-f1
+  [1/1] VERKADA INC: found greenhouse:verkada (307 postings)
+✓ swe-sponsor-pipeline (live): 1 candidates, 1 probed, 1 boards found, 6 roles scored
+  apply 6 · consider 0 · network 0 · check-by-hand 0 · skip 0
+  scorer: ✓ scored 6 roles → Apply 6 · Consider 0 · Skip 0 (skip 0%)
+  ✗ Imaginary Rocket Co: not in the 80 Days CSV — no sponsorship record, not scored
+  ✗ 10000 INC: no H-1B approvals on record (Total Approvals = blank)
+  /tmp/ssp-f1/pipeline-report.md  +  /tmp/ssp-f1/pipeline-log.json
+exit=0
