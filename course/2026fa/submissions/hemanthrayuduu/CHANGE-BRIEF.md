@@ -127,3 +127,14 @@ Checked against DHS *Study in the States*: the 90-day unemployment limit is stat
 Not predicted:
 - **The first pass found almost nothing.** Only 100 of 1,552 sponsors list an AI title (`23a`).
 - **"Can't sponsor" statements are role-specific**, so a company-wide rule drafted on that basis was wrong and was withdrawn (`24a`, `24b`).
+
+### Revision 4 — 2026-10-02, author (Hemanth Rayudu) via Claude Code, with outcome
+
+**Target widened by the author:** "include Senior titles and re-run, include Data Engineer, Data Scientist roles also." No predictions were written down before this run.
+
+**Outcome (iteration 3):**
+- consider 7 (was 3), including the first Texas match (Austin).
+- 8 Senior postings ruled out by years asked (5+ / 8+).
+- 1 Senior Data Scientist reached Consider.
+- No Data Engineer postings on the boards found.
+- A hand check showed the lowest-bound years rule keeps a role whose main requirement is 5+ years (TODO 9).

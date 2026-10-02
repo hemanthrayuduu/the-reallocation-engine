@@ -4,17 +4,214 @@
 
 **What this is:** the real runs of the job-list tool for a fictional student who mirrors the author's situation, with every command and its actual output pasted in.
 
-**Why read it:** to see which parts of each result are public records and which are the student's own rules, how the output was checked against its sources, and how the tool changed between two iterations.
+**Why read it:** to see which parts of each result are public records and which are the student's own rules, how the output was checked against its sources, and how the tool changed over three iterations.
 
 **What it found:**
-- **Iteration 1** targeted entry-level software roles. It gave 9 jobs to apply to, but a hand check showed both AI roles it suggested were closed to the student.
-- The author then re-scoped to **mid-level AI Engineer roles on the Microsoft AI stack, Texas and remote first**. **Iteration 2** reads job descriptions for disqualifiers.
-- On 2026-10-02 iteration 2 found 3 AI roles worth considering and 6 companies to network into. It ruled out a citizenship-only role automatically. It showed that companies with a sponsorship record often post "can't sponsor this role" on some jobs.
-- Nothing reached "apply". That's an honest limit of the data, explained below.
+- **Iteration 1** targeted entry-level software roles. A hand check showed both AI roles it suggested were closed to the student.
+- **Iteration 2** re-scoped to mid-level AI Engineer roles on the Microsoft AI stack, Texas and remote first. It reads job descriptions for disqualifiers.
+- **Iteration 3** added Senior titles and Data Scientist / Data Engineer roles, as the author asked. On 2026-10-02 it found **7 roles worth considering**, including the first Texas match, in Austin. It ruled out 9 postings by their descriptions (one citizenship requirement, eight asking 5+ years).
+- **Nothing reached "apply".** That's an honest limit of the sponsorship data, explained below.
 
 ---
 
-# Iteration 2 (current): mid-level AI Engineer, Microsoft AI stack
+# Iteration 3 (current): + Senior titles, Data Scientist and Data Engineer
+
+Code `75f3c41` (unchanged since iteration 2) · rules 0.3.0 · recipe 0.3.0 · run folder `runs/2026-10-02-live-v3/`
+
+## What changed from iteration 2 (all your-input)
+
+- **`rules.json` 0.3.0:**
+  - the two Senior title patterns are removed, while Staff, Principal, Lead and above are still excluded;
+  - new `data_science` and `data_engineering` families, with SOC lookups backed by O*NET ("Data Engineer" is an O*NET alternate title of 15-1242.00);
+  - Microsoft data-stack terms added (Data Factory, Synapse, Fabric, Power BI, …).
+- **Persona v3:** targets `ml_ai`, `data_science`, `data_engineering`; sponsorship history in any of those or software counts as evidence.
+- **Unchanged:** the years-of-experience rule (persona 3.5 + tolerance 1). It now decides which Senior roles fit.
+
+## Commands and real output
+
+### 1. Offline tests
+
+```text
+# offline test suite, iteration 3 (code 75f3c41 + rules 0.3.0 / persona v3; test file updated)
+$ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v
+test_F1_and_window_filters_drop_companies_without_a_record (test_pipeline.HappyPathOffline) ... ok
+test_F2_missing_or_failed_board_is_check_by_hand_and_never_scored (test_pipeline.HappyPathOffline) ... ok
+test_F4_soc_without_bls_row_shows_no_wage (test_pipeline.HappyPathOffline) ... ok
+test_F5_form_d_match_and_miss_are_both_labelled (test_pipeline.HappyPathOffline) ... ok
+test_F6_senior_only_or_non_us_board_becomes_network_target (test_pipeline.HappyPathOffline) ... ok
+test_TODO7_description_rules_rule_out_without_scoring (test_pipeline.HappyPathOffline) ... ok
+test_cant_sponsor_statements_are_counted_per_company_not_used_to_drop_it (test_pipeline.HappyPathOffline) ... ok
+test_completes_and_writes_both_outputs (test_pipeline.HappyPathOffline) ... ok
+test_every_value_carries_one_of_the_three_labels (test_pipeline.HappyPathOffline) ... ok
+test_live_posting_at_proven_sponsor_is_apply (test_pipeline.HappyPathOffline) ... ok
+test_no_network_host_was_contacted (test_pipeline.HappyPathOffline) ... ok
+test_real_scorer_produced_the_decisions (test_pipeline.HappyPathOffline) ... ok
+test_rules_030_senior_titles_are_scored (test_pipeline.HappyPathOffline) ... ok
+test_soft_sponsorship_tier_is_demoted_to_consider (test_pipeline.HappyPathOffline) ... ok
+test_stack_terms_years_and_preferred_location_are_labelled_records (test_pipeline.HappyPathOffline) ... ok
+test_location_classes (test_pipeline.LocationRule) ... ok
+test_F1_named_company_not_in_csv_is_reported_not_scored (test_pipeline.NamedFailures) ... ok
+test_F3_closed_opt_window_fails_without_a_timeline_value (test_pipeline.NamedFailures) ... ok
+test_missing_csv_fails_clearly (test_pipeline.NamedFailures) ... ok
+test_wrong_schema_csv_halts_instead_of_reporting_zero_candidates (test_pipeline.NamedFailures) ... ok
+test_family_of (test_pipeline.TitleAndDescriptionRules) ... ok
+test_seniority_rules_030 (test_pipeline.TitleAndDescriptionRules) ... ok
+test_years_parse_reads_only_experience_requirements (test_pipeline.TitleAndDescriptionRules) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.231s
+
+OK
+exit=0
+```
+
+### 2. The live run
+
+```text
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v3
+  [1/49] INTEL CORP: not-found
+  [2/49] ICON TECHNOLOGY INC: not-found
+  [3/49] DATABRICKS INC: found greenhouse:databricks (885 postings)
+  [4/49] VERKADA INC: found greenhouse:verkada (307 postings)
+  [5/49] CCC INTELLIGENT SOLUTIONS HOLDINGS INC: not-found
+  [6/49] GRAMMARLY INC: not-found
+  [7/49] WHATNOT INC: not-found
+  [8/49] COHERE HEALTH INC: found greenhouse:coherehealth (76 postings)
+  [9/49] AIERA INC: not-found
+  [10/49] APEX TECHNOLOGY INC: not-found
+  [11/49] APPTRONIK INC: found greenhouse:apptronik (80 postings)
+  [12/49] CELESTIAL AI INC: not-found
+  [13/49] FOURSQUARE LABS INC: not-found
+  [14/49] SPANIO INC: not-found
+  [15/49] HIGHNOTE PLATFORM INC: not-found
+  [16/49] OUTSET MEDICAL INC: found greenhouse:outsetmedical (30 postings)
+  [17/49] MERCURY TECHNOLOGIES INC: not-found
+  [18/49] TWIN HEALTH INC: found greenhouse:twinhealth (39 postings)
+  [19/49] ICERTIS INC: not-found
+  [20/49] CYNGN INC: not-found
+  [21/49] PSIQUANTUM CORP: found greenhouse:psiquantum (74 postings)
+  [22/49] CENTIFIC GLOBAL SOLUTIONS INC: not-found
+  [23/49] VIDMOB INC: found ashby:vidmob (3 postings)
+  [24/49] AEYE INC: not-found
+  [25/49] BLUECORE INC: not-found
+  [26/49] DILIGENT ROBOTICS INC: found greenhouse:diligentrobotics (9 postings)
+  [27/49] OBSERVE INC: not-found
+  [28/49] CODAMETRIX INC: found ashby:codametrix (2 postings)
+  [29/49] BUTLR TECHNOLOGIES INC: not-found
+  [30/49] VOUCH INC: not-found
+  [31/49] AIM INTELLIGENT MACHINES INC: not-found
+  [32/49] FARMER'S BUSINESS NETWORK INC: not-found
+  [33/49] FEMTOSENSE INC: not-found
+  [34/49] LILT INC: not-found
+  [35/49] MEMBRION INC: not-found
+  [36/49] WORKFUSION INC: not-found
+  [37/49] IFOODDECISIONSCIENCES INC: not-found
+  [38/49] SWING THERAPEUTICS INC: not-found
+  [39/49] UNDERDOG SPORTS HOLDINGS INC: not-found
+  [40/49] WAFFLE LABS INC: not-found
+  [41/49] BELFRY SOFTWARE INC: not-found
+  [42/49] HALCYON TECH INC: not-found
+  [43/49] LUMEN ENERGY INC: not-found
+  [44/49] MISO ROBOTICS INC: not-found
+  [45/49] PLEXIUM INC: found greenhouse:plexium (0 postings)
+  [46/49] POLYOPS INC: not-found
+  [47/49] PRIME ARTIFICIAL INTELLIGENCE INC: not-found
+  [48/49] RAISE ROBOTICS INC: not-found
+  [49/49] SERVICENOW INC: not-found
+✓ swe-sponsor-pipeline (live): 49 candidates, 49 probed, 11 boards found, 14 roles scored
+  apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1
+  scorer: ✓ scored 14 roles → Apply 0 · Consider 7 · Skip 7 (skip 50%)
+  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v3/pipeline-report.md  +  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v3/pipeline-log.json
+exit=0
+```
+
+The Consider table from `runs/2026-10-02-live-v3/pipeline-report.md`, verbatim:
+
+```text
+| # | ★ | Company | Posting | Score | Sponsorship evidence | Fit | Years asked | Microsoft AI stack terms | Wage context (SOC) |
+|---:|---|---|---|---:|---|---:|---|---|---|
+| 1 | ★ austin | APPTRONIK INC | [Senior Software Engineer, ML Infrastructure](https://boards.greenhouse.io/apptronik/jobs/6176116004?gh_jid=6176116004) — Austin, TX `record` | 0.403 | 56 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.88 `your-input` | 3+ `record` | none found `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via family rule `your-input` |
+| 2 | ★ anywhere in the us | DILIGENT ROBOTICS INC | [ML Engineer, Manipulation](https://job-boards.greenhouse.io/diligentrobotics/jobs/7651459003) — Anywhere in the US `record` | 0.290 | 20 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.50 `your-input` | 3+ `record` | none found `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via family rule `your-input` |
+| 3 |  | DATABRICKS INC | [AI Engineer – Forward Deployed Engineering (AI FDE)](https://databricks.com/company/careers/open-positions/job?gh_jid=8546367002) — United States `record` | 0.440 | 1640 approvals `record`; tier **Possible** (p 0.4) `your-input` | 1.00 `your-input` | not stated `record` | azure `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via O*NET title match `record` |
+| 4 |  | DATABRICKS INC | [Senior Applied ML Engineer - ML4Sys ](https://databricks.com/company/careers/open-positions/job?gh_jid=8656900002) — San Francisco, California `record` | 0.290 | 1640 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.50 `your-input` | 4+ `record` | none found `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via family rule `your-input` |
+| 5 |  | DATABRICKS INC | [Senior Data Scientist ](https://databricks.com/company/careers/open-positions/job?gh_jid=5634684002) — Mountain View, California; San Francisco, California `record` | 0.290 | 1640 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.50 `your-input` | not stated `record` | none found `record` | $112,590 median, job zone 4 `record` · SOC 15-2051.00 via O*NET title match `record` |
+| 6 |  | VERKADA INC ⚠ 156 of 307 postings here say they can't sponsor that role | [Senior Software Engineer - Computer Vision](https://job-boards.greenhouse.io/verkada/jobs/4128624007) — San Mateo, CA United States `record` | 0.290 | 272 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.50 `your-input` | 1+ `record` | none found `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via family rule `your-input` |
+| 7 |  | VERKADA INC ⚠ 156 of 307 postings here say they can't sponsor that role | [Software Engineer - Computer Vision](https://job-boards.greenhouse.io/verkada/jobs/5195995007) — San Mateo, CA United States `record` | 0.290 | 272 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.50 `your-input` | 1+ `record` | none found `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via family rule `your-input` |
+```
+
+## Verified vs. inferred: the Austin row
+
+| Line | Value | Label | Why |
+|---|---|---|---|
+| Company H-1B approvals | 56 | **record** | 80 Days CSV |
+| Sponsored titles | Senior Electrical Engineer, Software Engineer III | **record** | CSV `top_job_titles_sponsored` |
+| Posting | "Senior Software Engineer, ML Infrastructure", Austin, TX | **record** | Greenhouse API, fetched 2026-10-02 |
+| Family | `ml_ai` | your-input | role word "engineer" + AI word "ML" (composite rule) |
+| Tier and p | Possible, p 0.4 | your-input | ML posting, software-only sponsored titles, so a soft tier |
+| ★ preferred | yes, "austin" | your-input | persona `preferred_locations` |
+| Years asked | 3+ shown | **record** text, your-input rule | lowest stated bound; the description also says **5+ years** of software engineering (see the cross-check) |
+| Fit | 0.875 | your-input | deterministic phrase match against the résumé |
+| Score | 0.403 → Consider | **record of arithmetic** | `role-scorer.mjs`; the soft tier caps it at Consider |
+
+## Verification
+
+**Hand cross-check against the live job API**, independent of the pipeline:
+
+```text
+# Hand cross-check (iteration 3): the Austin, TX Consider row and a Senior role ruled out on years, read independently from the public Greenhouse job API
+$ curl -s https://boards-api.greenhouse.io/v1/boards/apptronik/jobs/6176116004  (title, location, years sentences, sponsorship sentence)
+   Senior Software Engineer, ML Infrastructure | Austin, TX
+   years: 5+ years of professional software engineering experience in ML platforms, data infrastructure, or 
+   years: 3+ years of direct, hands-on experience owning the data and evaluation infrastructure behind model
+   sponsor sentence: none found
+$ curl -s https://boards-api.greenhouse.io/v1/boards/twinhealth/jobs/5655780004  (title, location, years sentences, sponsorship sentence)
+   Senior AI Engineer | Remote, USA
+   years: 5+ years of industry experience developing AI and Machine Learning systems in production
+   sponsor sentence: 100% Employer sponsored healthcare, dental, and vision for you, and 80% coverage for your family; Hea
+```
+
+What it showed:
+- **Twin Health "Senior AI Engineer":** correctly ruled out (5+ years), and it really has no "can't sponsor" line; the only "sponsor" text is about healthcare.
+- **The Austin role exposes a rule choice.** Its main requirement is 5+ years, but the rule shows 3+. Recorded as `[TODO: DEFINE]` 9 and left for the author to decide, rather than tuned after seeing the result.
+
+## Reflection (iteration 3)
+
+**What worked:** with Senior titles allowed, the years-asked rule did the real filtering. 8 Senior roles were ruled out on 5+ or 8+ years, and the ones left state 3–4 years or nothing.
+
+**What it missed:**
+1. **The Austin role's 5+ years main requirement** (TODO 9).
+2. **No Data Engineer posting appeared on the 11 boards found.** The family is in place, but this sample has none.
+3. **"Sr. Developer Advocate, AI and Machine Learning" matched the AI family**, a new title-rule gap. It was ruled out anyway on years.
+
+**Next improvement:** the same as iteration 2. Per-petition SOC data (TODO 1), so AI and data postings at big software sponsors can reach Apply on evidence.
+
+## Attestation (iteration 3)
+
+- Recipe: swe-sponsor-pipeline v0.3.0 (rules 0.3.0, code commit 75f3c41)
+- By: **[Hemanth Rayudu signs after re-running the tests and the live run himself] · [date]**. The rows below were run by Claude Code in the author's session on 2026-10-02.
+
+### Tested
+
+| Ran | Saw | Expected |
+|---|---|---|
+| `python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v` | `Ran 23 tests … OK` | all pass offline |
+| `pipeline.py --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v3` | apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1; 9 ruled out by description | completes; only the two named hosts |
+| **Break, by rule change:** with the Senior patterns removed, does the fixture Senior posting get scored? | `test_rules_030_senior_titles_are_scored` passes; Staff still excluded (`test_seniority_rules_030`) | Senior in, Staff out |
+| Hand cross-check: Apptronik 6176116004, Twin Health 5655780004 via the API | "5+ years … and 3+ years …"; "5+ years …", no can't-sponsor line | matches the report, and exposes TODO 9 |
+
+### Did not test
+
+- Data Engineer postings live (none on the boards found); the family is tested with titles only (`test_family_of`).
+- Lever, Workday, iCIMS, SmartRecruiters; E-Verify; clauses worded outside the phrase lists.
+- A fresh clone for iteration 3 *(to be run by the author)*.
+
+### Broke during testing, fixed
+
+- `test_F6_…` failed after the Senior change, because fixture 102 "Senior Software Engineer" was now scored. That's the intended effect, so the test was updated and a dedicated test added.
+
+---
+
+# Iteration 2: mid-level AI Engineer, Microsoft AI stack
 
 Code `75f3c41` · rules 0.2.1 · recipe 0.2.1 · run folder `runs/2026-10-02-live-v2/`
 
@@ -227,7 +424,7 @@ failed tests: ['test_TODO7_description_rules_rule_out_without_scoring']
 
 **One concrete next improvement:** join DOL LCA disclosure data (SOC code per petition) to the 80 Days CSV, so "has this company sponsored an AI Engineer?" becomes a record match rather than a top-few title list. Then re-run and compare the Consider list.
 
-## Attestation (iteration 2)
+## Attestation (iteration 2): superseded by iteration 3 before signing, not signed
 
 - Recipe: swe-sponsor-pipeline v0.2.1 (rules 0.2.1, code commit 75f3c41)
 - By: **[Hemanth Rayudu signs after re-running rows 1, 2 and 6 himself] · [date]**. The rows below were run by Claude Code in the author's session on 2026-10-02.

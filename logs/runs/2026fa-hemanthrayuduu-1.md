@@ -6,7 +6,9 @@ This is the run record for a job-search recipe that finds open jobs at companies
 - **Iteration 1:** entry-level software and AI roles. It ran, was checked against its sources, and was signed off by the student. That sign-off revealed that both AI roles it suggested were closed to them.
 - **Iteration 2:** after the student corrected their situation (pre-completion OPT, about 3.5 years of experience, mid-level AI Engineer roles on the Microsoft AI stack, Texas and remote first), the tool was changed to read job descriptions. It was run again.
 
-The iteration-2 sign-off lines at the bottom are still open.
+- **Iteration 3:** the student widened the target to include Senior titles and Data Scientist / Data Engineer roles. That was a rules-only change, and the tool was run once more.
+
+The iteration-3 sign-off lines at the bottom are still open.
 
 ## 2026-10-02 — swe-sponsor-pipeline live sample run
 
@@ -83,10 +85,42 @@ The iteration-2 sign-off lines at the bottom are still open.
   - E-Verify data is absent (TODO 8).
   - **Gates G1–G3 and the sample-run gate for v0.2.1 are not yet cleared.** Recipe status is DRAFT.
 
-## Gate decisions — iteration 2 (v0.2.1; to be completed by the named human)
+## Gate decisions — iteration 2 (v0.2.1) — superseded by iteration 3 before sign-off; not cleared
 
 - **Sample-run gate (lifecycle):** ☐ cleared / ☐ not cleared · by: ______ · date: ______ · note: ______
 - **G1 liveness:** links checked for the 3 Consider rows (`npm run ats:liveness -- <url>` or a browser): ___ of 3 live · by/date: ______
 - **G2 timeline:** post-completion OPT start (2027-01-11, fictional stand-in) and 60-day hiring lag confirmed · by/date: ______
 - **G3 release:** rows I would act on: ______; rows rejected and why: ______; networking targets I would contact: ______ · by/date: ______
+
+## 2026-10-02 — iteration 3: Senior titles + Data Scientist / Data Engineer (rules 0.3.0, code 75f3c41 unchanged)
+
+- **Recipe:** manual (`recipes/cases/2026fa/hemanthrayuduu-swe-sponsor-pipeline.md` v0.3.0, rules 0.3.0, code `75f3c41`)
+- **Trigger (author):** "include Senior titles and re-run, include Data Engineer, Data Scientist roles also".
+- **Changes:**
+  - `rules.json` 0.3.0: Senior patterns removed; `data_science` and `data_engineering` families added, with SOC lookups backed by O*NET (alternate titles: "Data Engineer" under 15-1242.00, "Big Data Engineer" under 15-1243.00); Microsoft data-stack terms added.
+  - Persona v3: target and evidence families.
+  - Test file: 23 tests.
+  - `pipeline.py` unchanged (`git diff 75f3c41 -- pipeline.py` is empty).
+- **Inputs:** `python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v3`; same CSV/BLS/Form D files.
+- **Outputs:** `course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v3/`; `evidence/29-iteration3-live-run.txt`.
+- **Result:**
+  - Funnel: 49 candidates → 11 boards → 67 AI/data postings → 48 US → 16 right level by title → **9 ruled out by description** (1 citizenship, 8 asking 5+ or 8+ years) → 7 kept.
+  - Buckets: **apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1**; skip share 89.6%.
+  - First ★ Texas match: Apptronik "Senior Software Engineer, ML Infrastructure", Austin, TX. Tests 23/23.
+- **Hand check (`evidence/30`):**
+  - The Austin role states "5+ years of professional software engineering experience" *and* "3+ years …". The lowest-bound rule kept it at 3+ (recipe TODO 9, a human decision; not tuned).
+  - Twin Health "Senior AI Engineer" (Remote, USA) asks 5+ years, so it was correctly ruled out. It carries no "can't sponsor" statement.
+- **Open issues:**
+  - Nothing reaches Apply: all 7 kept postings are tier Possible.
+  - No Data Engineer posting appeared on the 11 boards found.
+  - "Sr. Developer Advocate, AI and Machine Learning" matched the AI family (ruled out anyway on years). Developer-advocate titles are another title-rule gap.
+  - Board coverage 11 of 49.
+  - **Gates for v0.3.0 are not yet cleared.**
+
+## Gate decisions — iteration 3 (v0.3.0; to be completed by the named human)
+
+- **Sample-run gate (lifecycle):** ☐ cleared / ☐ not cleared · by: ______ · date: ______ · note: ______
+- **G1 liveness:** the 7 Consider links checked (`npm run ats:liveness -- <url>` or a browser): ___ of 7 live · by/date: ______
+- **G2 timeline:** post-completion OPT start (2027-01-11, fictional stand-in) and 60-day hiring lag confirmed · by/date: ______
+- **G3 release:** rows I would act on: ______; rows rejected and why (e.g. the Austin role's 5+ years main requirement): ______; networking targets I would contact: ______ · by/date: ______
 

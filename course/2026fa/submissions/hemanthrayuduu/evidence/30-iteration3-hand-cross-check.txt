@@ -1,0 +1,10 @@
+# Hand cross-check (iteration 3): the Austin, TX Consider row and a Senior role ruled out on years, read independently from the public Greenhouse job API
+$ curl -s https://boards-api.greenhouse.io/v1/boards/apptronik/jobs/6176116004  (title, location, years sentences, sponsorship sentence)
+   Senior Software Engineer, ML Infrastructure | Austin, TX
+   years: 5+ years of professional software engineering experience in ML platforms, data infrastructure, or 
+   years: 3+ years of direct, hands-on experience owning the data and evaluation infrastructure behind model
+   sponsor sentence: none found
+$ curl -s https://boards-api.greenhouse.io/v1/boards/twinhealth/jobs/5655780004  (title, location, years sentences, sponsorship sentence)
+   Senior AI Engineer | Remote, USA
+   years: 5+ years of industry experience developing AI and Machine Learning systems in production
+   sponsor sentence: 100% Employer sponsored healthcare, dental, and vision for you, and 80% coverage for your family; Hea

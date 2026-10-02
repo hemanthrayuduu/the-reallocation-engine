@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-Kiran Rao is an **invented** student, built to exercise one recipe: finding mid-level AI Engineer jobs on the Microsoft AI stack at companies with a record of visa sponsorship. Kiran is an MS student on pre-completion OPT with about 3.5 years of prior AI engineering work, looking anywhere in the US with Texas and remote first. Use this persona to run or test that recipe without exposing anyone's real data. Nothing here describes a real person.
+Kiran Rao is an **invented** student, built to exercise one recipe: finding mid-level and senior AI Engineer, Data Scientist and Data Engineer jobs, ideally on the Microsoft AI and data stack, at companies with a record of visa sponsorship. Kiran is an MS student on pre-completion OPT with about 3.5 years of prior AI engineering work, looking anywhere in the US with Texas and remote first. Use this persona to run or test that recipe without exposing anyone's real data. Nothing here describes a real person.
 
 ## Files
 

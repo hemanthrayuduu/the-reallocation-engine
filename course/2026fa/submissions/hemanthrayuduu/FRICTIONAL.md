@@ -29,6 +29,8 @@ This is the honest record of how the work actually went: what was tried, what br
 | 19 | "AI" + "engineer" means an AI role | matched "Partner Engineer … AI & Apps" and "AI Automation QA Engineer" | `not_if_title_has` exclusions + tests | Claude | `23b`; rules 0.2.1 |
 | 20 | Twin Health "won't sponsor", so drop it from networking | Claude said this to the author from one posting; raw data: statements are role-specific, and its Senior AI postings have none | rule withdrawn before commit; statements counted per company; claim corrected to the author | Claude self-correction | `24a`, `24b` |
 | 21 | Drafted predictions P4/P5 for iteration 2 | Claude labeled them "written before the iteration-2 live run" when they were written after | removed; CHANGE-BRIEF now says no predictions were recorded before iteration 2 | Claude self-correction | CHANGE-BRIEF Rev. 2 |
+| 22 | Author: "include Senior titles and re-run, include Data Engineer, Data Scientist roles also" | rules 0.3.0: Senior in, data families added; first test run failed on the Senior fixture, which is the intended effect | test updated, 2 tests added; live run: consider 7, first Texas match | author decided; Claude built | `evidence/29`, `31` |
+| 23 | The years column is trustworthy | hand check: the Austin role asks 5+ years of software engineering *and* 3+ years of data infrastructure; the rule shows 3+ | logged as `[TODO: DEFINE]` 9 for the author; rule not tuned after seeing the result | Claude checked the source | `evidence/30` |
 
 **Unresolved questions:**
 - How should the recipe's proposed-addition TODOs count against SNICKERDOODLE's "zero open TODOs" rule for SPECIFIED?
@@ -74,7 +76,8 @@ This is the honest record of how the work actually went: what was tried, what br
 - I corrected the situation the tool was built for: I'm on **pre-completion OPT** from mid-October, I have about 3.5 years of experience, and I want **mid-level AI Engineer roles on the Microsoft AI stack**, anywhere in the US but Texas and remote first.
 - I thought my 90-day clock would start in October. The DHS page says the 90-day limit is a post-completion OPT rule, and that the student applies for OPT; no employer sponsors it. So my real question was "who hires on OPT and sponsors H-1B later". I still need to confirm my dates with my DSO.
 - After the change, the tool found 3 AI roles to consider and none to apply to, because the sponsorship records rarely list AI titles. It also showed companies with a sponsorship history posting "unable to sponsor … for this role" on some jobs.
-- *(Add: what you checked in the iteration-2 report and what you'd act on.)*
+- I then asked to include Senior titles and Data Engineer / Data Scientist roles. That found 7 roles to consider, including one in Austin, TX. The Austin role's description asks 5+ years of software engineering even though the tool shows 3+, so I have to read descriptions myself, not just the Years column.
+- *(Add: what you checked in the iteration-3 report and what you'd act on.)*
 
 **Still unresolved for me**
 - Where to find AI Engineer roles that are open to new graduates *and* at companies that sponsor that title. The sponsorship records behind this run mostly cover software titles.

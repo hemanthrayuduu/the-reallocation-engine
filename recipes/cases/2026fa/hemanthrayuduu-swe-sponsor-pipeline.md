@@ -1,16 +1,16 @@
 ---
-status: DRAFT          # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.1.2 reached RUNNABLE-SAMPLE (gate below); v0.2.1 changed code and rules, so it is back to DRAFT until the named human re-clears the sample-run gate. See "Lifecycle note".
-todos_open: 7
-last_gate: "sample-run, 2026-10-02, Hemanth Rayudu, logs/runs/2026fa-hemanthrayuduu-1.md (cleared for v0.1.2; v0.2.1 pending)"
+status: DRAFT          # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.1.2 reached RUNNABLE-SAMPLE (gate below); v0.2.x/0.3.0 changed code and rules, so it is back to DRAFT until the named human re-clears the sample-run gate. See "Lifecycle note".
+todos_open: 8
+last_gate: "sample-run, 2026-10-02, Hemanth Rayudu, logs/runs/2026fa-hemanthrayuduu-1.md (cleared for v0.1.2; v0.3.0 pending)"
 attestation: null  # set only at VERIFIED; sample-run attestations are in course/2026fa/submissions/hemanthrayuduu/worked-run.md
-recipe_version: 0.2.1  # 0.2.x: author re-scoped to mid-level AI Engineer (Microsoft AI stack); description rules; location preference
+recipe_version: 0.3.0  # 0.2.x: author re-scoped to AI Engineer (Microsoft AI stack), description rules, location preference; 0.3.0: Senior titles + Data Scientist / Data Engineer roles
 ---
 
-# swe-sponsor-pipeline — AI Engineer postings at sponsoring, recently funded companies
+# swe-sponsor-pipeline — AI Engineer, Data Scientist and Data Engineer postings at sponsoring, recently funded companies
 
 ## Executive summary
 
-**What it does:** it is built for an international MS Computer Science student on **pre-completion OPT** (from mid-October 2026) with about **3.5 years** of AI engineering experience. The student is looking for **mid-level AI Engineer roles on the Microsoft AI stack**: anywhere in the US, with **Texas and remote first**. The recipe finds open postings at companies that, by public record, have sponsored H-1B visas for software or AI titles and raised money recently. It also reads each job description for things that would rule the student out: US citizenship, a security clearance, "can't sponsor this role", or too many years asked. It labels every piece of evidence, then stops, and the student decides.
+**What it does:** it is built for an international MS Computer Science student on **pre-completion OPT** (from mid-October 2026) with about **3.5 years** of AI engineering experience. The student is looking for **mid-level and senior AI Engineer, Data Scientist and Data Engineer roles**, ideally on the Microsoft AI and data stack: anywhere in the US, with **Texas and remote first**. The recipe finds open postings at companies that, by public record, have sponsored H-1B visas for software or AI titles and raised money recently. It also reads each job description for things that would rule the student out: US citizenship, a security clearance, "can't sponsor this role", or too many years asked. It labels every piece of evidence, then stops, and the student decides.
 
 **Who it's for:** that student, deciding where to spend the two research-and-apply hours of the day before post-completion OPT starts the 90-day unemployment clock.
 
@@ -53,7 +53,7 @@ It never applies, never emails, and never treats a guess as a record.
 | Microsoft AI stack terms, years asked, can't-sponsor statements | Job-Ops | posting text, matched by `rules.json` `microsoft_ai_stack_terms` / `description_rules` | record (rule: your-input) | context; rule-outs |
 | Wage, job zone, cognitive pivot score | Cognitive Pivot | `data/bls/compact/soc_occupation_compact.csv` | record (SOC mapping: record or your-input) | context only (Fact 1) |
 | Situation: OPT dates, years, target and evidence families, preferred locations, hiring lag, funding window | — | `search/examples/kiran-rao/persona.json` | your-input | timeline **gate**, filters, sort |
-| Thresholds, patterns, tier p-values | — | `scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/rules.json` (v0.2.1) | your-input | all rules |
+| Thresholds, patterns, tier p-values | — | `scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/rules.json` (v0.3.0) | your-input | all rules |
 | Decision | engine | `scripts/score/role-scorer.mjs`, as a subprocess with `--out-dir`, never copied | record of arithmetic | Apply / Consider / Skip |
 
 **Prototype command** (repo root; Python 3.9+ stdlib, Node 20+):
@@ -99,6 +99,7 @@ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponso
 | 6 | `[TODO: DATA SOURCE]` | Hiring-lag record (application → offer) | The timeline gate rests on the persona's 60-day assumption. |
 | 7 | ~~`[TODO: DEV]`~~ **closed 2026-10-02** | Description rules: eligibility phrases, can't-sponsor phrases, years of experience | Closed by code (`description_check`, `no_sponsorship_phrase` in `pipeline.py`) + tests (`test_TODO7_…`, `test_years_parse_…`, break check `evidence/22-…`) + handoff met: in the iteration-2 live run the Federal Focus role was ruled out automatically (`evidence/25-…`). |
 | 8 | `[TODO: DATA SOURCE]` | E-Verify participation per employer | For a later STEM OPT extension the employer must use E-Verify (to be confirmed with the DSO; not confirmed on the DHS page read here). No repo data has it. |
+| 9 | `[TODO: DEFINE]` | Which number counts when a description gives several year requirements | The rule takes the **lowest** (lenient). The iteration-3 hand check found Apptronik's Austin role asks "5+ years of professional software engineering experience" *and* "3+ years … owning data and evaluation infrastructure", so it was kept at 3+ although its main requirement is 5+ (`evidence/30-…`). Lowest, highest, or first-stated is a human choice; it isn't changed here after seeing one result. |
 
 ## Phase gates
 
@@ -127,7 +128,7 @@ Liveness and timeline are **gates** (multipliers in the scorer), not votes.
 - title family (including the role-word + AI-word rule and its exclusions);
 - sponsorship tier and p;
 - US location;
-- seniority (mid-level: Senior and above excluded by default);
+- seniority (Staff / Principal / Lead and above, interns and PhD titles excluded; Senior included since 0.3.0);
 - description rule-outs;
 - fit p (phrase-match score ÷ 8, location weight 0);
 - timeline factor;
@@ -141,7 +142,7 @@ The log records hashes of `rules.json`, `persona.json`, the résumé and the sch
 - That a `check-by-hand` company has no openings.
 - That an Ashby board belongs to the company.
 - That the student is eligible when a requirement is worded differently from the phrase list.
-- The real level of a role whose description states no years.
+- The real level of a role whose description states no years, or states several (the lowest is used; TODO 9).
 - That a posting genuinely uses the Microsoft AI stack. The column is a word match; "Azure" alone may just mean the company's cloud.
 - That the hiring lag is realistic. What the employer pays.
 
@@ -237,7 +238,9 @@ buckets{apply, consider, network, check-by-hand, skip}, scorer{…}, pipeline_sk
 ## Lifecycle note
 
 - **v0.1.2** reached RUNNABLE-SAMPLE on 2026-10-02. Hemanth Rayudu cleared G1–G3 and the sample-run gate (run log, iteration 1).
-- **v0.2.1** changed code (`75f3c41`), `rules.json` and the persona after the author re-scoped the situation. A gate cleared for one version does not carry over (P4), so v0.2.1 is **DRAFT** until the author re-runs, re-clears G1–G3 for iteration 2, and signs.
+- **v0.2.1** changed code (`75f3c41`), `rules.json` and the persona after the author re-scoped the situation.
+- **v0.3.0** changed only `rules.json` (Senior titles in; data_science and data_engineering families; Microsoft data-stack terms) and the persona's target families. The code is still `75f3c41`.
+- A gate cleared for one version does not carry over (P4), so v0.3.0 is **DRAFT** until the author re-runs, re-clears G1–G3 for iteration 3, and signs.
 - The seven open TODOs are proposals outside the executed path. SNICKERDOODLE's zero-open-TODO rule for SPECIFIED conflicts with the assignment's request to list proposals as TODOs. The author's decision on that conflict is recorded in the run log.
 
 ## Run-log template (`logs/runs/`)

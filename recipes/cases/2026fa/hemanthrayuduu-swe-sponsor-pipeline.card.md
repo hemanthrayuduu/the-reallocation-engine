@@ -1,16 +1,16 @@
-# Sponsor-ready AI Engineer jobs — human card
+# Sponsor-ready AI and data jobs — human card
 
-**Audience:** an international MS CS student on pre-completion OPT with about 3.5 years of AI engineering experience, deciding which mid-level AI Engineer roles (Microsoft AI stack; anywhere in the US, Texas and remote first) deserve a tailored application this week.  
+**Audience:** an international MS CS student on pre-completion OPT with about 3.5 years of AI engineering experience, deciding which mid-level and senior AI Engineer, Data Scientist and Data Engineer roles (Microsoft AI and data stack preferred; anywhere in the US, Texas and remote first) deserve a tailored application this week.  
 **Agent twin:** `recipes/cases/2026fa/hemanthrayuduu-swe-sponsor-pipeline.md`  
 **Engine layers:** 80 Days to Stay (sponsorship and funding) · Job-Ops (live boards and job descriptions) · Cognitive Pivot (wage context only).
 
 ## Executive summary
 
-This one-page card explains what the job-list tool tells you and where it can mislead you. The tool lists open AI Engineer jobs at companies that have sponsored work visas and raised money recently. It drops jobs whose description rules you out: US citizenship, a clearance, "can't sponsor this role", or too many years. Texas and remote jobs are listed first. It also names strong sponsors to network into and companies it couldn't check. Read this card before you trust a row.
+This one-page card explains what the job-list tool tells you and where it can mislead you. The tool lists open AI Engineer, Data Scientist and Data Engineer jobs at companies that have sponsored work visas and raised money recently. It drops jobs whose description rules you out: US citizenship, a clearance, "can't sponsor this role", or too many years. Texas and remote jobs are listed first. It also names strong sponsors to network into and companies it couldn't check. Read this card before you trust a row.
 
 ## Purpose
 
-Answer: *which open AI Engineer roles are worth my research-and-apply hours today, given that I'll need H-1B sponsorship?* And, for strong sponsors with nothing open right now: *who should I reach out to instead?*
+Answer: *which open AI and data roles are worth my research-and-apply hours today, given that I'll need H-1B sponsorship?* And, for strong sponsors with nothing open right now: *who should I reach out to instead?*
 
 ## What it can verify
 
@@ -38,13 +38,13 @@ Answer: *which open AI Engineer roles are worth my research-and-apply hours toda
 
 ## Annotated commands
 
-Offline test. Expect 21 tests and `OK`, with no network used:
+Offline test. Expect 23 tests and `OK`, with no network used:
 
 ```bash
 python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v
 ```
 
-Live run. Expect about 2 minutes. In the 2026-10-02 run: `apply 0 · consider 3 · network 6 · check-by-hand 30`.
+Live run. Expect about 2 minutes. In the 2026-10-02 iteration-3 run: `apply 0 · consider 7 · network 6 · check-by-hand 38`.
 
 ```bash
 python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir /tmp/my-run
@@ -73,4 +73,4 @@ npm run ats:liveness -- <url from the Consider table>
 1. **"Can't sponsor" read as all-or-nothing.** The statements are per role. Verkada says it on 156 of 307 postings (mostly sales), but not on its backend roles. Twin Health says it on 23 of 39, but not on "Senior AI Engineer". *Hardest to catch for:* anyone who skims one posting and writes off the company. *Mitigation:* the posting is ruled out; the company stays, with its count shown.
 2. **The sponsorship record covers software titles, not AI titles.** The CSV keeps only a company's top few sponsored titles. So an AI posting at a big software sponsor is graded "Possible": a Consider at best. *Hardest to catch for:* a student who sees no "Apply" rows and concludes nobody sponsors AI engineers. *Mitigation:* read the Consider list, and see `[TODO: DATA SOURCE]` 1.
 3. **Title words mislead.** "AI" plus "engineer" also matches partner, sales and QA roles. Those are now excluded by rule, but new variants will appear. *Mitigation:* gate G3.
-4. **Senior roles hidden by default.** With 3.5 years you may qualify for some "Senior" roles, but they're excluded by default. *Mitigation:* delete the two Senior patterns in `rules.json` if you want them, and re-run.
+4. **Several year requirements in one description.** The tool takes the lowest. Apptronik's Austin "Senior Software Engineer, ML Infrastructure" asks 5+ years of software engineering *and* 3+ years of data-infrastructure work, so it shows "3+" although the main bar is 5+. *Hardest to catch for:* someone who reads the Years column instead of the description. *Mitigation:* gate G3; TODO 9.

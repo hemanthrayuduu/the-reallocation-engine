@@ -6,7 +6,7 @@ This page explains who the job-list tool is for, what hidden information it surf
 
 ## Who, in exactly what situation
 
-The student is an international MS Computer Science student on F-1 status, working under **pre-completion OPT** from mid-October 2026. They have about **3.5 years** of prior AI engineering experience (Azure OpenAI, Semantic Kernel, Azure ML, C#/.NET). They want **mid-level AI Engineer roles on the Microsoft AI stack**, anywhere in the US but **Texas and remote first**, at an employer that will file an H-1B.
+The student is an international MS Computer Science student on F-1 status, working under **pre-completion OPT** from mid-October 2026. They have about **3.5 years** of prior AI engineering experience (Azure OpenAI, Semantic Kernel, Azure ML, C#/.NET). They want **mid-level and senior AI Engineer, Data Scientist and Data Engineer roles**, ideally on the Microsoft AI and data stack, anywhere in the US but **Texas and remote first**, at an employer that will file an H-1B.
 
 Two facts from DHS (*Study in the States*, F-1 OPT page, checked 2026-10-02) shape the timing:
 - The 90-day unemployment limit applies to **post-completion** OPT.
@@ -34,13 +34,13 @@ Decisions come from the engine's own scorer, unchanged.
 
 It takes over the **research half of the 2 research-and-apply hours**: finding which postings are even worth tailoring.
 
-- **By hand** *(estimate, not measured)*: about 25–30 minutes per company to check sponsorship history, funding, the careers page, the level, and the fine print. For the 40 candidate companies that is roughly 17–20 hours.
+- **By hand** *(estimate, not measured)*: about 25–30 minutes per company to check sponsorship history, funding, the careers page, the level, and the fine print. For the 49 candidate companies in iteration 3 that is roughly 20–25 hours.
 - **With the tool** *(run time observed; review time estimated)*: about 2 minutes for the run, then roughly 45 minutes to clear gates G1–G3.
-- **Saving** *(estimate)*: **15+ hours the first week**, then 2–3 hours per weekly re-run. Most of it comes from what it lets the student skip: 94.5% of the 55 AI/ML postings evaluated in iteration 2.
+- **Saving** *(estimate)*: **15+ hours the first week**, then 2–3 hours per weekly re-run. Most of it comes from what it lets the student skip: 89.6% of the 67 AI and data postings evaluated in iteration 3, including 8 Senior roles whose descriptions ask 5+ years.
 
-It also **feeds the 3 networking hours**. In iteration 2 the network list (Cohere Health, Apptronik, Twin Health, PsiQuantum, VidMob, CodaMetrix) names recently funded sponsors with no qualifying AI opening today, each shown with its count of "can't sponsor this role" postings. The prototype itself is a **credibility-hours** artifact for an AI engineer.
+It also **feeds the 3 networking hours**. In iteration 3 the network list (Cohere Health, Outset Medical, Twin Health, PsiQuantum, VidMob, CodaMetrix) names recently funded sponsors with no qualifying AI opening today, each shown with its count of "can't sponsor this role" postings. The prototype itself is a **credibility-hours** artifact for an AI engineer.
 
 ## Domain-specific failure modes
 
 1. **A role-specific "can't sponsor" read as company policy, or the reverse.** Verkada's statement appears on most sales roles but not its backend roles. A student who sees it once may write off a 272-approval sponsor. A student who never reads it may apply to a role explicitly closed to them. *Hardest to catch for:* someone short on time who reads one posting per company. The tool counts the statements per company and rules out only the posting that carries them.
-2. **A top-few title list mistaken for the whole sponsorship record.** The CSV keeps only a company's top sponsored titles, and only 100 of 1,552 sponsors list an AI/ML title. So every AI posting in iteration 2 was graded "Possible" and none reached Apply, even at Databricks (1,640 approvals). *Hardest to catch for:* a student who sees an empty Apply list and concludes nobody sponsors AI engineers. Per-petition SOC data (recipe TODO 1) is the fix.
+2. **A top-few title list mistaken for the whole sponsorship record.** The CSV keeps only a company's top sponsored titles, and only 100 of 1,552 sponsors list an AI/ML title. So every AI and data posting in iterations 2 and 3 was graded "Possible" and none reached Apply, even at Databricks (1,640 approvals). *Hardest to catch for:* a student who sees an empty Apply list and concludes nobody sponsors AI engineers. Per-petition SOC data (recipe TODO 1) is the fix.

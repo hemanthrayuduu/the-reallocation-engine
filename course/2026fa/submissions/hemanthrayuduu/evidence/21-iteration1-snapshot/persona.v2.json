@@ -1,21 +1,17 @@
 {
-  "_comment": "FICTIONAL persona for the swe-sponsor-pipeline recipe. EVERY value in this file is your-input: the student's own situation and assumptions, not a record. Edit these to run the pipeline for a different student. v2 (2026-10-02): re-scoped by the author to mid-level AI Engineer roles on the Microsoft AI stack. v3 (2026-10-02): author added Senior titles and Data Scientist / Data Engineer roles.",
+  "_comment": "FICTIONAL persona for the swe-sponsor-pipeline recipe. EVERY value in this file is your-input: the student's own situation and assumptions, not a record. Edit these to run the pipeline for a different student. v2 (2026-10-02): re-scoped by the author to mid-level AI Engineer roles on the Microsoft AI stack.",
   "persona_id": "kiran-rao",
-  "summary": "an international MS Computer Science student on pre-completion OPT (from mid-October 2026) with about 3.5 years of prior AI-engineering experience, looking for mid-level and senior AI Engineer, Data Scientist and Data Engineer roles, ideally on the Microsoft AI and data stack (anywhere in the US, Texas and remote first), at companies that sponsor H-1B visas",
+  "summary": "an international MS Computer Science student on pre-completion OPT (from mid-October 2026) with about 3.5 years of prior AI-engineering experience, looking for mid-level AI Engineer roles that use the Microsoft AI stack (anywhere in the US, Texas and remote first), at companies that sponsor H-1B visas",
   "resume": "search/examples/kiran-rao/resume.example.json",
   "location_city": "Boston",
   "target_families": [
-    "ml_ai",
-    "data_science",
-    "data_engineering"
+    "ml_ai"
   ],
   "sponsorship_evidence_families": [
     "ml_ai",
-    "data_science",
-    "data_engineering",
     "software"
   ],
-  "_sponsorship_evidence_note": "your-input: a company's H-1B history for software, AI or data titles counts as sponsorship evidence, because the CSV keeps only a company's top few sponsored titles. Postings must be in target_families. A posting whose family is not among the company's sponsored families gets the soft 'Possible' tier, so it can reach Consider but not Apply.",
+  "_sponsorship_evidence_note": "your-input: a company's H-1B history for software OR AI titles counts as sponsorship evidence, because the CSV keeps only a company's top few sponsored titles and AI engineering roles are often filed under software occupations. Postings must still be AI roles (target_families). An AI posting at a company whose record lists only software titles gets the soft 'Possible' tier, so it can reach Consider but not Apply.",
   "experience_years": 3.5,
   "preferred_locations": {
     "_note": "your-input preference: postings in Texas or remote are shown first and starred in the report. All US locations stay in. Not a vote, and the scorer's numbers are unchanged.",

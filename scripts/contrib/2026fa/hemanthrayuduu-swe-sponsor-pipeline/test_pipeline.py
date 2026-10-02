@@ -92,7 +92,13 @@ class HappyPathOffline(unittest.TestCase):
         self.assertIn("company:ashby:quiet-harbor-labs", self.b["network"])
         self.assertIn("company:greenhouse:abroadonly", self.b["network"])
         ids = {r["role_id"] for r in self.roles_json}
-        self.assertNotIn("greenhouse:lumenbyte:102", ids)       # "Senior Software Engineer" never scored
+        self.assertNotIn("ashby:quiet-harbor-labs:qh-1", ids)   # "Staff Machine Learning Engineer": staff still excluded
+
+    def test_rules_030_senior_titles_are_scored(self):
+        # 0.3.0 (author): Senior allowed. Fixture 102 says "7+ years." but not "years of experience", so the years rule
+        # does not fire either: the posting is scored, as the rules say it should be.
+        ids = {r["role_id"] for r in self.roles_json}
+        self.assertIn("greenhouse:lumenbyte:102", ids)
 
     def test_F2_missing_or_failed_board_is_check_by_hand_and_never_scored(self):
         for name in ("Ghost Slug Corp", "Flaky Board Inc", "Mismatch Name Inc"):
@@ -178,7 +184,11 @@ class TitleAndDescriptionRules(unittest.TestCase):
                  "Account Executive": None,
                  "AI Product Manager": None,                        # AI word but no role word
                  "Partner Engineer: Partner Intelligence, AI & Apps": None,   # 0.2.1 false positive, now excluded
-                 "AI Automation QA Engineer": None}
+                 "AI Automation QA Engineer": None,
+                 "Senior Data Engineer": "data_engineering",          # 0.3.0 families
+                 "Analytics Engineer": "data_engineering",
+                 "Data Scientist II": "data_science",
+                 "Senior Data Scientist, Machine Learning": "ml_ai"}  # ml_ai is checked first
         for title, want in cases.items():
             self.assertEqual(P.family_of(title, self.rules), want, title)
 
@@ -191,6 +201,13 @@ class TitleAndDescriptionRules(unittest.TestCase):
         self.assertIsNone(years("Founded 10+ years ago; we value curiosity.")[1]["years_required"])
         self.assertTrue(years("6+ years of industry experience")[0].startswith("experience:"))
         self.assertIsNone(years("4+ years of experience")[0])               # 4 <= 3.5 + 1 tolerance
+
+
+    def test_seniority_rules_030(self):
+        for title, excluded in {"Senior AI Engineer": False, "Sr. Data Engineer": False, "AI Engineer III": False,
+                                "Staff AI Engineer": True, "Lead Data Scientist": True, "Principal ML Engineer": True,
+                                "Data Engineering Intern": True}.items():
+            self.assertEqual(bool(P.seniority_hit(title, self.rules)), excluded, title)
 
 
 class LocationRule(unittest.TestCase):

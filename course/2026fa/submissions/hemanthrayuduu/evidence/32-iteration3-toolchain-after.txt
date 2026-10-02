@@ -1,0 +1,17 @@
+$ npm run doctor
+SUMMARY
+  environment: ✓ runnable
+  recipes: 33/33 carry lifecycle frontmatter — all tracked
+  next: continue
+$ npm run verify
+✓ manifest check passed (3 warnings)
+$ node scripts/conformance.mjs recipes/cases/2026fa scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline search/examples/kiran-rao
+✓ all conform (machine half of P4). Adequacy is still the human gate.
+$ node scripts/pii-scan.mjs --diff main
+pii-scan: clean ✓
+$ git diff --name-only main  (grouped by namespace)
+  61 course/2026fa/submissions/hemanthrayuduu
+   1 logs/runs/2026fa-hemanthrayuduu-1.md
+   2 recipes/cases/2026fa
+  21 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline
+   3 search/examples/kiran-rao

@@ -2,7 +2,7 @@
 owner: hemanthrayuduu
 term: 2026fa
 component: swe-sponsor-pipeline
-status: DRAFT  # mirrors the recipe: v0.1.2 reached RUNNABLE-SAMPLE; v0.2.1 (iteration 2) awaits the author's re-cleared sample-run gate
+status: DRAFT  # mirrors the recipe: v0.1.2 reached RUNNABLE-SAMPLE; v0.3.0 (iteration 3) awaits the author's re-cleared sample-run gate
 promoted_to: null
 ---
 
@@ -10,7 +10,7 @@ promoted_to: null
 
 ## Executive summary
 
-**What this is:** a small program for an international master's student in computer science on pre-completion OPT, with about 3.5 years of AI engineering experience, who wants **mid-level AI Engineer roles on the Microsoft AI stack**: anywhere in the US, Texas and remote first. It starts from public records of which companies sponsored visas and raised money recently. It then checks those companies' live job boards, reading each job description for anything that rules the student out: US citizenship, a clearance, "can't sponsor this role", or too many years asked.
+**What this is:** a small program for an international master's student in computer science on pre-completion OPT, with about 3.5 years of AI engineering experience, who wants **mid-level and senior AI Engineer, Data Scientist and Data Engineer roles**, ideally on the Microsoft AI and data stack: anywhere in the US, Texas and remote first. It starts from public records of which companies sponsored visas and raised money recently. It then checks those companies' live job boards, reading each job description for anything that rules the student out: US citizenship, a clearance, "can't sponsor this role", or too many years asked.
 
 **Why use it:** doing this research by hand takes hours per company. This produces a sourced, labeled list in minutes.
 
@@ -56,7 +56,7 @@ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponso
 | Wage, job zone, cognitive pivot score | `data/bls/compact/soc_occupation_compact.csv` | record |
 | Live postings | Greenhouse / Ashby board APIs | record |
 | Persona and résumé (fictional; the tests use `fixtures/persona.fixture.json` instead) | `search/examples/kiran-rao/` | your-input |
-| Thresholds, patterns, tier p-values, description rules, stack terms | `rules.json` (this folder, v0.2.1) | your-input |
+| Thresholds, patterns, tier p-values, description rules, stack terms | `rules.json` (this folder, v0.3.0) | your-input |
 | Fit scheme (greenhouse-watch default, location weights 0) | `scheme.json` (this folder) | your-input |
 
 **Reused code (not copied):**

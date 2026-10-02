@@ -52,6 +52,7 @@ Claude Code, in this session:
   - **Made and withdrew** a wrong company-wide "doesn't sponsor" rule, after checking the raw descriptions (`24a`, `24b`).
   - **Told the author** Twin Health "won't sponsor" from one posting; corrected it.
   - **Wrongly labeled** two drafted predictions as written before the run; corrected before commit.
+- **Iteration 3:** rules 0.3.0 (Senior titles; data_science and data_engineering families with O*NET-backed SOC lookups; Microsoft data-stack terms), persona v3, two new tests; ran `evidence/29`–`32`; found the two-requirement years case (TODO 9).
 - **DHS source used:** *Study in the States*, "F-1 Optional Practical Training (OPT)", studyinthestates.dhs.gov, read 2026-10-02.
 
 ## What the author decided, checked, changed, or rejected
@@ -72,4 +73,5 @@ Claude Code, in this session:
 - **Decided** to log the description problem as TODO 7 rather than change the tested code. Promoted the recipe to RUNNABLE-SAMPLE.
 - **Signed** the attestation after my own re-runs. Reviewed and edited FRICTIONAL Part B.
 - **Re-scoped** the work after iteration 1. I corrected my situation (pre-completion OPT, about 3.5 years, mid-level AI Engineer, Microsoft AI stack) and my location priority (all US, Texas and remote first), and asked which employers hire on OPT.
-- *(Iteration 2: add what you re-run, check and decide at gates G1–G3.)*
+- **Widened** the target again: Senior titles in, plus Data Engineer and Data Scientist roles (iteration 3).
+- *(Iteration 3: add what you re-run, check and decide at gates G1–G3.)*

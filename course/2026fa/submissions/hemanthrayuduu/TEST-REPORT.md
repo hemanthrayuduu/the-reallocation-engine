@@ -9,7 +9,19 @@
 **What it found:**
 - **Iteration 1 (entry-level software/AI):** the tool runs from a fresh copy with no installation, all its tests passed, and every named failure stopped cleanly. Two real defects (a location bug and a silent wrong-file success) were fixed and covered by tests.
 - **Iteration 2 (the author's real situation: mid-level AI Engineer, Microsoft stack, Texas and remote first):** the tool reads job descriptions, and all 21 tests pass. A disabled rule is caught by the tests. Testing on real data also caught and withdrew a wrong rule before it shipped: one that treated "can't sponsor this role" as company-wide.
+- **Iteration 3 (Senior titles + Data Scientist / Data Engineer):** a rules-only change; all 23 tests pass, and 7 roles reached Consider, including the first Texas match. A hand check exposed a rule choice: when a description states two year requirements, the lower one is used.
 - **The weakness stated plainly:** with the shipped data, no AI posting reaches "apply", because the sponsorship records rarely name AI titles.
+
+## Iteration 3 checks (code `75f3c41` unchanged, rules 0.3.0, recipe 0.3.0)
+
+| # | Check | Command / action | Observed | Evidence |
+|---|---|---|---|---|
+| I3-1 | Code unchanged | `git diff --stat 75f3c41 -- scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py` | empty | (this report) |
+| I3-2 | Offline tests | `python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v` | `Ran 23 tests … OK`. The first run failed `test_F6_…` because the Senior fixture was now scored, which is the intended effect, so the test was updated | `31-iteration3-offline-tests.txt` |
+| I3-3 | Live run | `pipeline.py --out-dir …/runs/2026-10-02-live-v3` | 49 candidates → 11 boards → 67 AI/data postings → 48 US → 16 right level → 9 ruled out by description → 7 kept. **apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1**; skip share 89.6% | `29-iteration3-live-run.txt`, `runs/2026-10-02-live-v3/` |
+| I3-4 | Hand cross-check | Apptronik 6176116004 and Twin Health 5655780004 via the Greenhouse API | Austin role: "5+ years … and 3+ years …", shown as 3+ (lowest-bound rule; TODO 9). Twin Health Senior AI Engineer: 5+ years, correctly ruled out; no can't-sponsor line | `30-iteration3-hand-cross-check.txt` |
+| I3-5 | Toolchain after | doctor, verify, conformance, `pii-scan --diff main`, scope | see evidence | `32-iteration3-toolchain-after.txt` |
+| I3-6 | Fresh clone + author re-run | *(to be run by the author before signing)* | — | — |
 
 ## Iteration 2 checks (code `75f3c41`, rules 0.2.1, recipe 0.2.1)
 
