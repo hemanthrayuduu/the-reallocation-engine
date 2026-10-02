@@ -299,7 +299,7 @@ class Fetcher:
 
     def __init__(self, offline_dir, raw_dir, delay):
         self.offline_dir, self.raw_dir, self.delay = offline_dir, raw_dir, delay
-        self.hosts, self.calls = set(), 0
+        self.hosts, self.calls, self.raw_index = set(), 0, {}
 
     def get(self, url, key):
         if self.offline_dir:
@@ -320,8 +320,12 @@ class Fetcher:
                 return ("not-found", None) if e.code == 404 else (f"fetch-failed: HTTP {e.code}", None)
             except (urllib.error.URLError, TimeoutError, OSError, ValueError) as e:
                 return f"fetch-failed: {type(e).__name__}: {e}", None
+        # raw responses go to a gitignored .build/ (they carry company contact addresses);
+        # the hash in the log keeps the provenance after .build/ is cleared
         self.raw_dir.mkdir(parents=True, exist_ok=True)
-        (self.raw_dir / f"{key}.json").write_text(json.dumps(data), encoding="utf-8")
+        blob = json.dumps(data).encode("utf-8")
+        (self.raw_dir / f"{key}.json").write_bytes(blob)
+        self.raw_index[key] = {"path": rel(self.raw_dir / f"{key}.json"), "sha256": hashlib.sha256(blob).hexdigest()}
         return "ok", data
 
 
@@ -641,6 +645,7 @@ def run(args):
             "offline_fixtures": rel(args.offline) if args.offline else None,
         },
         "hosts_contacted": sorted(fetcher.hosts), "http_calls": fetcher.calls,
+        "raw_responses": fetcher.raw_index,
         "persona": {k: lab(persona[k], INP) for k in ("persona_id", "funding_window_months", "min_h1b_approvals", "hiring_lag_days") if k in persona}
                    | {"visa": lab(persona.get("visa"), INP)},
         "funding_window_start": lab(str(window_start), INP, note="today − funding_window_months"),

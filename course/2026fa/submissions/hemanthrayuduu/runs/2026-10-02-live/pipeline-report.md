@@ -107,7 +107,7 @@ The scorer itself returned Skip for 6 of the 17 items it scored (35%); 4 of thos
 ## Run record (technical)
 
 - Command: `python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py`
-- Mode: live · today: 2026-10-02 (system clock) · rules 0.1.1 · generated 2026-10-02T22:15:47+00:00
+- Mode: live · today: 2026-10-02 (system clock) · rules 0.1.1 · generated 2026-10-02T22:17:57+00:00
 - Hosts contacted: api.ashbyhq.com, boards-api.greenhouse.io · HTTP calls: 108
 - Funding window start: 2024-10-02 `your-input`
 - Scorer: `node scripts/score/role-scorer.mjs course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/roles.json --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live` → ✓ scored 17 roles → Apply 9 · Consider 2 · Skip 6 (skip 35%)

@@ -1,7 +1,7 @@
 {
   "_tool": "swe-sponsor-pipeline",
   "rules_version": "0.1.1",
-  "generated": "2026-10-02T22:15:47+00:00",
+  "generated": "2026-10-02T22:17:57+00:00",
   "today": {
     "value": "2026-10-02",
     "source": "record",
@@ -47,6 +47,76 @@
     "boards-api.greenhouse.io"
   ],
   "http_calls": 108,
+  "raw_responses": {
+    "greenhouse-databricks": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-databricks.json",
+      "sha256": "8c1b8a7d9dc43dcaefd0321a2f12f9a3f74e7f836af220a0a73f0ecb1ca82c7f"
+    },
+    "greenhouse-databricks.meta": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-databricks.meta.json",
+      "sha256": "48ab21b7e1862f865552e7e03203aba6713e59a90a8abbd153507307efa553e5"
+    },
+    "greenhouse-verkada": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-verkada.json",
+      "sha256": "a1f484a8f74f61d6c784b738fea9db5b0829ce860845f0d3366f429aa6713723"
+    },
+    "greenhouse-verkada.meta": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-verkada.meta.json",
+      "sha256": "7db800c7d5c63faeae8a1b7f32f4557e0b6cc400556356f2eca24e8141d6f2d4"
+    },
+    "greenhouse-coherehealth": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-coherehealth.json",
+      "sha256": "398bec0396ca0e50dee232e3814e05c7a503b2bebcd2d8c64207c6bc9d10e96a"
+    },
+    "greenhouse-coherehealth.meta": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-coherehealth.meta.json",
+      "sha256": "9315d684ac3d88dd9ddef4d4ebf9f7db894c42ca7f41658a5acec5291f771e92"
+    },
+    "greenhouse-apptronik": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-apptronik.json",
+      "sha256": "17cf1b8042054279149d607a5de4cad51fe6801593e23676a10db91b628bbe2e"
+    },
+    "greenhouse-apptronik.meta": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-apptronik.meta.json",
+      "sha256": "7672553ce358ff5b869d191bfdd9df638ef026cb75f9e0464c79167592661c5b"
+    },
+    "greenhouse-twinhealth": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-twinhealth.json",
+      "sha256": "aa8c6b04eae8bed18678c62fc6f3cc1aa5020566bf8311695fa43fc1efb42c9d"
+    },
+    "greenhouse-twinhealth.meta": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-twinhealth.meta.json",
+      "sha256": "77dd6e8ca4d3aa9e2223d5b504f01969c9aee6a67e7ae92bfe868767bdf957e8"
+    },
+    "greenhouse-psiquantum": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-psiquantum.json",
+      "sha256": "25fc42794a324c3eebf047897808f9280d88f8b2c3f221a9abe961c0fef67516"
+    },
+    "greenhouse-psiquantum.meta": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-psiquantum.meta.json",
+      "sha256": "fb584cdafc03914b98a307fd51e1b987ddf8afea230cc70a50d477e83ab500ea"
+    },
+    "ashby-vidmob": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/ashby-vidmob.json",
+      "sha256": "e796b5b2eeab28f891af3ff8119efef79d0f73424a424fb189874717a1ee1c13"
+    },
+    "greenhouse-diligentrobotics": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-diligentrobotics.json",
+      "sha256": "5b849ee53b72cfde88deeb0834c442164623e55717f498663a51065ebbafcef4"
+    },
+    "greenhouse-diligentrobotics.meta": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-diligentrobotics.meta.json",
+      "sha256": "1be37672ce029758b76497c2bcd66eeac6985afe4619a0c56c31b35f52cd4a9c"
+    },
+    "greenhouse-plexium": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-plexium.json",
+      "sha256": "3c17cd094da21b3650f5e310affcc8f17cffd315a516c588972a73588704a791"
+    },
+    "greenhouse-plexium.meta": {
+      "path": "course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live/.build/raw/greenhouse-plexium.meta.json",
+      "sha256": "882faf0616ededdce13fac772584e9f7e24c842cd772ef92e6bf60dd37d1e5a2"
+    }
+  },
   "persona": {
     "persona_id": {
       "value": "kiran-rao",
