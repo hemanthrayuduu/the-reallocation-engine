@@ -1,0 +1,12 @@
+$ npx playwright install chromium   # first attempt failed: browser executable missing (see 03a)
+$ npm run ats:liveness -- https://databricks.com/company/careers/open-positions/job?gh_jid=8829029002
+
+> the-reallocation-engine@1.0.0 ats:liveness
+> node scripts/ats/check-liveness.mjs https://databricks.com/company/careers/open-positions/job?gh_jid=8829029002
+
+Checking 1 URL(s)...
+
+✅ active     https://databricks.com/company/careers/open-positions/job?gh_jid=8829029002
+
+Results: 1 active  0 expired  0 uncertain
+exit=0
