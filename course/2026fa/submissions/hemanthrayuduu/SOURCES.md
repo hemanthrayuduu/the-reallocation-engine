@@ -43,13 +43,23 @@ Claude Code, in this session:
   - an unverified claim about which ATS Intel and ServiceNow use, which was removed;
   - a wrong count of identity-confirmed rows in TEST-REPORT, which was corrected after checking the log.
 - **Drafted** predictions P1–P3. These are labeled as Claude's in CHANGE-BRIEF.
+- **Drafted** FRICTIONAL Part B at the author's request, from the session record of his commands, output and decisions, for him to review and edit. Also wrote the gate-decision lines in the run log and the attestation line, from his stated results.
+- **Pulled** the two AI Engineer job descriptions at gate G3 (`evidence/20`). Ran the 11-link liveness check at the author's request (`evidence/19`).
 
 ## What the author decided, checked, changed, or rejected
 
-*(Author: complete in your own words. The decisions below are recorded from the session, to start from.)*
-
 - **Chose** the career situation (MS CS, December graduation, OPT not started), the target roles (software / AI engineer), the GitHub handle, and the starting recipe idea.
-- **Rejected** the first design. You asked why the output was "network, don't apply" and whether it would give you jobs to apply to. That made an Apply list the primary output, with networking kept as a secondary bucket.
-- **Rejected** a hard-coded prototype. You asked for one that is "not a hard coded one". That replaced the hand-typed board list, constant fit and fixed SOC with automatic board discovery, per-posting fit and BLS lookup.
+- **Rejected** the first design. I asked why the output was "network, don't apply" and whether it would give me jobs to apply to. That made an Apply list the primary output, with networking kept as a secondary bucket.
+- **Rejected** a hard-coded prototype. I asked for one that is "not a hard coded one". That replaced the hand-typed board list, constant fit and fixed SOC with automatic board discovery, per-posting fit and BLS lookup.
 - **Asked** whether the plan followed the assignment instructions. That produced the requirement trace in the plan.
-- *(Add: what you personally re-ran, read, checked against a source, and what you accepted or changed in each drafted document.)*
+- **Re-ran myself:**
+  - the offline tests (16 OK);
+  - the full live run (identical to the committed run);
+  - a fresh clone of the branch (tests OK, live run OK, no tracked files changed).
+- **Checked myself:** I opened all 11 Apply/Consider links (all live, with descriptions and Apply buttons). I confirmed the persona's OPT date and hiring lag as a stand-in for my situation (gate G2).
+- **Decided at gate G3:**
+  - rejected both Databricks AI Engineer roles once their descriptions showed a new-grad exclusion and a US citizenship and clearance requirement;
+  - chose Cohere Health SWE II and Verkada Backend to apply to;
+  - kept 7 rows as backups.
+- **Decided** to log the description problem as TODO 7 rather than change the tested code. Promoted the recipe to RUNNABLE-SAMPLE.
+- **Signed** the attestation after my own re-runs. Reviewed and edited FRICTIONAL Part B.
