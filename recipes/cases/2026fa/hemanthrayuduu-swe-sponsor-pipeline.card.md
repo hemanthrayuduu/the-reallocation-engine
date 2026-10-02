@@ -26,6 +26,7 @@ Answer: *which open roles are worth my two research-and-apply hours today, given
 - That a "check by hand" company has no jobs. Its board just wasn't found: 28 of 37 in the live run.
 - That an Ashby board (marked ⚠) belongs to the company.
 - That the role is truly entry level. Only the title is read.
+- That you're **eligible** at all. Requirements in the description, such as US citizenship, a security clearance, or "not for new graduates", are not read. Both AI Engineer roles in the live run were disqualifying this way, and only a human reading the description caught it.
 - That your 60-day hiring-lag assumption is realistic.
 - What this employer pays. The wage is a national median for the occupation.
 

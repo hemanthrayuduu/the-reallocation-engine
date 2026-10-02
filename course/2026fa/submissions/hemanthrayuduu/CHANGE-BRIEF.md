@@ -88,3 +88,22 @@ Why this is specific: a December graduate who hasn't started OPT can apply *now*
 ## Revisions
 
 *(Append only. Each revision dated and attributed.)*
+
+### Revision 1 — 2026-10-02, Claude Code (after the build and the live run; predictions above unchanged)
+
+| Prediction | Outcome | Evidence |
+|---|---|---|
+| P1: boards found for fewer than a third | **Confirmed.** 9 of 37 (24%); 28 in check-by-hand | `evidence/09-final-live-run.txt` |
+| P2: title-family matching misfires both ways | **Confirmed.** "Embedded Software Engineer" counts as software; Twin Health's family match rests on one sponsored "Senior Backend Engineer". Not yet seen: a "Member of Technical Staff" miss | `runs/2026-10-02-live/pipeline-report.md` |
+| P3: most Apply results demoted to Consider | **Wrong.** 9 Apply vs 2 Consider. With Proven p 0.9, sponsorship alone (0.315) clears the 0.30 Apply threshold, so fit barely matters for strong sponsors | `role-scores.json` traces; recipe `[TODO: DEFINE]` 5 |
+
+Failures that were **not** predicted:
+- PhD-only roles reached the Apply list (`evidence/05-first-live-smoke/`).
+- "Anywhere in the US" was classed non-US (`evidence/06-…`).
+- A wrong-schema CSV produced a successful-looking empty run (`evidence/08a-…`).
+
+All three are fixed and tested. F4 (SOC with no BLS row) happened only in a fixture: the real BLS file has every SOC the run used. Slug changed from the plan's `swe-network-targets` to `swe-sponsor-pipeline` after the author asked for an apply list as the main output.
+
+### Revision 2 — author
+
+*(Your own predictions or corrections, in your words.)*

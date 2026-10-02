@@ -1,0 +1,22 @@
+# Gate G1: liveness spot-check of all 11 Apply/Consider URLs from runs/2026-10-02-live
+$ npm run ats:liveness -- --file /tmp/apply-urls.txt
+
+> the-reallocation-engine@1.0.0 ats:liveness
+> node scripts/ats/check-liveness.mjs --file /tmp/apply-urls.txt
+
+Checking 11 URL(s)...
+
+✅ active     https://databricks.com/company/careers/open-positions/job?gh_jid=8546367002
+✅ active     https://databricks.com/company/careers/open-positions/job?gh_jid=8760167002
+✅ active     https://databricks.com/company/careers/open-positions/job?gh_jid=8560779002
+✅ active     https://databricks.com/company/careers/open-positions/job?gh_jid=8635225002
+✅ active     https://job-boards.greenhouse.io/verkada/jobs/5194598007
+✅ active     https://job-boards.greenhouse.io/verkada/jobs/5233102007
+✅ active     https://job-boards.greenhouse.io/verkada/jobs/5194716007
+✅ active     https://job-boards.greenhouse.io/verkada/jobs/5195995007
+✅ active     https://job-boards.greenhouse.io/verkada/jobs/4129304007
+✅ active     https://job-boards.greenhouse.io/verkada/jobs/4134234007
+✅ active     https://job-boards.greenhouse.io/coherehealth/jobs/7930480003
+
+Results: 11 active  0 expired  0 uncertain
+exit=0

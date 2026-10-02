@@ -1,9 +1,9 @@
 ---
-status: DRAFT          # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. Sample run is complete and logged (logs/runs/2026fa-hemanthrayuduu-1.md); promotion to RUNNABLE-SAMPLE waits for the named human to clear the sample-run gate below. See "Lifecycle note".
-todos_open: 6
-last_gate: null
-attestation: null
-recipe_version: 0.1.1
+status: RUNNABLE-SAMPLE  # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. Sample-run gate cleared by a named human; see "Lifecycle note" for how the open TODOs are counted.
+todos_open: 7
+last_gate: "sample-run, 2026-10-02, Hemanth Rayudu, logs/runs/2026fa-hemanthrayuduu-1.md (G1–G3 cleared)"
+attestation: null  # set only at VERIFIED; the sample-run attestation is in course/2026fa/submissions/hemanthrayuduu/worked-run.md
+recipe_version: 0.1.2  # 0.1.2: TODO 7 + gate result added after G3 (text only; code and rules unchanged from 0.1.1)
 ---
 
 # swe-sponsor-pipeline — live SWE/AI postings at sponsoring, recently funded companies
@@ -91,6 +91,7 @@ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponso
 | 4 | `[TODO: DEV]` | A funding vote in `role-scorer.mjs`, outside this namespace (an engine change for the maintainer) | The assignment's evidence table calls funding a vote, but the scorer has no such term. Here funding is a pre-filter, which is coarser: any funding inside the window counts the same. |
 | 5 | `[TODO: DEFINE]` | A fit floor, or a lower Proven p | With Proven p = 0.9, sponsorship alone gives 0.35 × 0.9 = 0.315 ≥ 0.30, the Apply threshold. So a Proven-tier posting is Apply whatever its fit (live run: "Software Engineer, Web Products", fit 0.25, Apply). The human picks the value; this recipe doesn't tune it to change one result. |
 | 6 | `[TODO: DATA SOURCE]` | A hiring-lag record (application → offer days) per company size or sector | The timeline gate rests entirely on the persona's 60-day assumption. No repo record measures hiring lag. |
+| 7 | `[TODO: DEV]` | Exclusion rules read from the posting **description**, not only its title. For example: "not intended for … new graduate", "U.S. citizenship … required", "security clearance". These are stated phrases in `rules.json`, matched against the posting text (record) | Found at gate G3 on 2026-10-02. Both Consider rows, the Databricks AI Engineer roles, were disqualifying for this persona: one excludes new graduates, the other requires US citizenship and a secret clearance. The title-only seniority rule could not see either (`course/2026fa/submissions/hemanthrayuduu/evidence/20-G3-ai-engineer-requirements.txt`). |
 
 ## Phase gates
 
@@ -129,6 +130,7 @@ Changing `rules.json` or `persona.json` changes the result, and the log records 
 - That a company in `check-by-hand` has no openings. Slugs are guesses, and four ATSs aren't probed.
 - That an Ashby board belongs to the company. The API returns no company name.
 - That a posting is truly entry level. Only the title is read, so "Software Engineer" at a robotics firm may want 3+ years.
+- That the student is eligible for the posting at all. Requirements stated only in the description, such as US citizenship, a security clearance, or "not for new graduates", are not read. Gate G3 caught both on 2026-10-02 (TODO 7).
 - That the hiring lag is realistic.
 - What this employer pays. OEWS is national and occupation-level.
 - That the 80 Days CSV is complete or current for any company.
@@ -220,9 +222,11 @@ Raw board responses go to `.build/raw/`, which is gitignored and hashed in the l
 
 ## Lifecycle note
 
-This version has a complete sample run with conformance passing and audits read by the agent. It stays **DRAFT** in the frontmatter until the named human, the student, clears the sample-run gate. A gate does not clear itself (P4).
+The sample-run gate was cleared on 2026-10-02 by Hemanth Rayudu. The record covers a full sample run, conformance passing, audits read, and G1–G3 decided (`logs/runs/2026fa-hemanthrayuduu-1.md`). So this version claims **RUNNABLE-SAMPLE** and no more: no gated live run beyond the sample, and no VERIFIED attestation.
 
-The six open TODOs are proposals outside the path this version executes. SNICKERDOODLE's DRAFT → SPECIFIED rule counts every open `[TODO]`, while the assignment asks for proposals written as TODOs. That conflict is recorded in the run log rather than resolved silently.
+Version 0.1.2 changed only recipe text after the student signed the sample-run attestation: TODO 7, one "cannot verify" line, this note, and the frontmatter. The code (`e26febd`) and `rules.json` 0.1.1 that were tested are unchanged.
+
+The seven open TODOs are proposals outside the path this version executes. SNICKERDOODLE's DRAFT → SPECIFIED rule counts every open `[TODO]`, while the assignment asks for proposals written as TODOs. That conflict is recorded in the run log rather than resolved silently.
 
 ## Run-log template (`logs/runs/`)
 
