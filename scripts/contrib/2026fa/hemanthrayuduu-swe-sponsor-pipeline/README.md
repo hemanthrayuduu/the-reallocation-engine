@@ -2,7 +2,7 @@
 owner: hemanthrayuduu
 term: 2026fa
 component: swe-sponsor-pipeline
-status: RUNNABLE-SAMPLE
+status: DRAFT  # mirrors the recipe; becomes RUNNABLE-SAMPLE when the named human clears the sample-run gate
 promoted_to: null
 ---
 
