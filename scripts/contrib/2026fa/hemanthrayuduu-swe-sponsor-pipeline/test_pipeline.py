@@ -261,18 +261,27 @@ class NamedFailures(unittest.TestCase):
         self.assertIn("missing columns", err)
         self.assertFalse((self.out / "pipeline-log.json").exists())
 
-    def test_never_writes_over_tracked_files(self):
-        # the fixtures folder is git-tracked: the run must refuse it and write nothing there
+    def test_never_writes_into_a_folder_it_did_not_create(self):
+        # the fixtures folder holds files this tool didn't write (and, in a checkout, tracked files):
+        # the run must refuse it and write nothing there, with or without git (e.g. from the unzipped submission)
         before = sorted(p.name for p in FIX.iterdir())
         rc, _, err = run(BASE + ["--out-dir", str(FIX)])
         self.assertEqual(rc, 1)
         self.assertIn("refusing to write into", err)
         self.assertEqual(sorted(p.name for p in FIX.iterdir()), before)
 
+    def test_reuses_its_own_earlier_output_folder(self):
+        rc1, _, _ = run(BASE + ["--out-dir", str(self.out)])
+        rc2, _, err = run(BASE + ["--out-dir", str(self.out)])
+        self.assertEqual((rc1, rc2), (0, 0), err)
+
     def test_default_out_dir_is_gitignored_inside_own_folder(self):
         import subprocess
         default = HERE / ".build" / "runs" / "2026-10-01-offline" / "pipeline-log.json"
         self.assertTrue(str(default).startswith(str(HERE)))
+        inside = subprocess.run(["git", "-C", str(HERE), "rev-parse", "--is-inside-work-tree"], capture_output=True, text=True)
+        if inside.returncode != 0:
+            self.skipTest("not a git checkout (e.g. the unzipped submission): nothing can be git-tracked here")
         ignored = subprocess.run(["git", "-C", str(HERE), "check-ignore", "-q", str(default)])
         self.assertEqual(ignored.returncode, 0, "default output folder is not gitignored")
 

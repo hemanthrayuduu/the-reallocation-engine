@@ -140,12 +140,24 @@ BLS_COLUMNS = ("onet_soc_code", "title", "alternate_titles_sample", "annual_medi
 
 
 def refuse_tracked_out_dir(out_dir):
-    """Never write over a tracked repo file: refuse an output folder that already holds git-tracked files."""
+    """Never write over a file this tool didn't write, and never over a tracked repo file.
+    1. Works without git (e.g. an unzipped submission): an existing, non-empty folder is refused unless it holds this
+       tool's own earlier pipeline-log.json.
+    2. Inside a git checkout, additionally: a folder holding any git-tracked file is refused."""
+    if out_dir.exists() and any(out_dir.iterdir()):
+        own = False
+        try:
+            own = json.loads((out_dir / "pipeline-log.json").read_text(encoding="utf-8")).get("_tool") == "swe-sponsor-pipeline"
+        except (OSError, ValueError, AttributeError):
+            own = False
+        if not own:
+            raise InputError(f"refusing to write into {rel(out_dir)}: it already holds files this tool did not write. "
+                             f"Choose an empty or new --out-dir, or omit it to use the gitignored default.")
     try:
         proc = subprocess.run(["git", "-C", str(REPO), "ls-files", "--", str(out_dir)],
                               capture_output=True, text=True, timeout=30)
     except (FileNotFoundError, subprocess.TimeoutExpired):
-        return  # no git available: nothing tracked can be overwritten through git's view; proceed
+        return  # no git: no tracked files exist to overwrite; check 1 above still applied
     if proc.returncode == 0 and proc.stdout.strip():
         n = len(proc.stdout.strip().splitlines())
         raise InputError(f"refusing to write into {rel(out_dir)}: it holds {n} git-tracked file(s), and this tool never "

@@ -21,6 +21,8 @@
 | F-3 | Break attempt on the real case | `--out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live` (offline fixtures) | `ERROR: refusing to write into … it holds 5 git-tracked file(s)`, exit 1; `git status` of `runs/` empty; the default path is gitignored (`git check-ignore`) | `36-fixA-tracked-output-guard.txt` |
 | F-4 | Author re-run + fresh clone on the fixed code | author typed `! bash .build/rerun.sh` and `! bash .build/fresh-clone.sh` (clone of `0e46158`) | both: 25 OK; apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1, identical to v0.3.0; git status empty | `38-v031-author-rerun.txt`, `39-v031-author-fresh-clone.txt` |
 | F-5 | Scope (fix C) | `git diff --stat main` | see evidence | `37-final-git-diff-stat.txt` |
+| F-6 | **The ZIP itself, unzipped and tested** | `bash .build/make-zip.sh`, unzip, run the offline tests in the extracted copy | **v0.3.1: `FAIL: test_never_writes_over_tracked_files`.** The guard asked git which files are tracked, and an unzipped submission is not a git checkout | `40-zip-test-failed-v031.txt` |
+| F-7 | Fix (v0.3.2) and re-test of the ZIP outside any git checkout | guard also refuses folders holding files the tool didn't write (no git needed); gitignore test skips when not in a checkout | see evidence | `41-zip-test-v032-outside-git.txt` |
 
 ## What the gates require a human to judge (iteration 3)
 

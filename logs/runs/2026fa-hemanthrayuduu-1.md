@@ -156,3 +156,14 @@ The iteration-3 sign-off lines at the bottom are still open.
 - **Gate decision:** the sample-run gate is re-confirmed for v0.3.1 by these re-runs, and the recipe is back at **RUNNABLE-SAMPLE**. The author's iteration-3 G1–G3 decisions stand for the same 7 rows, since matching and scoring are unchanged · Hemanth Rayudu, 2026-10-02.
 - **Open issues:** none from this fix.
 
+## 2026-10-02 — v0.3.2: Canvas ZIP built and tested; output guard made git-independent
+
+- **Recipe:** manual (`recipes/cases/2026fa/hemanthrayuduu-swe-sponsor-pipeline.md` v0.3.2, rules 0.3.0)
+- **Inputs:** `bash .build/make-zip.sh` (`git archive` of the branch commit minus `private/`, plus `SUBMISSION.md` at the top level with the SHA filled in). The ZIP was then unzipped and its offline tests run.
+- **Outputs:** `../reallocation-hemanthrayuduu-recipe.zip`, outside the repo and rebuilt per commit; `evidence/40`, `41`.
+- **Result:**
+  - The v0.3.1 ZIP failed one test: the output guard relied on git, and an unzipped submission isn't a checkout.
+  - v0.3.2 adds a git-independent check (refuse a non-empty folder this tool didn't write) and skips the gitignore test outside a checkout.
+  - The ZIP's tests then pass with git unable to see any repository (`evidence/41`).
+- **Open issues:** status is DRAFT until the author re-runs the tests and a fresh clone on v0.3.2. The ZIP must be rebuilt after the final commit. The PR is not opened yet (author's decision).
+

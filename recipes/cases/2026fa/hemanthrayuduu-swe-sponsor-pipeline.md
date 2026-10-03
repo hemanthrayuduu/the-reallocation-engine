@@ -1,9 +1,9 @@
 ---
-status: RUNNABLE-SAMPLE  # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.3.0 gates cleared by a named human; v0.3.1 (output-path guard) re-confirmed by the author's re-run and fresh clone. See "Lifecycle note".
+status: DRAFT          # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.3.1 reached RUNNABLE-SAMPLE (author re-run + fresh clone); v0.3.2 makes the output guard work without git (it failed in the unzipped submission), so it awaits the author's re-run. See "Lifecycle note".
 todos_open: 8
 last_gate: "sample-run, 2026-10-02, Hemanth Rayudu, logs/runs/2026fa-hemanthrayuduu-1.md (v0.3.0 G1–G3 cleared; v0.3.1 re-confirmed by author re-run + fresh clone at 0e46158)"
 attestation: null  # set only at VERIFIED; sample-run attestations are in course/2026fa/submissions/hemanthrayuduu/worked-run.md
-recipe_version: 0.3.1  # 0.3.1: outputs default to a gitignored folder and never overwrite tracked files; open decisions listed separately; 0.2.x: author re-scoped to AI Engineer (Microsoft AI stack), description rules, location preference; 0.3.0: Senior titles + Data Scientist / Data Engineer roles
+recipe_version: 0.3.2  # 0.3.2: output guard also works outside a git checkout (the unzipped submission); 0.3.1: outputs default to a gitignored folder and never overwrite tracked files; open decisions listed separately; 0.2.x: author re-scoped to AI Engineer (Microsoft AI stack), description rules, location preference; 0.3.0: Senior titles + Data Scientist / Data Engineer roles
 ---
 
 # swe-sponsor-pipeline — AI Engineer, Data Scientist and Data Engineer postings at sponsoring, recently funded companies
@@ -228,7 +228,7 @@ buckets{apply, consider, network, check-by-hand, skip}, scorer{…}, pipeline_sk
 - a persona family isn't in `rules.json`;
 - the OPT window has closed;
 - `node` is missing or the scorer fails;
-- the output folder holds git-tracked files (it would overwrite a committed result).
+- the output folder already holds files this tool did not write, or (in a git checkout) any git-tracked file. The run would overwrite a committed result.
 
 **Refuse to:**
 - score an unfetched board;
@@ -251,7 +251,8 @@ buckets{apply, consider, network, check-by-hand, skip}, scorer{…}, pipeline_sk
 - **v0.2.1** changed code (`75f3c41`), `rules.json` and the persona after the author re-scoped the situation.
 - **v0.3.0** changed only `rules.json` (Senior titles in; data_science and data_engineering families; Microsoft data-stack terms) and the persona's target families. The code is still `75f3c41`.
 - A gate cleared for one version does not carry over (P4), so v0.3.0 had its own gates. Hemanth Rayudu cleared G1–G3 and the sample-run gate for v0.3.0 on 2026-10-02.
-- **v0.3.1** changes only where outputs are written: a gitignored default and a refusal to write into a folder with tracked files. Matching, rules and scoring are unchanged. It also lists the two `[TODO: DEFINE]` items separately as open decisions. The author re-ran the tests and the live run, and ran a fresh clone of the branch at `0e46158`, on 2026-10-02 (`evidence/38`, `39`): 25 tests OK, results identical to v0.3.0, clean status. So the sample-run gate is re-confirmed and this version claims **RUNNABLE-SAMPLE** and no more: no gated live run beyond the sample, and no VERIFIED attestation.
+- **v0.3.1** changes only where outputs are written: a gitignored default and a refusal to write into a folder with tracked files. Matching, rules and scoring are unchanged. It also lists the two `[TODO: DEFINE]` items separately as open decisions. The author re-ran the tests and the live run, and ran a fresh clone of the branch at `0e46158`, on 2026-10-02 (`evidence/38`, `39`): 25 tests OK, results identical to v0.3.0, clean status. So the sample-run gate was re-confirmed for v0.3.1.
+- **v0.3.2** fixes a defect found when the Canvas ZIP was unzipped and tested: the v0.3.1 guard relied on git, so outside a git checkout it never fired and `test_never_writes_over_tracked_files` failed. The guard now also refuses any existing folder holding files this tool did not write, which works without git. Matching, rules and scoring are unchanged. It is **DRAFT** until the author's next re-run and fresh clone.
 - The seven open TODOs are proposals outside the executed path. SNICKERDOODLE's zero-open-TODO rule for SPECIFIED conflicts with the assignment's request to list proposals as TODOs. The author's decision on that conflict is recorded in the run log.
 
 ## Run-log template (`logs/runs/`)

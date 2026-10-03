@@ -1,0 +1,6 @@
+# v0.3.1 Canvas ZIP, unzipped into .build/zip-check and tested (inside the outer repo's ignored .build/, so git saw no tracked files there) — the four lines below are excerpted verbatim from that run's output (filtered with grep), not the full output
+$ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py'   (in the extracted the-reallocation-engine/ of the ZIP built from 4457345)
+FAIL: test_never_writes_over_tracked_files (test_pipeline.NamedFailures)
+    self.assertEqual(rc, 1)
+AssertionError: 0 != 1
+FAILED (failures=1)
