@@ -1,0 +1,21 @@
+# Fresh-clone check of the committed branch (iteration 3), run by the author, Hemanth Rayudu, 2026-10-02, typed in the Claude Code prompt as `! bash .build/fresh-clone.sh`
+# (script copied verbatim in 35b; the clone and its run output live in the gitignored .build/ folder). Output below is verbatim.
+$ bash .build/fresh-clone.sh
+== 0. fresh clone of contrib/2026fa-hemanthrayuduu-swe-sponsor-pipeline (committed files only; no node_modules, no .build, no local edits)
+99bc2c9 2026fa hemanthrayuduu: author's own iteration-3 re-run (evidence/34b) and signed attestation
+node v23.11.0 · Python 3.9.10 · Darwin 27.0.0
+
+== 1. offline tests (in the clone)
+Ran 23 tests in 0.184s
+
+OK
+
+== 2. live run from the clone (about 2 minutes; output goes outside the clone, to .build/fresh-clone-run)
+  [49/49] SERVICENOW INC: not-found
+✓ swe-sponsor-pipeline (live): 49 candidates, 49 probed, 11 boards found, 14 roles scored
+  apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1
+  scorer: ✓ scored 14 roles → Apply 0 · Consider 7 · Skip 7 (skip 50%)
+  /Users/HemanthRayudu/Profession/Assignments/Prompt Engineering/the-reallocation-engine/.build/fresh-clone-run/pipeline-report.md  +  /Users/HemanthRayudu/Profession/Assignments/Prompt Engineering/the-reallocation-engine/.build/fresh-clone-run/pipeline-log.json
+
+== 3. git status in the clone (must be empty: the run changed no tracked file)
+== done

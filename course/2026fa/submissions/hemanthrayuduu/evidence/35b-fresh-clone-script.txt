@@ -1,0 +1,23 @@
+# The exact script the author ran for 35 (gitignored at .build/fresh-clone.sh; copied here verbatim for traceability)
+#!/usr/bin/env bash
+# Fresh-clone check of the committed branch (iteration 3). Gitignored helper (.build/), not part of the submission.
+REPO="/Users/HemanthRayudu/Profession/Assignments/Prompt Engineering/the-reallocation-engine"
+BRANCH="contrib/2026fa-hemanthrayuduu-swe-sponsor-pipeline"
+CLONE="$REPO/.build/fresh-clone"
+RUN="$REPO/.build/fresh-clone-run"
+rm -rf "$CLONE" "$RUN"
+echo "== 0. fresh clone of $BRANCH (committed files only; no node_modules, no .build, no local edits)"
+git clone -q --branch "$BRANCH" "$REPO" "$CLONE" || exit 1
+cd "$CLONE" || exit 1
+git log --oneline -1
+echo "node $(node --version) · $(python3 --version) · $(uname -sr)"
+echo
+echo "== 1. offline tests (in the clone)"
+python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' 2>&1 | tail -3
+echo
+echo "== 2. live run from the clone (about 2 minutes; output goes outside the clone, to .build/fresh-clone-run)"
+python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir "$RUN" 2>&1 | tail -5
+echo
+echo "== 3. git status in the clone (must be empty: the run changed no tracked file)"
+git status --short
+echo "== done"

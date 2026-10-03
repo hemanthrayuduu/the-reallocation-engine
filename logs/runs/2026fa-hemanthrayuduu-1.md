@@ -120,6 +120,9 @@ The iteration-3 sign-off lines at the bottom are still open.
 ## Gate decisions — iteration 3 (v0.3.0)
 
 - **Sample-run gate (lifecycle):** ☑ cleared · by: Hemanth Rayudu · date: 2026-10-02 · note: full sample run of v0.3.0 (`runs/2026-10-02-live-v3/`) with conformance, tests (23) and G1–G3 cleared; recipe promoted to RUNNABLE-SAMPLE. The seven open proposal TODOs are treated as non-blocking, as decided for iteration 1. The iteration-3 attestation is signed separately after my own re-run.
+- **Author re-runs:**
+  - working copy (`evidence/34b`);
+  - fresh clone of the branch at `99bc2c9` (`evidence/35`): 23 tests OK, identical live result, clone `git status` empty.
 - **G1 liveness:** ☑ cleared. All 7 Consider links are live. Machine check: `npm run ats:liveness -- --file /tmp/consider-urls-v3.txt` returned `7 active 0 expired 0 uncertain` (`course/2026fa/submissions/hemanthrayuduu/evidence/33-iteration3-G1-liveness-7-links.txt`). Human check: I opened all 7 in a browser, and each showed its job description and an Apply button. Removed: none · by/date: Hemanth Rayudu, 2026-10-02
 - **G2 timeline:** ☑ cleared. The post-completion OPT start (2027-01-11, fictional stand-in; pre-completion OPT from mid-October) and the 60-day hiring lag are confirmed; timeline factor 1.0 (margin 131 days) · by/date: Hemanth Rayudu, 2026-10-02
 - **G3 release:** ☑ cleared.

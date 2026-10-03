@@ -23,7 +23,7 @@
 | I3-5 | Toolchain after | doctor, verify, conformance, `pii-scan --diff main`, scope | see evidence | `32-iteration3-toolchain-after.txt` |
 | I3-6 | Gate G1 (machine + human) | `npm run ats:liveness -- --file /tmp/consider-urls-v3.txt`; author opened all 7 | `7 active 0 expired 0 uncertain`; each page has a description and an Apply button | `33-iteration3-G1-liveness-7-links.txt`, run log |
 | I3-7 | Author re-run (for the attestation) | author typed `! bash .build/rerun.sh` (tests, live run to gitignored `.build/my-run-v3`, git status) | 23 OK; apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1, identical; git status listed one leftover file from an interrupted Claude run (archived) | `34b-iteration3-author-rerun.txt`, `34c-rerun-script.txt`, `34a-INTERRUPTED-claude-rerun.txt` |
-| I3-8 | Fresh clone for iteration 3 | not run (iteration 1 was tested from a fresh clone) | — | — |
+| I3-8 | Fresh clone of the branch (author) | author typed `! bash .build/fresh-clone.sh`: clone of `99bc2c9`, tests, live run (output outside the clone), git status | node v23.11.0 · Python 3.9.10 · Darwin 27.0.0; 23 OK; apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1; clone `git status` empty | `35-iteration3-author-fresh-clone.txt`, `35b-fresh-clone-script.txt` |
 
 ## Iteration 2 checks (code `75f3c41`, rules 0.2.1, recipe 0.2.1)
 

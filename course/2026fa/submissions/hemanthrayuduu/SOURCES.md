@@ -57,7 +57,7 @@ Claude Code, in this session:
 
 ## What the author decided, checked, changed, or rejected
 
-- **Chose** the career situation (MS CS, December graduation, OPT not started), the target roles (software / AI engineer), the GitHub handle, and the starting recipe idea.
+- **Chose** the starting career situation (MS CS, December graduation, OPT not started; later corrected, see *Re-scoped*), the target roles (software / AI engineer), the GitHub handle, and the starting recipe idea.
 - **Rejected** the first design. I asked why the output was "network, don't apply" and whether it would give me jobs to apply to. That made an Apply list the primary output, with networking kept as a secondary bucket.
 - **Rejected** a hard-coded prototype. I asked for one that is "not a hard coded one". That replaced the hand-typed board list, constant fit and fixed SOC with automatic board discovery, per-posting fit and BLS lookup.
 - **Asked** whether the plan followed the assignment instructions. That produced the requirement trace in the plan.
@@ -74,4 +74,10 @@ Claude Code, in this session:
 - **Signed** the attestation after my own re-runs. Reviewed and edited FRICTIONAL Part B.
 - **Re-scoped** the work after iteration 1. I corrected my situation (pre-completion OPT, about 3.5 years, mid-level AI Engineer, Microsoft AI stack) and my location priority (all US, Texas and remote first), and asked which employers hire on OPT.
 - **Widened** the target again: Senior titles in, plus Data Engineer and Data Scientist roles (iteration 3).
-- *(Iteration 3: add what you re-run, check and decide at gates G1–G3.)*
+- **Iteration 3, checked and decided myself:**
+  - opened all 7 Consider links (all live, with descriptions and Apply buttons);
+  - confirmed the timeline stand-in (G2);
+  - chose to apply to all 7 Consider rows (G3), treating the Austin role as a reach because its description asks 5+ years;
+  - promoted the recipe to RUNNABLE-SAMPLE for v0.3.0.
+- **Re-ran myself for iteration 3:** I stopped Claude Code's re-run so I could run the checks myself. I ran `! bash .build/rerun.sh` (`evidence/34b`) and `! bash .build/fresh-clone.sh` on a fresh clone at `99bc2c9` (`evidence/35`). Both gave 23 tests OK and an identical live result.
+- **Asked Claude Code to write** the iterations 2–3 part of FRICTIONAL Part B and this iteration-3 entry from the session record; I read them before submitting.

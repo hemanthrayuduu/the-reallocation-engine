@@ -39,7 +39,9 @@ This is the honest record of how the work actually went: what was tried, what br
 
 ## Part B — author's own account (Hemanth Rayudu)
 
-> How this was written: at my request, Claude Code drafted this section from this session's record: the commands I ran, the output I saw, and the decisions I made. I then reviewed it and edited it into my own words. Everything here is something I did or decided myself.
+> How this was written: at my request, Claude Code drafted this section from this session's record: the commands I ran, the output I saw, and the decisions I made. I reviewed the iteration-1 part before it was committed. I asked Claude Code to write the iterations 2–3 part as well, and I read it before submitting. Everything here is something I did, saw or decided myself.
+
+### Iteration 1 (entry-level software / AI)
 
 **What I tried myself, and what happened**
 - I ran the offline tests: `Ran 16 tests … OK`.
@@ -73,13 +75,42 @@ This is the honest record of how the work actually went: what was tried, what br
 - Labels matter: `record` means read from a file or job board, and `your-input` means my own rule or assumption. Seeing them side by side showed me how much of each score rests on choices rather than facts.
 - Running the same thing again isn't iteration. The useful changes all came from noticing something wrong in real output.
 
-**Iteration 2 (re-scope), drafted from the session for me to edit**
-- I corrected the situation the tool was built for: I'm on **pre-completion OPT** from mid-October, I have about 3.5 years of experience, and I want **mid-level AI Engineer roles on the Microsoft AI stack**, anywhere in the US but Texas and remote first.
-- I thought my 90-day clock would start in October. The DHS page says the 90-day limit is a post-completion OPT rule, and that the student applies for OPT; no employer sponsors it. So my real question was "who hires on OPT and sponsors H-1B later". I still need to confirm my dates with my DSO.
-- After the change, the tool found 3 AI roles to consider and none to apply to, because the sponsorship records rarely list AI titles. It also showed companies with a sponsorship history posting "unable to sponsor … for this role" on some jobs.
-- I then asked to include Senior titles and Data Engineer / Data Scientist roles. That found 7 roles to consider, including one in Austin, TX. The Austin role's description asks 5+ years of software engineering even though the tool shows 3+, so I have to read descriptions myself, not just the Years column.
-- *(Add: what you checked in the iteration-3 report and what you'd act on.)*
-
-**Still unresolved for me**
+**Still unresolved after iteration 1**
 - Where to find AI Engineer roles that are open to new graduates *and* at companies that sponsor that title. The sponsorship records behind this run mostly cover software titles.
 - What fit floor would stop a weak match like Databricks "Web Products" (fit 0.25) from being called Apply.
+
+### Iterations 2 and 3 (my real situation)
+
+**What I tried myself, and what happened**
+- **Iteration 2: corrected the situation.** I'm on pre-completion OPT from mid-October, I have about 3.5 years of AI engineering experience, and I want AI Engineer roles on the Microsoft AI stack, anywhere in the US but Texas and remote first.
+- **Iteration 3: widened the target.** I asked to include Senior titles and Data Engineer / Data Scientist roles.
+- **Liveness:** I had the liveness check run on the 7 Consider links (7 active, `evidence/33`), and I opened all 7 in my browser. Each had a job description and an Apply button.
+- **My own re-runs.** I stopped Claude Code when it started re-running the checks for my attestation, because I wanted to run them myself. I couldn't copy commands out of the terminal, so Claude put them into two short scripts, and I ran both from the Claude Code prompt:
+  - `! bash .build/rerun.sh`: 23 tests OK; live run apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1 (`evidence/34b`).
+  - `! bash .build/fresh-clone.sh`: a fresh clone of the branch at `99bc2c9`. 23 tests OK, the same live result, and `git status` empty in the clone (`evidence/35`).
+
+**What I expected vs. what I saw**
+- **The OPT clock.** I believed my 90-day unemployment clock starts in October. The DHS Study in the States page says the 90-day limit is a post-completion OPT rule, and that the student applies for OPT; no employer sponsors it. So my real question is "who hires people on OPT and sponsors an H-1B later?". I still have to confirm my dates with my DSO.
+- **No Apply rows.** I expected some AI roles to reach Apply. None did, in iteration 2 or 3. Every AI and data posting got the weaker "Possible" sponsorship grade, because the sponsorship records list only a company's top few titles, and those are rarely AI or data titles.
+- **Senior roles.** I expected adding them to open up a lot. The description check ruled out 8 of them for asking 5+ or 8+ years, and 7 roles reached Consider, including one in Austin, TX.
+
+**What I checked against a source, and the result**
+- **The 7 Consider links:** all live.
+- **The Austin role (Apptronik, Senior Software Engineer, ML Infrastructure):** its description asks for 5+ years of software engineering *and* 3+ years of data-infrastructure work, but the tool shows 3+. I'm applying anyway, knowing it's a reach (`evidence/30`).
+- **Twin Health's Senior AI Engineer:** it asks 5+ years, so it was correctly ruled out. It doesn't say it can't sponsor.
+
+**What I accepted, modified, or rejected from the AI's work, and why**
+- **Applying to all 7** Consider rows (gate G3), and confirming the timeline stand-in (G2).
+- **Kept the years rule as it is**, rather than tuning it after seeing the Austin result. It's logged as TODO 9 for a deliberate decision.
+- **Accepted Claude's correction** that "can't sponsor this role" statements are per role, not company-wide. Claude had first told me Twin Health "won't sponsor" based on one posting.
+- **Didn't rely on Claude's word that "nothing ran"** after I stopped its run. My own `git status` showed a leftover file. Claude admitted the mistake, and the file is archived as `evidence/34a`.
+
+**What I learned**
+- Check visa rules against the official source. My assumption about when the OPT clock starts was wrong.
+- The deciding facts are in the job description, not the title: citizenship, clearance, years, "can't sponsor this role". Even the tool's Years column needs a human reading, as the Austin role showed.
+- A company's sponsorship history doesn't mean every role there is sponsored, and one "can't sponsor" line doesn't mean the company never sponsors.
+
+**Still unresolved for me**
+- Which of the six networking targets I'll contact (not decided yet).
+- No Data Engineer postings turned up, and boards were found for only 11 of 49 companies.
+- How the tool should read descriptions that give two different year requirements (TODO 9), and whether a fit floor is needed (TODO 5).
