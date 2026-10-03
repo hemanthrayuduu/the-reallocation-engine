@@ -1,0 +1,359 @@
+{
+  "roles": [
+    {
+      "role_id": "greenhouse:databricks:8546367002",
+      "company": "DATABRICKS INC",
+      "title": "AI Engineer – Forward Deployed Engineering (AI FDE)",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "1640 H-1B approvals (record); posting family 'ml_ai' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.812,
+        "source": "your-input",
+        "basis": "scheme hemanthrayuduu-0.2 score 9.75 / scheme max 12.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-03"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:databricks:8656900002",
+      "company": "DATABRICKS INC",
+      "title": "Senior Applied ML Engineer - ML4Sys ",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "1640 H-1B approvals (record); posting family 'ml_ai' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.333,
+        "source": "your-input",
+        "basis": "scheme hemanthrayuduu-0.2 score 4.00 / scheme max 12.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-03"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:databricks:5634684002",
+      "company": "DATABRICKS INC",
+      "title": "Senior Data Scientist ",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "1640 H-1B approvals (record); posting family 'data_science' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.333,
+        "source": "your-input",
+        "basis": "scheme hemanthrayuduu-0.2 score 4.00 / scheme max 12.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-03"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:4128624007",
+      "company": "VERKADA INC",
+      "title": "Senior Software Engineer - Computer Vision",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'ml_ai' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.333,
+        "source": "your-input",
+        "basis": "scheme hemanthrayuduu-0.2 score 4.00 / scheme max 12.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-03"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:5195995007",
+      "company": "VERKADA INC",
+      "title": "Software Engineer - Computer Vision",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'ml_ai' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.333,
+        "source": "your-input",
+        "basis": "scheme hemanthrayuduu-0.2 score 4.00 / scheme max 12.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-03"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:verkada:4129304007",
+      "company": "VERKADA INC",
+      "title": "Software Engineer - Data Platform",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "272 H-1B approvals (record); posting family 'data_engineering' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.25,
+        "source": "your-input",
+        "basis": "scheme hemanthrayuduu-0.2 score 3.00 / scheme max 12.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-03"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:coherehealth",
+      "company": "COHERE HEALTH INC",
+      "title": "(no qualifying US ml_ai/data_science/data_engineering posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "104 H-1B approvals for ['ml_ai', 'software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-03: 76 postings, 0 passed family+US+seniority+description rules"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:apptronik:6176116004",
+      "company": "APPTRONIK INC",
+      "title": "Senior Software Engineer, ML Infrastructure",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "56 H-1B approvals (record); posting family 'ml_ai' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.583,
+        "source": "your-input",
+        "basis": "scheme hemanthrayuduu-0.2 score 7.00 / scheme max 12.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-03"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:outsetmedical",
+      "company": "OUTSET MEDICAL INC",
+      "title": "(no qualifying US ml_ai/data_science/data_engineering posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "44 H-1B approvals for ['data_engineering'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-03: 30 postings, 0 passed family+US+seniority+description rules"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:twinhealth",
+      "company": "TWIN HEALTH INC",
+      "title": "(no qualifying US ml_ai/data_science/data_engineering posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "40 H-1B approvals for ['data_engineering', 'software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-03: 39 postings, 0 passed family+US+seniority+description rules"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:psiquantum",
+      "company": "PSIQUANTUM CORP",
+      "title": "(no qualifying US ml_ai/data_science/data_engineering posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "26 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-03: 74 postings, 0 passed family+US+seniority+description rules"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:ashby:vidmob",
+      "company": "VIDMOB INC",
+      "title": "(no qualifying US ml_ai/data_science/data_engineering posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "22 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-03: 3 postings, 0 passed family+US+seniority+description rules"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "greenhouse:diligentrobotics:7651459003",
+      "company": "DILIGENT ROBOTICS INC",
+      "title": "ML Engineer, Manipulation",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "20 H-1B approvals (record); posting family 'ml_ai' is NOT among sponsored families ['software'] (record); tier rule rules.json"
+      },
+      "fit": {
+        "p": 0.333,
+        "source": "your-input",
+        "basis": "scheme hemanthrayuduu-0.2 score 4.00 / scheme max 12.0 — deterministic phrase match, no model"
+      },
+      "liveness": {
+        "factor": 1.0,
+        "source": "record",
+        "basis": "posting present in greenhouse board API response fetched 2026-10-03"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:ashby:codametrix",
+      "company": "CODAMETRIX INC",
+      "title": "(no qualifying US ml_ai/data_science/data_engineering posting on board)",
+      "sponsorship": {
+        "p": 0.9,
+        "tier": "Proven",
+        "source": "your-input",
+        "basis": "18 H-1B approvals for ['ml_ai'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-03: 2 postings, 0 passed family+US+seniority+description rules"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    },
+    {
+      "role_id": "company:greenhouse:plexium",
+      "company": "PLEXIUM INC",
+      "title": "(no qualifying US ml_ai/data_science/data_engineering posting on board)",
+      "sponsorship": {
+        "p": 0.4,
+        "tier": "Possible",
+        "source": "your-input",
+        "basis": "2 H-1B approvals for ['software'] titles (record); tier rule rules.json"
+      },
+      "liveness": {
+        "factor": 0.0,
+        "source": "record",
+        "basis": "board fetched 2026-10-03: 0 postings, 0 passed family+US+seniority+description rules"
+      },
+      "timeline": {
+        "factor": 1.0,
+        "source": "your-input",
+        "basis": "persona opt_start_date + unemployment_days_allowed − hiring_lag_days (rules.json timeline)"
+      }
+    }
+  ]
+}
