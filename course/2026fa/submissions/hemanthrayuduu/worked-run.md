@@ -77,7 +77,26 @@ Details per row: `evidence/verify-iteration-1.md`, `-2.md`, `-3.md`.
 
 ## Attestation (iteration 4)
 
-To be signed by the author after his own re-run and fresh-clone check (Task 6). Until then the recipe is DRAFT.
+- Recipe: swe-sponsor-pipeline v0.4.2 (rules 0.4.2)
+- By: Hemanth Rayudu · 2026-10-03
+
+### Tested
+| Ran | Saw | Expected |
+|---|---|---|
+| `bash .build/rerun.sh` (my own run, `evidence/46`) | 49 tests OK; apply 0 · consider 8 · network 6 · check-by-hand 38 · skip 1 | tests pass; same buckets as the committed run |
+| `bash .build/fresh-clone.sh` at `b81f526` (`evidence/47`) | 49 OK; identical buckets; empty git status in the clone | runs from committed files only and changes no tracked file |
+| Opened all 8 Consider links (G1; machine check `evidence/45`: 8 active) | each shows the description and an Apply button | all live |
+| Break attempt (Claude Code, verification 1–2): the sample checked against live descriptions | 1, then 2 wrong decisions found and fixed with tests | the loop finds errors before the human gate |
+
+### Did not test
+- Every posting by hand: only the 23-row sample and the 16 years rule-outs were checked.
+- Years written as words ("five years"), and descriptions in languages other than English.
+- Lever, Workday, iCIMS and SmartRecruiters boards (not probed; 38 companies are check-by-hand).
+- Whether any of these employers will actually sponsor me, and the real hiring lag.
+
+### Broke during testing, fixed
+- Verification 1: a "… is a plus" in the next sentence made a 5+ requirement look preferred (Twin Health Senior AI Engineer kept wrongly). Fixed in rules 0.4.1, with a test.
+- Verification 2: "2+ years strongly preferred" and "expertise (5+ years)" were misread (two RL Engineer roles kept). Fixed in rules 0.4.2, with tests.
 
 ---
 

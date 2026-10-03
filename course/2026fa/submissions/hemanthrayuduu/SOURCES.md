@@ -81,4 +81,5 @@ Claude Code, in this session:
   - chose to apply to all 7 Consider rows (G3), treating the Austin role as a reach because its description asks 5+ years; *(the "5+ years" reading was Claude's mistake: the description says 5+ **or** 3+; corrected 2026-10-03)*
   - promoted the recipe to RUNNABLE-SAMPLE for v0.3.0.
 - **Re-ran myself for iteration 3:** I stopped Claude Code's re-run so I could run the checks myself. I ran `! bash .build/rerun.sh` (`evidence/34b`) and `! bash .build/fresh-clone.sh` on a fresh clone at `99bc2c9` (`evidence/35`). Both gave 23 tests OK and an identical live result.
+- **Iteration 4, checked and decided myself (2026-10-03):** chose "verified accuracy" and minimal hardening in the design; approved the design and plan; ran `! bash .build/rerun.sh` and `! bash .build/fresh-clone.sh` myself (`evidence/46`, `47`); opened all 8 Consider links (G1); confirmed the timeline (G2); chose to apply to all 8 (G3); promoted v0.4.2 to RUNNABLE-SAMPLE.
 - **Asked Claude Code to write** the iterations 2–3 part of FRICTIONAL Part B and this iteration-3 entry from the session record; I read them before submitting.

@@ -1,0 +1,19 @@
+$ bash .build/fresh-clone.sh   # typed by the author (Hemanth Rayudu) in the session prompt, 2026-10-03
+== 0. fresh clone of contrib/2026fa-hemanthrayuduu-swe-sponsor-pipeline (committed files only; no node_modules, no .build, no local edits)
+b81f526 2026fa hemanthrayuduu: recipe 0.4.2 documents; Austin 'or' correction; TODO 9 closed
+node v23.11.0 · Python 3.9.10 · Darwin 27.0.0
+
+== 1. offline tests (in the clone)
+Ran 49 tests in 0.481s
+
+OK
+
+== 2. live run from the clone (about 2 minutes; output goes outside the clone, to .build/fresh-clone-run)
+  [49/49] SERVICENOW INC: not-found
+✓ swe-sponsor-pipeline (live): 49 candidates, 49 probed, 11 boards found, 15 roles scored
+  apply 0 · consider 8 · network 6 · check-by-hand 38 · skip 1
+  scorer: ✓ scored 15 roles → Apply 0 · Consider 8 · Skip 7 (skip 47%)
+  <repo>/.build/fresh-clone-run/pipeline-report.md  +  <repo>/.build/fresh-clone-run/pipeline-log.json
+
+== 3. git status in the clone (must be empty: the run changed no tracked file)
+== done

@@ -2,7 +2,7 @@
 owner: hemanthrayuduu
 term: 2026fa
 component: swe-sponsor-pipeline
-status: DRAFT  # mirrors the recipe: v0.4.2 (years rule v2, fit ÷ 12, per-posting audit) awaits the author's re-run and gates
+status: RUNNABLE-SAMPLE  # mirrors the recipe: v0.4.2, gates cleared by the author 2026-10-03
 promoted_to: null
 ---
 

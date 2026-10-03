@@ -177,11 +177,11 @@ The iteration-3 sign-off lines at the bottom are still open.
   - Final: apply 0 · consider 8 · network 6 · check-by-hand 38 · skip 1. 92 target-family postings, 17 ruled out by description, skip share 91.3%. Tests 49/49.
   - TODO 9 closed by the years rule v2 (author's decision in the approved design). `todos_open` 7.
 - **Correction:** the iteration-3 entry above says the Austin role states 5+ years *and* 3+ years. The description says 5+ **or** 3+. The entry is left as written; this line corrects it.
-- **Open issues:** status is DRAFT until the author re-runs the tests and a fresh clone, and clears this version's gates below.
+- **Author re-run and fresh clone (2026-10-03, at `b81f526`):** 49 tests OK; apply 0 · consider 8 · network 6 · check-by-hand 38 · skip 1, identical to the committed run; clean status in the clone (`evidence/46`, `47`).
 
 ## Gate decisions — iteration 4 (v0.4.2)
 
-- **Sample-run gate (lifecycle):** ☐ · by/date: ______
-- **G1 liveness:** links checked for the 8 Consider rows: ___ of 8 live · by/date: ______
-- **G2 timeline:** OPT start stand-in (2027-01-11) and 60-day hiring lag confirmed · by/date: ______
-- **G3 release:** rows I would act on: ______; rows rejected and why: ______ · by/date: ______
+- **Sample-run gate (lifecycle):** ☑ cleared · by: Hemanth Rayudu · date: 2026-10-03 · note: full sample run of v0.4.2 (`runs/2026-10-03-live-v4/`), my own re-run and fresh clone (`evidence/46`, `47`), conformance, 49 tests and G1–G3 cleared; recipe promoted to RUNNABLE-SAMPLE. The seven open proposal TODOs stay non-blocking, as decided for iteration 1.
+- **G1 liveness:** ☑ cleared. All 8 Consider links are live. Machine check: `npm run ats:liveness -- --file .build/kept-urls-v4.txt` returned `8 active 0 expired 0 uncertain` (`course/2026fa/submissions/hemanthrayuduu/evidence/45-iteration4-G1-liveness-8-links.txt`). Human check: I opened all 8, and each showed its job description and an Apply button. Removed: none · by/date: Hemanth Rayudu, 2026-10-03
+- **G2 timeline:** ☑ cleared. The post-completion OPT start stand-in (2027-01-11) and the 60-day hiring lag are confirmed; timeline factor 1.0 · by/date: Hemanth Rayudu, 2026-10-03
+- **G3 release:** ☑ cleared. Rows I will act on: all 8 Consider rows, Austin (Apptronik) and US-remote (Diligent Robotics) first. Rows rejected: none. (Context added by Claude Code, not the author's words: each row passed the years and eligibility checks, and Verkada's three rows say "We do sponsor … for this role".) · by/date: Hemanth Rayudu, 2026-10-03

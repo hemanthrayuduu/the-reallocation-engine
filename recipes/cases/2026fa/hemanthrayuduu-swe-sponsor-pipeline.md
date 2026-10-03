@@ -1,7 +1,7 @@
 ---
-status: DRAFT          # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.3.x reached RUNNABLE-SAMPLE; v0.4.2 changes the years rule, the fit scale and adds a per-posting audit, so it is DRAFT until the author's own re-run and gates. See "Lifecycle note".
+status: RUNNABLE-SAMPLE  # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.4.2: author re-run + fresh clone at b81f526 and G1–G3 cleared 2026-10-03. See "Lifecycle note".
 todos_open: 7
-last_gate: "sample-run, 2026-10-02, Hemanth Rayudu, logs/runs/2026fa-hemanthrayuduu-1.md (v0.3.0 G1–G3 cleared; v0.3.1 re-confirmed by author re-run + fresh clone at 0e46158)"
+last_gate: "sample-run, 2026-10-03, Hemanth Rayudu, logs/runs/2026fa-hemanthrayuduu-1.md (v0.4.2 G1–G3 cleared; author re-run + fresh clone at b81f526)"
 attestation: null  # set only at VERIFIED; sample-run attestations are in course/2026fa/submissions/hemanthrayuduu/worked-run.md
 recipe_version: 0.4.2  # 0.4.x: years rule v2 (required vs preferred lines; 'or' alternatives), fit on the scheme's own scale, per-posting audit + verification loop (rules 0.4.0–0.4.2); 0.3.2: output guard works outside git; 0.3.1: gitignored outputs; 0.2.x: AI Engineer re-scope + description rules; 0.3.0: Senior titles + Data Scientist / Data Engineer
 ---
@@ -270,7 +270,7 @@ The checks were done by Claude Code against the live descriptions; the author's 
 - A gate cleared for one version does not carry over (P4), so v0.3.0 had its own gates. Hemanth Rayudu cleared G1–G3 and the sample-run gate for v0.3.0 on 2026-10-02.
 - **v0.3.1** changes only where outputs are written: a gitignored default and a refusal to write into a folder with tracked files. Matching, rules and scoring are unchanged. It also lists the two `[TODO: DEFINE]` items separately as open decisions. The author re-ran the tests and the live run, and ran a fresh clone of the branch at `0e46158`, on 2026-10-02 (`evidence/38`, `39`): 25 tests OK, results identical to v0.3.0, clean status. So the sample-run gate was re-confirmed for v0.3.1.
 - **v0.3.2** fixes a defect found when the Canvas ZIP was unzipped and tested: the v0.3.1 guard relied on git, so outside a git checkout it never fired and `test_never_writes_over_tracked_files` failed. The guard now also refuses any existing folder holding files this tool did not write, which works without git. Matching, rules and scoring are unchanged. It is **DRAFT** until the author's next re-run and fresh clone.
-- **v0.4.0–0.4.2** (2026-10-03) change the years rule, put fit on the scheme's own scale (÷ 12, not ÷ 8), add `pipeline-audit.md`, and tighten the family words from the verification loop. TODO 9 is closed. Final live run: `course/2026fa/submissions/hemanthrayuduu/runs/2026-10-03-live-v4/`. The recipe is **DRAFT** until the author re-runs it and clears this version's gates.
+- **v0.4.0–0.4.2** (2026-10-03) change the years rule, put fit on the scheme's own scale (÷ 12, not ÷ 8), add `pipeline-audit.md`, and tighten the family words from the verification loop. TODO 9 is closed. Final live run: `course/2026fa/submissions/hemanthrayuduu/runs/2026-10-03-live-v4/`. Hemanth Rayudu re-ran the tests and the live run, ran a fresh clone at `b81f526` (`evidence/46`, `47`: 49 OK, identical results, clean status) and cleared G1–G3 and the sample-run gate on 2026-10-03, so v0.4.2 is **RUNNABLE-SAMPLE**.
 - The seven open TODOs are proposals outside the executed path. SNICKERDOODLE's zero-open-TODO rule for SPECIFIED conflicts with the assignment's request to list proposals as TODOs. The author's decision on that conflict is recorded in the run log.
 
 ## Run-log template (`logs/runs/`)

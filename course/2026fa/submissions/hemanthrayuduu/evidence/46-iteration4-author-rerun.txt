@@ -1,0 +1,21 @@
+$ bash .build/rerun.sh   # typed by the author (Hemanth Rayudu) in the session prompt, 2026-10-03, at b81f526
+== branch: contrib/2026fa-hemanthrayuduu-swe-sponsor-pipeline
+
+== 1. offline tests
+Ran 49 tests in 0.518s
+
+OK
+
+== 2. live run (about 2 minutes; writes only to .build/my-run-v4, which is gitignored)
+  [49/49] SERVICENOW INC: not-found
+✓ swe-sponsor-pipeline (live): 49 candidates, 49 probed, 11 boards found, 15 roles scored
+  apply 0 · consider 8 · network 6 · check-by-hand 38 · skip 1
+  scorer: ✓ scored 15 roles → Apply 0 · Consider 8 · Skip 7 (skip 47%)
+  .build/my-run-v4/pipeline-report.md  +  .build/my-run-v4/pipeline-log.json
+
+== 3. git status (should be empty)
+?? course/2026fa/submissions/hemanthrayuduu/evidence/45-iteration4-G1-liveness-8-links.txt
+== done
+
+# Note: the one untracked file is the G1 machine liveness check Claude Code saved just before this run
+# (evidence/45); the run itself changed no tracked file.
