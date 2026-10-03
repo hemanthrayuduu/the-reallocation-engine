@@ -650,6 +650,7 @@ def run(args):
                              "postings_seen", "postings_target_family", "postings_us", "postings_level_ok",
                              "postings_ruled_out_by_description", "postings_kept")}
 
+    audit = []
     for i, c in enumerate(cands, 1):
         disc = discover(c, fetcher, rules)
         print(f"  [{i}/{len(cands)}] {c['name']}: {disc['status']}"
@@ -679,6 +680,7 @@ def run(args):
         comp["board"].update({"ats": disc["ats"], "slug": disc["slug"], "url": disc["url"], "identity": disc["identity"]})
         pc = {"seen": 0, "other_family": 0, "non_us": 0, "seniority": 0, "description": 0, "kept": 0}
         excluded_examples, ruled_out, no_sponsor = [], [], []
+        other_family = []
         for job in disc["jobs"]:
             pc["seen"] += 1
             nsp = no_sponsorship_phrase(job, rules)  # company-wide: any posting, any family
@@ -689,17 +691,22 @@ def run(args):
             fam = family_of(title, rules)
             if fam not in targets:
                 pc["other_family"] += 1
+                other_family.append({"title": title, "url": job.get("absolute_url")})
                 continue
             loc = (job.get("location") or {}).get("name") or ""
             lclass = location_class(loc, rules)
             if lclass == "non-us":
                 pc["non_us"] += 1
                 excluded_examples.append(f"{title} — {loc} (non-US)")
+                audit.append(audit_row(c["name"], disc, job, title, loc, lclass, "non-us", "location not in the US",
+                                       {"location_class": lclass}))
                 continue
             sh = seniority_hit(title, rules)
             if sh:
                 pc["seniority"] += 1
                 excluded_examples.append(f"{title} (seniority /{sh}/)")
+                audit.append(audit_row(c["name"], disc, job, title, loc, lclass, "wrong-level", f"title matches /{sh}/",
+                                       {"seniority_pattern": sh}))
                 continue
             dreason, dinfo = description_check(job, rules, persona)
             if dreason:
@@ -708,6 +715,9 @@ def run(args):
                 ruled_out.append({"title": lab(title, REC), "url": lab(job.get("absolute_url"), REC),
                                   "reason": lab(dreason, INP, note="description_rules phrase/years rule applied to the posting text (record)"),
                                   "years_mentions": lab(dinfo["years_mentions"], REC)})
+                audit.append(audit_row(c["name"], disc, job, title, loc, lclass, "ruled-out:" + dreason.split(":")[0], dreason,
+                                       {"phrase": dinfo["matched_phrase"], "context": dinfo["phrase_context"],
+                                        "years_lines": dinfo["years_lines"]}))
                 continue
             pc["kept"] += 1
             same = fam in c["families"]
@@ -717,6 +727,8 @@ def run(args):
             _, fscore, why, freason = GW.judge(job, feats, scheme)
             fit_p = round(max(0.0, min(1.0, fscore / full)), 3)
             rid = f"{disc['ats']}:{disc['slug']}:{job.get('id')}"
+            audit.append(audit_row(c["name"], disc, job, title, loc, lclass, "kept", "passed family, US, level and description rules",
+                                   {"years_lines": dinfo["years_lines"], "rid": rid}))
             roles.append({
                 "role_id": rid, "company": c["name"], "title": title,
                 "sponsorship": {"p": p, "tier": tier, "source": INP,
@@ -752,6 +764,7 @@ def run(args):
         comp["excluded_examples"] = excluded_examples[:5]
         comp["ruled_out_by_description"] = ruled_out
         comp["no_sponsorship_statements"] = no_sponsor
+        comp["other_family_postings"] = other_family
         if pc["kept"] == 0:
             # the engine's reject: board live, nothing for this persona → liveness gate closed for the company
             rid = f"company:{disc['ats']}:{disc['slug']}"
@@ -809,6 +822,10 @@ def run(args):
             c["bucket"] = "has-postings"
         if c["bucket"] == "check-by-hand":
             buckets["check-by-hand"].append(c["company"]["value"])
+    for r in audit:
+        if r["decision"]["value"] == "kept":
+            r["decision"]["value"] = "kept:" + role_meta[r["evidence"]["rid"]]["bucket"]
+    sample = verification_sample(audit, companies)
     skip_share = (sum(1 for r in roles if role_meta[r["role_id"]]["recommendation"] == "Skip") / len(roles)) if roles else None
     # the engine's "a healthy run skips at least half" is about everything EVALUATED, not only what reached
     # the scorer: count every target-family posting seen, and how few became Apply/Consider.
@@ -849,11 +866,83 @@ def run(args):
                    "skip_share": skip_share},
         "pipeline_skip_share": lab(pipeline_skip_share, REC,
                                    note="1 − (apply + consider) / target-family postings evaluated"),
+        "postings_audit": audit, "verification_sample": sample,
         "cannot_verify": CANNOT_VERIFY,
     }
     (out_dir / "pipeline-log.json").write_text(json.dumps(log, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
     (out_dir / "pipeline-report.md").write_text(render_report(log, role_meta, roles, companies), encoding="utf-8")
+    (out_dir / "pipeline-audit.md").write_text(render_audit(log), encoding="utf-8")
     return log, out_dir
+
+
+_BOUNDARY_TITLE = re.compile(r"engineer|scientist|data|\bai\b|\bml\b|machine learning|analytics", re.I)
+
+
+def audit_row(company, disc, job, title, loc, lclass, decision, reason, evidence):
+    return {"company": company, "board": f"{disc['ats']}:{disc['slug']}", "id": str(job.get("id")),
+            "title": lab(title, REC), "url": lab(job.get("absolute_url"), REC),
+            "location": lab(loc, REC, location_class=lclass),
+            "decision": lab(decision, INP, note="rules.json applied to the posting (record)"),
+            "reason": lab(reason, INP), "evidence": evidence}
+
+
+def verification_sample(audit, companies):
+    """Deterministic: every kept row; first 3 (by company, title) of every other decision; first 5 other-family
+    postings whose title looks like engineering/data/AI work (the family rule's boundary)."""
+    key = lambda r: (r["company"], r["title"]["value"] or "")
+    rows = sorted(audit, key=key)
+    sample = [{"why": "kept", **r} for r in rows if r["decision"]["value"].startswith("kept")]
+    others = {}
+    for r in rows:
+        if not r["decision"]["value"].startswith("kept"):
+            others.setdefault(r["decision"]["value"], []).append(r)
+    for d in sorted(others):
+        sample += [{"why": f"first 3 of {d}", **r} for r in others[d][:3]]
+    boundary = sorted((c["company"]["value"], p["title"] or "", p["url"]) for c in companies
+                      for p in c.get("other_family_postings", []) if _BOUNDARY_TITLE.search(p["title"] or ""))
+    sample += [{"why": "boundary other-family title", "company": co, "id": None, "title": lab(t, REC), "url": lab(u, REC),
+                "decision": lab("other-family", INP), "reason": lab("title not in a targeted family", INP), "evidence": {}}
+               for co, t, u in boundary[:5]]
+    return sample
+
+
+def evidence_text(r):
+    e = r.get("evidence") or {}
+    parts = []
+    if e.get("location_class"):
+        parts.append(f"location «{r['location']['value']}» → {e['location_class']}")
+    if e.get("seniority_pattern"):
+        parts.append(f"title matches /{e['seniority_pattern']}/")
+    if e.get("phrase"):
+        parts.append(f"«{e['phrase']}» in «…{(e.get('context') or '').strip()}…»")
+    for l in e.get("years_lines") or []:
+        parts.append(f"[{l['section']}] {l['value']}+ ({l['rule']}): «{l['text'][:110]}»")
+    return "; ".join(parts) or "—"
+
+
+def render_audit(log):
+    a, s = log["postings_audit"], log["verification_sample"]
+    counts = {}
+    for r in a:
+        counts[r["decision"]["value"]] = counts.get(r["decision"]["value"], 0) + 1
+    other = sum(c["postings"]["value"]["other_family"] for c in log["companies"] if c.get("postings"))
+    L = ["# Posting audit — every decision and its evidence", "", "## Executive summary", "",
+         f"This file lists every posting the tool judged relevant ({len(a)} postings in a targeted job family on the boards it "
+         f"found), what it decided for each, and the exact text that decided it. It exists so a person can check the tool by "
+         f"hand instead of trusting it. {other} other-family postings were counted, not listed. The verification sample below "
+         f"({len(s)} rows, chosen by a fixed rule) is what gets checked against the live descriptions in each iteration.", "",
+         "## Decisions", "", "| Decision | Postings |", "|---|---:|"]
+    L += [f"| {d} | {n} |" for d, n in sorted(counts.items())] + [f"| other-family (counted, not listed) | {other} |", ""]
+    L += ["## Verification sample", "", "| # | Why sampled | Company | Posting | Decision | Evidence | Checked |",
+          "|---:|---|---|---|---|---|---|"]
+    for i, r in enumerate(s, 1):
+        L.append(f"| {i} | {r['why']} | {r['company']} | [{(r['title']['value'] or '').strip()}]({r['url']['value']}) | "
+                 f"{r['decision']['value']} | {evidence_text(r)} |  |")
+    L += ["", "## Every target-family posting", "", "| Company | Posting | Location | Decision | Evidence |", "|---|---|---|---|---|"]
+    for r in sorted(a, key=lambda r: (r["company"], r["title"]["value"] or "")):
+        L.append(f"| {r['company']} | [{(r['title']['value'] or '').strip()}]({r['url']['value']}) | {r['location']['value'] or '—'} | "
+                 f"{r['decision']['value']} | {evidence_text(r)} |")
+    return "\n".join(L) + "\n"
 
 
 CANNOT_VERIFY = [

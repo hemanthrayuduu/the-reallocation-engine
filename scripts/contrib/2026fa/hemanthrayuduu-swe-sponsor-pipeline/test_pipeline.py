@@ -171,6 +171,32 @@ class HappyPathOffline(unittest.TestCase):
         self.assertEqual(boston["preferred_location"]["value"], False)
 
 
+    def test_audit_has_every_target_family_posting_once_with_its_decision(self):
+        got = {r["id"]: r["decision"]["value"] for r in self.log["postings_audit"]}
+        self.assertEqual(got, {"101": "kept:apply", "102": "kept:apply", "103": "kept:consider", "105": "ruled-out:eligibility",
+                               "106": "ruled-out:experience", "107": "kept:skip", "qh-1": "wrong-level", "qh-2": "non-us",
+                               "401": "kept:consider", "402": "ruled-out:no-sponsorship", "501": "non-us"})
+        self.assertEqual(len(self.log["postings_audit"]), len(got))
+
+    def test_verification_sample_has_every_kept_row_and_is_deterministic(self):
+        sample = self.log["verification_sample"]
+        kept = {r["id"] for r in self.log["postings_audit"] if r["decision"]["value"].startswith("kept")}
+        self.assertTrue(kept <= {r.get("id") for r in sample})
+        tmp = tempfile.TemporaryDirectory()
+        rc, _, _ = run(BASE + ["--out-dir", tmp.name])
+        again = json.loads((Path(tmp.name) / "pipeline-log.json").read_text())["verification_sample"]
+        key = lambda s: [(r["why"], r["company"], r["title"]["value"]) for r in s]
+        self.assertEqual(key(sample), key(again))
+        tmp.cleanup()
+
+    def test_audit_markdown_counts_other_family_without_listing(self):
+        md = (self.out / "pipeline-audit.md").read_text()
+        self.assertTrue(md.splitlines()[2].startswith("## Executive summary"))
+        self.assertIn("Verification sample", md)
+        self.assertNotIn("Account Executive", md)   # an other-family title: counted, never listed
+        self.assertIn("other-family", md)
+
+
 class TitleAndDescriptionRules(unittest.TestCase):
     rules = json.loads((HERE / "rules.json").read_text())
 
