@@ -187,7 +187,8 @@ What it showed:
 
 ## Attestation (iteration 3)
 
-- Recipe: swe-sponsor-pipeline v0.3.0 (rules 0.3.0, code commit 75f3c41). *v0.3.1 later changed only where outputs are written; the author's re-run of v0.3.1 is recorded below this table.*
+- Recipe: swe-sponsor-pipeline v0.3.0 (rules 0.3.0, code commit 75f3c41). *v0.3.1 later changed only where outputs are written; the author re-signed for v0.3.1 below.*
+- **Re-signed for v0.3.1 (code `0e46158`): Hemanth Rayudu · 2026-10-02.** After the output-path fix I re-ran `bash .build/rerun.sh` (`evidence/38`) and `bash .build/fresh-clone.sh` on a fresh clone at `0e46158` (`evidence/39`). Both: 25 tests OK; live run apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1, identical to v0.3.0; git status empty. My G1–G3 decisions for the same 7 Consider rows stand.
 - By: Hemanth Rayudu · 2026-10-02. I re-ran the tests and the live run myself on 2026-10-02 with `bash .build/rerun.sh` (`evidence/34b`, script in `34c`): 23 tests OK; live run apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1 (scorer: Apply 0 · Consider 7 · Skip 7), identical to the committed run. `git status` showed only one leftover file from an interrupted Claude Code run (archived as `34a`). I also ran a fresh clone of the branch at `99bc2c9` (`bash .build/fresh-clone.sh`, `evidence/35`): 23 tests OK, the same live result, and `git status` empty in the clone. I cleared G1–G3 for this run (run log, iteration 3). The other rows were run by Claude Code in my session on 2026-10-02.
 
 ### Tested
@@ -196,6 +197,8 @@ What it showed:
 |---|---|---|
 | `python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v` | `Ran 23 tests … OK` | all pass offline |
 | `pipeline.py --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live-v3` | apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1; 9 ruled out by description | completes; only the two named hosts |
+| **Break (v0.3.1):** `--out-dir` set to the committed iteration-1 run folder | `ERROR: refusing to write into … 5 git-tracked file(s)`, exit 1; nothing overwritten (`evidence/36`) | a run never overwrites a tracked file |
+| Author re-run + fresh clone at `0e46158` (v0.3.1) | 25 OK; identical live result; clean status (`evidence/38`, `39`) | fix changes nothing but the output location |
 | **Break, by rule change:** with the Senior patterns removed, does the fixture Senior posting get scored? | `test_rules_030_senior_titles_are_scored` passes; Staff still excluded (`test_seniority_rules_030`) | Senior in, Staff out |
 | Hand cross-check: Apptronik 6176116004, Twin Health 5655780004 via the API | "5+ years … and 3+ years …"; "5+ years …", no can't-sponsor line | matches the report, and exposes TODO 9 |
 

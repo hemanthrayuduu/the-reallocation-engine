@@ -19,7 +19,8 @@
 | F-1 | Defect found in a requirements audit | read the default output path | without `--out-dir`, a run on 2026-10-02 wrote to `course/…/runs/2026-10-02-live/`, the **committed** iteration-1 folder, which breaks "never over a tracked repo file" | `pipeline.py` before the fix (`75f3c41`) |
 | F-2 | Fix | default output is now `<prototype>/.build/runs/<today>-<mode>/` (gitignored); `refuse_tracked_out_dir` exits 1 for a folder holding git-tracked files | 25 tests OK, including `test_never_writes_over_tracked_files` and `test_default_out_dir_is_gitignored_inside_own_folder` | test file |
 | F-3 | Break attempt on the real case | `--out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live` (offline fixtures) | `ERROR: refusing to write into … it holds 5 git-tracked file(s)`, exit 1; `git status` of `runs/` empty; the default path is gitignored (`git check-ignore`) | `36-fixA-tracked-output-guard.txt` |
-| F-4 | Author re-run of tests, live run and fresh clone on the fixed code | *(author, then the attestation is re-signed)* | — | — |
+| F-4 | Author re-run + fresh clone on the fixed code | author typed `! bash .build/rerun.sh` and `! bash .build/fresh-clone.sh` (clone of `0e46158`) | both: 25 OK; apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1, identical to v0.3.0; git status empty | `38-v031-author-rerun.txt`, `39-v031-author-fresh-clone.txt` |
+| F-5 | Scope (fix C) | `git diff --stat main` | see evidence | `37-final-git-diff-stat.txt` |
 
 ## What the gates require a human to judge (iteration 3)
 

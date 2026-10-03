@@ -152,5 +152,7 @@ The iteration-3 sign-off lines at the bottom are still open.
   - (C) final `git diff --stat main` added to the evidence (`37`).
   - (D) TEST-REPORT section added. Matching, rules and scoring are unchanged.
 - **Result:** 25 tests OK. A break attempt writing into the committed run folder was refused (exit 1), with nothing overwritten (`evidence/36`).
-- **Open issues:** status is DRAFT until the author re-runs the tests, the live run and a fresh clone on the fixed code and re-confirms the sample-run gate.
+- **Author re-runs (v0.3.1):** working copy (`evidence/38`) and a fresh clone at `0e46158` (`evidence/39`). Both: 25 tests OK; apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1, identical to v0.3.0; git status empty.
+- **Gate decision:** the sample-run gate is re-confirmed for v0.3.1 by these re-runs, and the recipe is back at **RUNNABLE-SAMPLE**. The author's iteration-3 G1–G3 decisions stand for the same 7 rows, since matching and scoring are unchanged · Hemanth Rayudu, 2026-10-02.
+- **Open issues:** none from this fix.
 

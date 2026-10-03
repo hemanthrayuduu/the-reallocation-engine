@@ -2,7 +2,7 @@
 owner: hemanthrayuduu
 term: 2026fa
 component: swe-sponsor-pipeline
-status: DRAFT  # mirrors the recipe: v0.3.1 adds an output-path guard; awaiting the author's re-run to re-confirm the sample-run gate
+status: RUNNABLE-SAMPLE  # mirrors the recipe: v0.3.1 re-confirmed by the author's re-run + fresh clone, 2026-10-02 (logs/runs/2026fa-hemanthrayuduu-1.md)
 promoted_to: null
 ---
 
