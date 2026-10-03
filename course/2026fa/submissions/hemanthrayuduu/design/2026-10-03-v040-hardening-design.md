@@ -62,11 +62,12 @@ Bigger ideas (the book's sponsorship formula, more job boards, staleness signals
 4. **Line value.**
    - If the text between any two consecutive mentions contains the word "or" (`\bor\b`, case-insensitive, so "and/or" counts), the value is the **min** (alternatives).
    - Otherwise it is the **max** (all apply).
-5. **Requirement.**
+5. **Line section.** A line that itself says "a plus", "nice to have" or "bonus" counts as *preferred* even inside a required section (added while planning: a required list often ends with "2+ years of X is a plus").
+6. **Requirement.**
    - `years_required` = max of line values over `required` lines, or `null` if there are none.
    - `years_preferred` = max over `preferred` lines, or `null`.
-6. **Decision (unchanged):** rule out when `years_required > experience_years + tolerance_years`.
-7. **Evidence kept:** `years_lines = [{section, text, value}]`, so every reading can be checked by hand.
+7. **Decision (unchanged):** rule out when `years_required > experience_years + tolerance_years`.
+8. **Evidence kept:** `years_lines = [{section, text, value}]`, so every reading can be checked by hand.
 
 **Labels:** the description text is `record`; the rule is `your-input`.
 
