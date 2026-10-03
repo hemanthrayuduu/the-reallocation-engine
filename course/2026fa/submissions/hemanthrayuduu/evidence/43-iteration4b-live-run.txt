@@ -1,0 +1,55 @@
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-03-live-v4   # rules 0.4.1
+  [1/49] INTEL CORP: not-found
+  [2/49] ICON TECHNOLOGY INC: not-found
+  [3/49] DATABRICKS INC: found greenhouse:databricks (886 postings)
+  [4/49] VERKADA INC: found greenhouse:verkada (307 postings)
+  [5/49] CCC INTELLIGENT SOLUTIONS HOLDINGS INC: not-found
+  [6/49] GRAMMARLY INC: not-found
+  [7/49] WHATNOT INC: not-found
+  [8/49] COHERE HEALTH INC: found greenhouse:coherehealth (76 postings)
+  [9/49] AIERA INC: not-found
+  [10/49] APEX TECHNOLOGY INC: not-found
+  [11/49] APPTRONIK INC: found greenhouse:apptronik (80 postings)
+  [12/49] CELESTIAL AI INC: not-found
+  [13/49] FOURSQUARE LABS INC: not-found
+  [14/49] SPANIO INC: not-found
+  [15/49] HIGHNOTE PLATFORM INC: not-found
+  [16/49] OUTSET MEDICAL INC: found greenhouse:outsetmedical (30 postings)
+  [17/49] MERCURY TECHNOLOGIES INC: not-found
+  [18/49] TWIN HEALTH INC: found greenhouse:twinhealth (39 postings)
+  [19/49] ICERTIS INC: not-found
+  [20/49] CYNGN INC: not-found
+  [21/49] PSIQUANTUM CORP: found greenhouse:psiquantum (74 postings)
+  [22/49] CENTIFIC GLOBAL SOLUTIONS INC: not-found
+  [23/49] VIDMOB INC: found ashby:vidmob (3 postings)
+  [24/49] AEYE INC: not-found
+  [25/49] BLUECORE INC: not-found
+  [26/49] DILIGENT ROBOTICS INC: found greenhouse:diligentrobotics (9 postings)
+  [27/49] OBSERVE INC: not-found
+  [28/49] CODAMETRIX INC: found ashby:codametrix (2 postings)
+  [29/49] BUTLR TECHNOLOGIES INC: not-found
+  [30/49] VOUCH INC: not-found
+  [31/49] AIM INTELLIGENT MACHINES INC: not-found
+  [32/49] FARMER'S BUSINESS NETWORK INC: not-found
+  [33/49] FEMTOSENSE INC: not-found
+  [34/49] LILT INC: not-found
+  [35/49] MEMBRION INC: not-found
+  [36/49] WORKFUSION INC: not-found
+  [37/49] IFOODDECISIONSCIENCES INC: not-found
+  [38/49] SWING THERAPEUTICS INC: not-found
+  [39/49] UNDERDOG SPORTS HOLDINGS INC: not-found
+  [40/49] WAFFLE LABS INC: not-found
+  [41/49] BELFRY SOFTWARE INC: not-found
+  [42/49] HALCYON TECH INC: not-found
+  [43/49] LUMEN ENERGY INC: not-found
+  [44/49] MISO ROBOTICS INC: not-found
+  [45/49] PLEXIUM INC: found greenhouse:plexium (0 postings)
+  [46/49] POLYOPS INC: not-found
+  [47/49] PRIME ARTIFICIAL INTELLIGENCE INC: not-found
+  [48/49] RAISE ROBOTICS INC: not-found
+  [49/49] SERVICENOW INC: not-found
+✓ swe-sponsor-pipeline (live): 49 candidates, 49 probed, 11 boards found, 17 roles scored
+  apply 0 · consider 10 · network 6 · check-by-hand 38 · skip 1
+  scorer: ✓ scored 17 roles → Apply 0 · Consider 10 · Skip 7 (skip 41%)
+  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-03-live-v4/pipeline-report.md  +  course/2026fa/submissions/hemanthrayuduu/runs/2026-10-03-live-v4/pipeline-log.json
+exit=0

@@ -283,6 +283,24 @@ class YearsRuleV2(unittest.TestCase):
                    "Experience building consumer facing features a plus.</li></ul>")
         self.assertEqual((r["required"], r["preferred"]), (5, None))
 
+    def test_preferred_after_the_number_marks_it_preferred(self):
+        # verify-iteration-2, rows 1-2: "… with 2+ years industry experience strongly preferred."
+        r = self.y("<ul><li>A PhD or MS in Computer Science, Robotics, or a related field, with 2+ years industry experience strongly preferred.</li></ul>")
+        self.assertEqual((r["required"], r["preferred"]), (None, 2))
+
+    def test_required_before_preferred_stays_required(self):
+        r = self.y("5+ years of experience required; 7+ years of experience preferred")
+        self.assertEqual((r["required"], r["preferred"]), (5, 7))
+
+    def test_expertise_in_parentheses_counts(self):
+        # verify-iteration-2, rows 1-2: "Deep, hands-on expertise (5+ years) with common RL frameworks"
+        r = self.y("<h3>Skills and Requirements</h3><ul><li>Deep, hands-on expertise (5+ years) with common RL frameworks</li>"
+                   "<li>A PhD or MS with 2+ years industry experience strongly preferred.</li></ul>")
+        self.assertEqual((r["required"], r["preferred"]), (5, 2))
+
+    def test_years_of_expertise_counts(self):
+        self.assertEqual(self.y("4+ years of expertise in Spark and Delta Lake")["required"], 4)
+
     def test_no_headings_means_required(self):
         self.assertEqual(self.y("3+ years of experience with Azure OpenAI")["required"], 3)
 

@@ -213,7 +213,9 @@ def no_sponsorship_phrase(job, rules):
 
 
 _BLOCK_TAGS = re.compile(r"</?(?:p|li|br|div|h[1-6]|tr|ul|ol|table|section)\b[^>]*>", re.I)
-_YEARS = re.compile(r"(\d{1,2})\s*\+?\s*(?:(?:-|–|to)\s*(\d{1,2})\s*\+?\s*)?years?\b(?=[^.;]{0,60}?experience)", re.I)
+_YEARS = re.compile(r"(\d{1,2})\s*\+?\s*(?:(?:-|–|to)\s*(\d{1,2})\s*\+?\s*)?years?\b(?=[^.;]{0,60}?(?:experience|expertise))", re.I)
+# 0.4.2: "expertise (5+ years) with …" — the number in parentheses right after the word (verify-iteration-2)
+_YEARS_PAREN = re.compile(r"(?:experience|expertise)\s*\(\s*(\d{1,2})\s*\+?\s*(?:(?:-|–|to)\s*(\d{1,2})\s*\+?\s*)?years?\s*\)", re.I)
 _PREFERRED_HEAD = re.compile(r"prefer|nice[- ]to[- ]have|bonus|\bplus\b|ideal|desired", re.I)
 _HEADING_WORDS = re.compile(r"qualif|require|what you|you have|you bring|you'?ll need|must|basic|minimum|experience|"
                             r"about you|skills|prefer|nice[- ]to[- ]have|bonus|\bplus\b|ideal|desired", re.I)
@@ -258,17 +260,29 @@ def years_requirement(content):
                 section = h2
         # 0.4.1: judge each sentence on its own, so "… a plus." in the next sentence cannot make a requirement optional
         for sentence in re.split(r"(?<=[.!?])\s+(?=[A-Z])", text):
-            mentions = list(_YEARS.finditer(sentence))
+            found = {}
+            for x in list(_YEARS.finditer(sentence)) + list(_YEARS_PAREN.finditer(sentence)):
+                found.setdefault(x.start(1), x)  # same number matched by both patterns counts once
+            mentions = [found[k] for k in sorted(found)]
             if not mentions:
                 continue
-            values = [int(x.group(1)) for x in mentions]
             alt = any(re.search(r"\bor\b", sentence[mentions[i].end():mentions[i + 1].start()], re.I)
                       for i in range(len(mentions) - 1))
-            value = min(values) if alt else max(values)
-            line_section = "preferred" if (section == "preferred" or _PREFERRED_INLINE.search(sentence)) else "required"
-            lines.append({"section": line_section, "text": sentence[:240], "value": value,
-                          "rule": "min (or-alternatives)" if alt else "max"})
-            (pref if line_section == "preferred" else req).append(value)
+            groups = {"required": [], "preferred": []}
+            for x in mentions:
+                # 0.4.2: "preferred" after the number (before any "required") marks that mention preferred
+                tail = sentence[x.end():]
+                pm, rm = re.search(r"\bpreferred\b", tail, re.I), re.search(r"\brequired\b", tail, re.I)
+                pref_after = bool(pm and (not rm or pm.start() < rm.start()))
+                sec = "preferred" if (section == "preferred" or _PREFERRED_INLINE.search(sentence) or pref_after) else "required"
+                groups[sec].append(int(x.group(1)))
+            for sec, vals in groups.items():
+                if not vals:
+                    continue
+                value = min(vals) if alt else max(vals)
+                lines.append({"section": sec, "text": sentence[:240], "value": value,
+                              "rule": "min (or-alternatives)" if alt else "max"})
+                (pref if sec == "preferred" else req).append(value)
     return {"required": max(req) if req else None, "preferred": max(pref) if pref else None, "lines": lines}
 
 
