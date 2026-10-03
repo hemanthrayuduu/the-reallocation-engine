@@ -21,7 +21,8 @@
 | I3-3 | Live run | `pipeline.py --out-dir …/runs/2026-10-02-live-v3` | 49 candidates → 11 boards → 67 AI/data postings → 48 US → 16 right level → 9 ruled out by description → 7 kept. **apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1**; skip share 89.6% | `29-iteration3-live-run.txt`, `runs/2026-10-02-live-v3/` |
 | I3-4 | Hand cross-check | Apptronik 6176116004 and Twin Health 5655780004 via the Greenhouse API | Austin role: "5+ years … and 3+ years …", shown as 3+ (lowest-bound rule; TODO 9). Twin Health Senior AI Engineer: 5+ years, correctly ruled out; no can't-sponsor line | `30-iteration3-hand-cross-check.txt` |
 | I3-5 | Toolchain after | doctor, verify, conformance, `pii-scan --diff main`, scope | see evidence | `32-iteration3-toolchain-after.txt` |
-| I3-6 | Fresh clone + author re-run | *(to be run by the author before signing)* | — | — |
+| I3-6 | Gate G1 (machine + human) | `npm run ats:liveness -- --file /tmp/consider-urls-v3.txt`; author opened all 7 | `7 active 0 expired 0 uncertain`; each page has a description and an Apply button | `33-iteration3-G1-liveness-7-links.txt`, run log |
+| I3-7 | Fresh clone + author re-run | *(to be run by the author before signing the iteration-3 attestation)* | — | — |
 
 ## Iteration 2 checks (code `75f3c41`, rules 0.2.1, recipe 0.2.1)
 

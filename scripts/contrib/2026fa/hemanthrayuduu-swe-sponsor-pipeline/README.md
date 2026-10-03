@@ -2,7 +2,7 @@
 owner: hemanthrayuduu
 term: 2026fa
 component: swe-sponsor-pipeline
-status: DRAFT  # mirrors the recipe: v0.1.2 reached RUNNABLE-SAMPLE; v0.3.0 (iteration 3) awaits the author's re-cleared sample-run gate
+status: RUNNABLE-SAMPLE  # mirrors the recipe: v0.3.0 sample-run gate cleared 2026-10-02 (logs/runs/2026fa-hemanthrayuduu-1.md, iteration 3)
 promoted_to: null
 ---
 

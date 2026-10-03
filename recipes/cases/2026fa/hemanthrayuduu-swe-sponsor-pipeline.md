@@ -1,7 +1,7 @@
 ---
-status: DRAFT          # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.1.2 reached RUNNABLE-SAMPLE (gate below); v0.2.x/0.3.0 changed code and rules, so it is back to DRAFT until the named human re-clears the sample-run gate. See "Lifecycle note".
+status: RUNNABLE-SAMPLE  # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.3.0 sample-run gate cleared by a named human (run log, iteration 3). See "Lifecycle note".
 todos_open: 8
-last_gate: "sample-run, 2026-10-02, Hemanth Rayudu, logs/runs/2026fa-hemanthrayuduu-1.md (cleared for v0.1.2; v0.3.0 pending)"
+last_gate: "sample-run, 2026-10-02, Hemanth Rayudu, logs/runs/2026fa-hemanthrayuduu-1.md (iteration 3, v0.3.0; G1–G3 cleared)"
 attestation: null  # set only at VERIFIED; sample-run attestations are in course/2026fa/submissions/hemanthrayuduu/worked-run.md
 recipe_version: 0.3.0  # 0.2.x: author re-scoped to AI Engineer (Microsoft AI stack), description rules, location preference; 0.3.0: Senior titles + Data Scientist / Data Engineer roles
 ---
@@ -240,7 +240,7 @@ buckets{apply, consider, network, check-by-hand, skip}, scorer{…}, pipeline_sk
 - **v0.1.2** reached RUNNABLE-SAMPLE on 2026-10-02. Hemanth Rayudu cleared G1–G3 and the sample-run gate (run log, iteration 1).
 - **v0.2.1** changed code (`75f3c41`), `rules.json` and the persona after the author re-scoped the situation.
 - **v0.3.0** changed only `rules.json` (Senior titles in; data_science and data_engineering families; Microsoft data-stack terms) and the persona's target families. The code is still `75f3c41`.
-- A gate cleared for one version does not carry over (P4), so v0.3.0 is **DRAFT** until the author re-runs, re-clears G1–G3 for iteration 3, and signs.
+- A gate cleared for one version does not carry over (P4), so v0.3.0 had its own gates. Hemanth Rayudu cleared G1–G3 and the sample-run gate for v0.3.0 on 2026-10-02, so this version claims **RUNNABLE-SAMPLE** and no more: no gated live run beyond the sample, and no VERIFIED attestation.
 - The seven open TODOs are proposals outside the executed path. SNICKERDOODLE's zero-open-TODO rule for SPECIFIED conflicts with the assignment's request to list proposals as TODOs. The author's decision on that conflict is recorded in the run log.
 
 ## Run-log template (`logs/runs/`)

@@ -117,10 +117,21 @@ The iteration-3 sign-off lines at the bottom are still open.
   - Board coverage 11 of 49.
   - **Gates for v0.3.0 are not yet cleared.**
 
-## Gate decisions — iteration 3 (v0.3.0; to be completed by the named human)
+## Gate decisions — iteration 3 (v0.3.0)
 
-- **Sample-run gate (lifecycle):** ☐ cleared / ☐ not cleared · by: ______ · date: ______ · note: ______
-- **G1 liveness:** the 7 Consider links checked (`npm run ats:liveness -- <url>` or a browser): ___ of 7 live · by/date: ______
-- **G2 timeline:** post-completion OPT start (2027-01-11, fictional stand-in) and 60-day hiring lag confirmed · by/date: ______
-- **G3 release:** rows I would act on: ______; rows rejected and why (e.g. the Austin role's 5+ years main requirement): ______; networking targets I would contact: ______ · by/date: ______
+- **Sample-run gate (lifecycle):** ☑ cleared · by: Hemanth Rayudu · date: 2026-10-02 · note: full sample run of v0.3.0 (`runs/2026-10-02-live-v3/`) with conformance, tests (23) and G1–G3 cleared; recipe promoted to RUNNABLE-SAMPLE. The seven open proposal TODOs are treated as non-blocking, as decided for iteration 1. The iteration-3 attestation is signed separately after my own re-run.
+- **G1 liveness:** ☑ cleared. All 7 Consider links are live. Machine check: `npm run ats:liveness -- --file /tmp/consider-urls-v3.txt` returned `7 active 0 expired 0 uncertain` (`course/2026fa/submissions/hemanthrayuduu/evidence/33-iteration3-G1-liveness-7-links.txt`). Human check: I opened all 7 in a browser, and each showed its job description and an Apply button. Removed: none · by/date: Hemanth Rayudu, 2026-10-02
+- **G2 timeline:** ☑ cleared. The post-completion OPT start (2027-01-11, fictional stand-in; pre-completion OPT from mid-October) and the 60-day hiring lag are confirmed; timeline factor 1.0 (margin 131 days) · by/date: Hemanth Rayudu, 2026-10-02
+- **G3 release:** ☑ cleared.
+  - **Acting on (tailor an application) — all 7 Consider rows:**
+    - Apptronik "Senior Software Engineer, ML Infrastructure" (★ Austin, TX). Applying knowing its description asks 5+ years of software engineering (TODO 9), so it's a reach.
+    - Diligent Robotics "ML Engineer, Manipulation" (★ anywhere in the US).
+    - Databricks "AI Engineer – Forward Deployed Engineering".
+    - Databricks "Senior Applied ML Engineer - ML4Sys".
+    - Databricks "Senior Data Scientist".
+    - Verkada "Senior Software Engineer - Computer Vision".
+    - Verkada "Software Engineer - Computer Vision" (neither Verkada posting carries Verkada's "can't sponsor this role" statement).
+  - **Rejected:** none.
+  - **Networking targets:** not decided in this pass.
+  - by/date: Hemanth Rayudu, 2026-10-02
 
