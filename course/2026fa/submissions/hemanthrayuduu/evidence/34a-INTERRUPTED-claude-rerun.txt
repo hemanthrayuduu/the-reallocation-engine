@@ -1,0 +1,10 @@
+# INTERRUPTED — Claude Code started this re-run at the author's request; the author stopped it mid-way (the live run never finished, no output folder was written). Not used as evidence for the attestation; see 34b for the author's own run. Kept, not deleted, per the repo's archive rule.
+# Re-run at the author's request (iteration 3 attestation), run by Claude Code, 2026-10-02
+$ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py'
+.......................
+----------------------------------------------------------------------
+Ran 23 tests in 0.205s
+
+OK
+exit=0
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir /tmp/my-run-v3

@@ -188,7 +188,7 @@ What it showed:
 ## Attestation (iteration 3)
 
 - Recipe: swe-sponsor-pipeline v0.3.0 (rules 0.3.0, code commit 75f3c41)
-- By: **[Hemanth Rayudu signs after re-running the tests and the live run himself] · [date]**. The rows below were run by Claude Code in the author's session on 2026-10-02.
+- By: Hemanth Rayudu · 2026-10-02. I re-ran the tests and the live run myself on 2026-10-02 with `bash .build/rerun.sh` (`evidence/34b`, script in `34c`): 23 tests OK; live run apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1 (scorer: Apply 0 · Consider 7 · Skip 7), identical to the committed run. `git status` showed only one leftover file from an interrupted Claude Code run (archived as `34a`). I cleared G1–G3 for this run (run log, iteration 3). The other rows were run by Claude Code in my session on 2026-10-02.
 
 ### Tested
 
@@ -203,7 +203,7 @@ What it showed:
 
 - Data Engineer postings live (none on the boards found); the family is tested with titles only (`test_family_of`).
 - Lever, Workday, iCIMS, SmartRecruiters; E-Verify; clauses worded outside the phrase lists.
-- A fresh clone for iteration 3 *(to be run by the author)*.
+- A fresh clone of the branch for iteration 3. Iteration 1 was tested from a fresh clone; iteration 3 was re-run in the working copy only.
 
 ### Broke during testing, fixed
 
@@ -438,7 +438,7 @@ failed tests: ['test_TODO7_description_rules_rule_out_without_scoring']
 | **Break:** `description_check` patched to never rule out | `FAIL: test_TODO7_description_rules_rule_out_without_scoring` | the test catches it |
 | **Break (on real data):** draft rule "one 'can't sponsor' posting drops the company" | Twin Health dropped from networking although its Senior AI postings carry no such statement | rule withdrawn; statements now counted per company (`24a`, `24b`) |
 | Hand cross-check: CodaMetrix / Diligent CSV rows, Diligent posting via curl, BLS 15-1221.00 | 18 approvals, NLP Scientist; 20 approvals; "3+ years of experience …"; median 140910, zone 5 | report matches sources |
-| Fresh clone of the branch, tests + `--limit 3` | *(to be run by the author)* | 21 OK; exit 0; `git status` clean |
+| Author's own re-run: `bash .build/rerun.sh` (tests, live run, git status) | 23 OK; apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1; one leftover untracked file from an interrupted Claude run | identical to the committed run; no tracked file changed |
 
 ### Did not test
 

@@ -1,0 +1,15 @@
+# The exact script the author ran for 34b (gitignored at .build/rerun.sh; copied here verbatim for traceability)
+#!/usr/bin/env bash
+# Iteration-3 re-run for the author's attestation. Gitignored helper (.build/), not part of the submission.
+cd "/Users/HemanthRayudu/Profession/Assignments/Prompt Engineering/the-reallocation-engine" || exit 1
+echo "== branch: $(git branch --show-current)"
+echo
+echo "== 1. offline tests"
+python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' 2>&1 | tail -3
+echo
+echo "== 2. live run (about 2 minutes; writes only to .build/my-run-v3, which is gitignored)"
+python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir .build/my-run-v3 2>&1 | tail -5
+echo
+echo "== 3. git status (should be empty)"
+git status --short
+echo "== done"

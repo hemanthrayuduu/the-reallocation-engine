@@ -1,0 +1,22 @@
+# Iteration-3 re-run by the author, Hemanth Rayudu, 2026-10-02, typed in the Claude Code prompt as `! bash .build/rerun.sh`
+# (.build/rerun.sh = tests, live run to .build/my-run-v3, git status; output below is verbatim from the author's run)
+$ bash .build/rerun.sh
+== branch: contrib/2026fa-hemanthrayuduu-swe-sponsor-pipeline
+
+== 1. offline tests
+Ran 23 tests in 0.219s
+
+OK
+
+== 2. live run (about 2 minutes; writes only to .build/my-run-v3, which is gitignored)
+  [49/49] SERVICENOW INC: not-found
+✓ swe-sponsor-pipeline (live): 49 candidates, 49 probed, 11 boards found, 14 roles scored
+  apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1
+  scorer: ✓ scored 14 roles → Apply 0 · Consider 7 · Skip 7 (skip 50%)
+  .build/my-run-v3/pipeline-report.md  +  .build/my-run-v3/pipeline-log.json
+
+== 3. git status (should be empty)
+?? course/2026fa/submissions/hemanthrayuduu/evidence/34-iteration3-rerun-for-attestation.txt
+== done
+
+# Note: the one untracked file listed in step 3 was left by an interrupted Claude Code run (now archived as 34a-INTERRUPTED-claude-rerun.txt). The author's run itself wrote only to the gitignored .build/ folder.
