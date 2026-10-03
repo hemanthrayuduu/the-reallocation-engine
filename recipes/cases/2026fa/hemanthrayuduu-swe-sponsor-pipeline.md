@@ -1,9 +1,9 @@
 ---
-status: RUNNABLE-SAMPLE  # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.3.0 sample-run gate cleared by a named human (run log, iteration 3). See "Lifecycle note".
+status: DRAFT          # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.3.0 reached RUNNABLE-SAMPLE; v0.3.1 adds an output-path guard (code), so it awaits the author's re-run to re-confirm. See "Lifecycle note".
 todos_open: 8
 last_gate: "sample-run, 2026-10-02, Hemanth Rayudu, logs/runs/2026fa-hemanthrayuduu-1.md (iteration 3, v0.3.0; G1–G3 cleared)"
 attestation: null  # set only at VERIFIED; sample-run attestations are in course/2026fa/submissions/hemanthrayuduu/worked-run.md
-recipe_version: 0.3.0  # 0.2.x: author re-scoped to AI Engineer (Microsoft AI stack), description rules, location preference; 0.3.0: Senior titles + Data Scientist / Data Engineer roles
+recipe_version: 0.3.1  # 0.3.1: outputs default to a gitignored folder and never overwrite tracked files; open decisions listed separately; 0.2.x: author re-scoped to AI Engineer (Microsoft AI stack), description rules, location preference; 0.3.0: Senior titles + Data Scientist / Data Engineer roles
 ---
 
 # swe-sponsor-pipeline — AI Engineer, Data Scientist and Data Engineer postings at sponsoring, recently funded companies
@@ -87,7 +87,7 @@ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponso
 | Found: **no funding vote, no exports** in the scorer | Funding is a pre-filter (TODO 4). The scorer is run as a subprocess. |
 | Found: **the CSV keeps only a company's top few sponsored titles** | Only 100 of 1,552 sponsors list an AI/ML title. So software **or** AI sponsorship counts as evidence (persona `sponsorship_evidence_families`). An AI posting at a software-only sponsor gets the soft tier **Possible**, which can reach Consider but never Apply. |
 
-## Proposed additions
+## Proposed additions (each `[TODO: DEV]` or `[TODO: DATA SOURCE]`)
 
 | # | Type | Addition | Why it belongs |
 |---|---|---|---|
@@ -95,10 +95,17 @@ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponso
 | 2 | `[TODO: DATA SOURCE]` | Verified company → ATS `careers_url` map | Slug guessing found 10 of 40 boards; 30 are `check-by-hand`. |
 | 3 | `[TODO: DEV]` | Lever, SmartRecruiters, Workday probes (`scripts/ats/providers/lever.mjs` exists; greenhouse-watch supports SmartRecruiters) | The largest sponsors (Intel, ServiceNow) were not found on Greenhouse/Ashby by slug. Their ATS was not established. |
 | 4 | `[TODO: DEV]` | A funding vote in `role-scorer.mjs` (engine change, outside this namespace) | The assignment calls funding a vote; the scorer has none. |
-| 5 | `[TODO: DEFINE]` | A fit floor, or a lower Proven p | Proven p 0.9 × 0.35 = 0.315 ≥ 0.30, so a Proven posting is Apply at any fit (iteration 1: fit 0.25 → Apply). |
 | 6 | `[TODO: DATA SOURCE]` | Hiring-lag record (application → offer) | The timeline gate rests on the persona's 60-day assumption. |
 | 7 | ~~`[TODO: DEV]`~~ **closed 2026-10-02** | Description rules: eligibility phrases, can't-sponsor phrases, years of experience | Closed by code (`description_check`, `no_sponsorship_phrase` in `pipeline.py`) + tests (`test_TODO7_…`, `test_years_parse_…`, break check `evidence/22-…`) + handoff met: in the iteration-2 live run the Federal Focus role was ruled out automatically (`evidence/25-…`). |
 | 8 | `[TODO: DATA SOURCE]` | E-Verify participation per employer | For a later STEM OPT extension the employer must use E-Verify (to be confirmed with the DSO; not confirmed on the DHS page read here). No repo data has it. |
+
+### Open decisions (human value choices, typed `[TODO: DEFINE]`)
+
+These are not additions to the repo. They are values a person must choose; the recipe deliberately does not pick them after seeing results. They count toward `todos_open`.
+
+| # | Type | Decision | Why it is open |
+|---|---|---|---|
+| 5 | `[TODO: DEFINE]` | A fit floor, or a lower Proven p | Proven p 0.9 × 0.35 = 0.315 ≥ 0.30, so a Proven posting is Apply at any fit (iteration 1: fit 0.25 → Apply). |
 | 9 | `[TODO: DEFINE]` | Which number counts when a description gives several year requirements | The rule takes the **lowest** (lenient). The iteration-3 hand check found Apptronik's Austin role asks "5+ years of professional software engineering experience" *and* "3+ years … owning data and evaluation infrastructure", so it was kept at 3+ although its main requirement is 5+ (`evidence/30-…`). Lowest, highest, or first-stated is a human choice; it isn't changed here after seeing one result. |
 
 ## Phase gates
@@ -160,10 +167,10 @@ The log records hashes of `rules.json`, `persona.json`, the résumé and the sch
    python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v
    ```
 
-3. Live sample run. Use `--out-dir` to keep earlier runs, `--limit 5` for a demo, or `--company "NAME"` to check one company:
+3. Live sample run. By default it writes to the prototype's gitignored `.build/runs/<today>-live/`. A `--out-dir` that already holds git-tracked files is refused, so a run never overwrites a committed result. Use `--limit 5` for a demo, or `--company "NAME"` to check one company:
 
    ```bash
-   python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir course/2026fa/submissions/hemanthrayuduu/runs/<date>-live-v2
+   python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py
    ```
 
 4. Read `pipeline-report.md`, then run the G1 spot-check:
@@ -212,13 +219,16 @@ buckets{apply, consider, network, check-by-hand, skip}, scorer{…}, pipeline_sk
 
 **Scorer output:** `roles.json` in; `role-scores.json` and `role-scores.md` written by `role-scorer.mjs`.
 
+**Where:** all files go to one output folder. By default it is the prototype's gitignored `.build/runs/<today>-<mode>/`; a folder that already holds git-tracked files is refused (exit 1).
+
 ## Stop conditions, and the next action per result
 
 **Stop and invent nothing when:**
 - an input is missing or has the wrong columns;
 - a persona family isn't in `rules.json`;
 - the OPT window has closed;
-- `node` is missing or the scorer fails.
+- `node` is missing or the scorer fails;
+- the output folder holds git-tracked files (it would overwrite a committed result).
 
 **Refuse to:**
 - score an unfetched board;
@@ -240,7 +250,8 @@ buckets{apply, consider, network, check-by-hand, skip}, scorer{…}, pipeline_sk
 - **v0.1.2** reached RUNNABLE-SAMPLE on 2026-10-02. Hemanth Rayudu cleared G1–G3 and the sample-run gate (run log, iteration 1).
 - **v0.2.1** changed code (`75f3c41`), `rules.json` and the persona after the author re-scoped the situation.
 - **v0.3.0** changed only `rules.json` (Senior titles in; data_science and data_engineering families; Microsoft data-stack terms) and the persona's target families. The code is still `75f3c41`.
-- A gate cleared for one version does not carry over (P4), so v0.3.0 had its own gates. Hemanth Rayudu cleared G1–G3 and the sample-run gate for v0.3.0 on 2026-10-02, so this version claims **RUNNABLE-SAMPLE** and no more: no gated live run beyond the sample, and no VERIFIED attestation.
+- A gate cleared for one version does not carry over (P4), so v0.3.0 had its own gates. Hemanth Rayudu cleared G1–G3 and the sample-run gate for v0.3.0 on 2026-10-02.
+- **v0.3.1** changes only where outputs are written: a gitignored default and a refusal to write into a folder with tracked files. Matching, rules and scoring are unchanged. It also lists the two `[TODO: DEFINE]` items separately as open decisions. It is **DRAFT** until the author re-runs the tests and a fresh clone and re-confirms the sample-run gate.
 - The seven open TODOs are proposals outside the executed path. SNICKERDOODLE's zero-open-TODO rule for SPECIFIED conflicts with the assignment's request to list proposals as TODOs. The author's decision on that conflict is recorded in the run log.
 
 ## Run-log template (`logs/runs/`)

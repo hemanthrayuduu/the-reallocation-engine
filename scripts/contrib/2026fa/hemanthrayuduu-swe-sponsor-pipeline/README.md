@@ -2,7 +2,7 @@
 owner: hemanthrayuduu
 term: 2026fa
 component: swe-sponsor-pipeline
-status: RUNNABLE-SAMPLE  # mirrors the recipe: v0.3.0 sample-run gate cleared 2026-10-02 (logs/runs/2026fa-hemanthrayuduu-1.md, iteration 3)
+status: DRAFT  # mirrors the recipe: v0.3.1 adds an output-path guard; awaiting the author's re-run to re-confirm the sample-run gate
 promoted_to: null
 ---
 
@@ -30,7 +30,7 @@ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py
 
 - **Needs:** Python 3.9+ (standard library only) and Node 20+ (for the engine's scorer). No `pip install` is needed.
 - **Network:** live mode calls only `boards-api.greenhouse.io` and `api.ashbyhq.com`, through greenhouse-watch's allow-listed fetcher, with no redirects.
-- **Output:** `course/2026fa/submissions/hemanthrayuduu/runs/<today>-live/`. Change it with `--out-dir`.
+- **Output:** `scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/.build/runs/<today>-live/`. That folder is inside this one and gitignored, so a run never writes over a tracked file. `--out-dir` changes it, and the run refuses any folder that already holds git-tracked files.
 - **Test** (offline, fixtures only; any network call fails it):
 
 ```bash

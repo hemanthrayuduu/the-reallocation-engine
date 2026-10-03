@@ -139,6 +139,19 @@ CSV_COLUMNS = ("company_name", "website", "Total Approvals", "Total Denials", "A
 BLS_COLUMNS = ("onet_soc_code", "title", "alternate_titles_sample", "annual_median_wage", "job_zone", "cognitive_pivot_score", "oews_year")
 
 
+def refuse_tracked_out_dir(out_dir):
+    """Never write over a tracked repo file: refuse an output folder that already holds git-tracked files."""
+    try:
+        proc = subprocess.run(["git", "-C", str(REPO), "ls-files", "--", str(out_dir)],
+                              capture_output=True, text=True, timeout=30)
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return  # no git available: nothing tracked can be overwritten through git's view; proceed
+    if proc.returncode == 0 and proc.stdout.strip():
+        n = len(proc.stdout.strip().splitlines())
+        raise InputError(f"refusing to write into {rel(out_dir)}: it holds {n} git-tracked file(s), and this tool never "
+                         f"writes over a tracked repo file. Choose another --out-dir, or omit it to use the gitignored default.")
+
+
 def require_columns(found, needed, path, what):
     """A conformance check, not an audit: a wrong-schema file halts the run instead of yielding '0 candidates'."""
     missing = [c for c in needed if c not in (found or [])]
@@ -535,9 +548,12 @@ def run(args):
     targets = target_families(persona, rules)
 
     mode = "offline" if args.offline else "live"
-    out_dir = Path(args.out_dir) if args.out_dir else REPO / f"course/2026fa/submissions/hemanthrayuduu/runs/{today}-{mode}"
+    # default: a gitignored folder inside this prototype's own folder, so the documented command never writes
+    # over a tracked file (an earlier default, course/…/runs/<today>-live, collided with a committed run folder)
+    out_dir = Path(args.out_dir) if args.out_dir else HERE / ".build" / "runs" / f"{today}-{mode}"
     if not out_dir.is_absolute():
         out_dir = REPO / out_dir
+    refuse_tracked_out_dir(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     fetcher = Fetcher(args.offline, out_dir / ".build" / "raw", 0 if args.offline else rules["discovery"]["probe_delay_seconds"])
 
@@ -947,7 +963,7 @@ def main(argv=None):
     ap.add_argument("--csv", default=DEFAULTS["csv"])
     ap.add_argument("--bls", default=DEFAULTS["bls"])
     ap.add_argument("--formd", default=DEFAULTS["formd"], help="glob of Form D sample JSON files")
-    ap.add_argument("--out-dir", help="default: course/2026fa/submissions/hemanthrayuduu/runs/<today>-<mode>/")
+    ap.add_argument("--out-dir", help="default: <this folder>/.build/runs/<today>-<mode>/ (gitignored); refused if it holds tracked files")
     ap.add_argument("--offline", help="read boards from <dir>/<ats>-<slug>.json fixtures; no network")
     ap.add_argument("--today", help="YYYY-MM-DD; default: system date (recorded in the log)")
     ap.add_argument("--limit", type=int, help="probe at most N candidates (highest approvals first)")

@@ -138,3 +138,19 @@ The iteration-3 sign-off lines at the bottom are still open.
   - **Networking targets:** not decided in this pass.
   - by/date: Hemanth Rayudu, 2026-10-02
 
+## 2026-10-02 — v0.3.1: outputs never overwrite a tracked file (requirements audit, fixes A–D)
+
+- **Recipe:** manual (`recipes/cases/2026fa/hemanthrayuduu-swe-sponsor-pipeline.md` v0.3.1, rules 0.3.0)
+- **Trigger:** the author asked whether the work follows the assignment's §1–§4. The audit found:
+  - (A) the documented command's default output, `course/…/runs/<today>-live`, collided with the committed iteration-1 folder when run on 2026-10-02;
+  - (B) two `[TODO: DEFINE]` items sat in the "Proposed additions" list, which the assignment types as DEV or DATA SOURCE;
+  - (C) no `git diff --stat` after iteration 1;
+  - (D) no iteration-3 "what the human must judge" note.
+- **Changes:**
+  - (A) `pipeline.py`: default output `<prototype>/.build/runs/<today>-<mode>/` (gitignored), plus `refuse_tracked_out_dir`; two tests.
+  - (B) recipe: the DEFINE items moved to "Open decisions".
+  - (C) final `git diff --stat main` added to the evidence (`37`).
+  - (D) TEST-REPORT section added. Matching, rules and scoring are unchanged.
+- **Result:** 25 tests OK. A break attempt writing into the committed run folder was refused (exit 1), with nothing overwritten (`evidence/36`).
+- **Open issues:** status is DRAFT until the author re-runs the tests, the live run and a fresh clone on the fixed code and re-confirms the sample-run gate.
+

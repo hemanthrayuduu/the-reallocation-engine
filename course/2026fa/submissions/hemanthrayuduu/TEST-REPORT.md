@@ -12,6 +12,25 @@
 - **Iteration 3 (Senior titles + Data Scientist / Data Engineer):** a rules-only change; all 23 tests pass, and 7 roles reached Consider, including the first Texas match. A hand check exposed a rule choice: when a description states two year requirements, the lower one is used.
 - **The weakness stated plainly:** with the shipped data, no AI posting reaches "apply", because the sponsorship records rarely name AI titles.
 
+## v0.3.1 fix: outputs never overwrite a tracked file
+
+| # | Check | Command / action | Observed | Evidence |
+|---|---|---|---|---|
+| F-1 | Defect found in a requirements audit | read the default output path | without `--out-dir`, a run on 2026-10-02 wrote to `course/…/runs/2026-10-02-live/`, the **committed** iteration-1 folder, which breaks "never over a tracked repo file" | `pipeline.py` before the fix (`75f3c41`) |
+| F-2 | Fix | default output is now `<prototype>/.build/runs/<today>-<mode>/` (gitignored); `refuse_tracked_out_dir` exits 1 for a folder holding git-tracked files | 25 tests OK, including `test_never_writes_over_tracked_files` and `test_default_out_dir_is_gitignored_inside_own_folder` | test file |
+| F-3 | Break attempt on the real case | `--out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live` (offline fixtures) | `ERROR: refusing to write into … it holds 5 git-tracked file(s)`, exit 1; `git status` of `runs/` empty; the default path is gitignored (`git check-ignore`) | `36-fixA-tracked-output-guard.txt` |
+| F-4 | Author re-run of tests, live run and fresh clone on the fixed code | *(author, then the attestation is re-signed)* | — | — |
+
+## What the gates require a human to judge (iteration 3)
+
+- **G1 liveness:** each Consider link opens a live posting with a description and an Apply button. A ⚠ on board identity means checking that the page belongs to the named company.
+- **G2 timeline:** the post-completion OPT start (stand-in 2027-01-11) and the 60-day hiring lag are the student's own, and the DSO has confirmed the OPT dates.
+- **G3 release:** for each Consider row, read the full description:
+  - Does the level fit? The Years column shows the *lowest* number stated. Apptronik's Austin role shows 3+, but its main requirement is 5+ years (open decision 9).
+  - Is there an eligibility or sponsorship clause the phrase lists missed?
+  - Does the company's sponsored-title record plausibly cover this kind of role (every row is tier "Possible")?
+  - For networking targets, check each company's count of "can't sponsor this role" postings before reaching out.
+
 ## Iteration 3 checks (code `75f3c41` unchanged, rules 0.3.0, recipe 0.3.0)
 
 | # | Check | Command / action | Observed | Evidence |

@@ -261,6 +261,21 @@ class NamedFailures(unittest.TestCase):
         self.assertIn("missing columns", err)
         self.assertFalse((self.out / "pipeline-log.json").exists())
 
+    def test_never_writes_over_tracked_files(self):
+        # the fixtures folder is git-tracked: the run must refuse it and write nothing there
+        before = sorted(p.name for p in FIX.iterdir())
+        rc, _, err = run(BASE + ["--out-dir", str(FIX)])
+        self.assertEqual(rc, 1)
+        self.assertIn("refusing to write into", err)
+        self.assertEqual(sorted(p.name for p in FIX.iterdir()), before)
+
+    def test_default_out_dir_is_gitignored_inside_own_folder(self):
+        import subprocess
+        default = HERE / ".build" / "runs" / "2026-10-01-offline" / "pipeline-log.json"
+        self.assertTrue(str(default).startswith(str(HERE)))
+        ignored = subprocess.run(["git", "-C", str(HERE), "check-ignore", "-q", str(default)])
+        self.assertEqual(ignored.returncode, 0, "default output folder is not gitignored")
+
     def test_F1_named_company_not_in_csv_is_reported_not_scored(self):
         rc, out, _ = run(BASE + ["--company", "Imaginary Rocket Co", "--out-dir", str(self.out)])
         self.assertEqual(rc, 0)

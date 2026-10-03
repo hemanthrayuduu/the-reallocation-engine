@@ -187,7 +187,7 @@ What it showed:
 
 ## Attestation (iteration 3)
 
-- Recipe: swe-sponsor-pipeline v0.3.0 (rules 0.3.0, code commit 75f3c41)
+- Recipe: swe-sponsor-pipeline v0.3.0 (rules 0.3.0, code commit 75f3c41). *v0.3.1 later changed only where outputs are written; the author's re-run of v0.3.1 is recorded below this table.*
 - By: Hemanth Rayudu · 2026-10-02. I re-ran the tests and the live run myself on 2026-10-02 with `bash .build/rerun.sh` (`evidence/34b`, script in `34c`): 23 tests OK; live run apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1 (scorer: Apply 0 · Consider 7 · Skip 7), identical to the committed run. `git status` showed only one leftover file from an interrupted Claude Code run (archived as `34a`). I also ran a fresh clone of the branch at `99bc2c9` (`bash .build/fresh-clone.sh`, `evidence/35`): 23 tests OK, the same live result, and `git status` empty in the clone. I cleared G1–G3 for this run (run log, iteration 3). The other rows were run by Claude Code in my session on 2026-10-02.
 
 ### Tested

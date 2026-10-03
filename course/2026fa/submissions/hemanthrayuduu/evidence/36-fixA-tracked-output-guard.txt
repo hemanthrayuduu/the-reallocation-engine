@@ -1,0 +1,13 @@
+# Fix A (output must never overwrite a tracked file): try to write into the COMMITTED iteration-1 run folder (offline fixtures, no network)
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --offline scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/fixtures/boards --csv scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/fixtures/80days.fixture.csv --bls scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/fixtures/bls.fixture.csv --formd scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/fixtures/formd.fixture.json --persona scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/fixtures/persona.fixture.json --today 2026-10-01 --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live
+ERROR: refusing to write into course/2026fa/submissions/hemanthrayuduu/runs/2026-10-02-live: it holds 5 git-tracked file(s), and this tool never writes over a tracked repo file. Choose another --out-dir, or omit it to use the gitignored default.
+exit=1
+$ git status --short course/2026fa/submissions/hemanthrayuduu/runs/   # must be empty: nothing overwritten
+$ (same fixtures, no --out-dir: the new default)
+  scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/.build/runs/2026-10-01-offline/pipeline-report.md  +  scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/.build/runs/2026-10-01-offline/pipeline-log.json
+$ git check-ignore -v scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/.build/runs/2026-10-01-offline/pipeline-log.json
+.gitignore:23:.build/	scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/.build/runs/2026-10-01-offline/pipeline-log.json
+$ git status --short
+ M scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py
+ M scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/test_pipeline.py
+?? course/2026fa/submissions/hemanthrayuduu/evidence/36-fixA-tracked-output-guard.txt
