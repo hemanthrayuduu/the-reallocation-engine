@@ -210,6 +210,65 @@ class TitleAndDescriptionRules(unittest.TestCase):
             self.assertEqual(bool(P.seniority_hit(title, self.rules)), excluded, title)
 
 
+class YearsRuleV2(unittest.TestCase):
+    """Patterns taken from the live descriptions read on 2026-10-03 (rewritten as fictional text)."""
+
+    def y(self, html):
+        return P.years_requirement(html)
+
+    def test_largest_required_line_wins_over_a_secondary_skill_line(self):
+        r = self.y("<p><strong>What You Bring</strong></p><ul><li>4+ years of industry software engineering experience</li>"
+                   "<li>1+ years of work or research experience with neural net frameworks</li></ul>")
+        self.assertEqual((r["required"], r["preferred"]), (4, None))
+
+    def test_or_alternatives_count_their_smallest(self):
+        r = self.y("<ul><li>5+ years of professional software engineering experience in ML platforms, OR 3+ years of direct, "
+                   "hands-on experience owning data and evaluation infrastructure</li></ul>")
+        self.assertEqual(r["required"], 3)
+        self.assertEqual(r["lines"][0]["rule"], "min (or-alternatives)")
+
+    def test_preferred_section_never_decides(self):
+        r = self.y("<h3>Preferred Skills</h3><ul><li>4+ years of machine learning engineering experience</li></ul>")
+        self.assertEqual((r["required"], r["preferred"]), (None, 4))
+
+    def test_list_item_is_never_a_heading(self):
+        r = self.y("<h3>Nice to have</h3><ul><li>Experience with Kubernetes</li><li>6+ years of platform experience</li></ul>")
+        self.assertEqual((r["required"], r["preferred"]), (None, 6))
+
+    def test_inline_heading_prefix_sets_section(self):
+        r = self.y("<p><strong>Preferred qualifications:</strong> 5+ years of distributed systems experience</p>")
+        self.assertEqual((r["required"], r["preferred"]), (None, 5))
+
+    def test_a_plus_on_the_line_marks_it_preferred(self):
+        r = self.y("<ul><li>3+ years of Python experience</li><li>2+ years of Spark experience is a plus</li></ul>")
+        self.assertEqual((r["required"], r["preferred"]), (3, 2))
+
+    def test_no_headings_means_required(self):
+        self.assertEqual(self.y("3+ years of experience with Azure OpenAI")["required"], 3)
+
+    def test_plain_text_lines_and_headings(self):
+        r = self.y("About the role\nRequirements\n3+ years of experience shipping ML\nBonus points\n7+ years of experience leading teams")
+        self.assertEqual((r["required"], r["preferred"]), (3, 7))
+
+    def test_years_without_experience_are_ignored(self):
+        self.assertIsNone(self.y("Founded 10+ years ago; we value curiosity.")["required"])
+
+    def test_years_in_words_are_not_parsed(self):
+        self.assertIsNone(self.y("Five years of experience with LLMs")["required"])
+
+    def test_missing_content_is_safe(self):
+        self.assertEqual(self.y(None), {"required": None, "preferred": None, "lines": []})
+
+    def test_description_check_uses_v2_and_keeps_evidence(self):
+        persona = {"experience_years": 3.5}
+        rules = json.loads((HERE / "rules.json").read_text())
+        job = {"title": "AI Engineer", "content": "&lt;h3&gt;Requirements&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;6+ years of industry experience&lt;/li&gt;&lt;/ul&gt;"}
+        reason, info = P.description_check(job, rules, persona)
+        self.assertTrue(reason.startswith("experience:"), reason)
+        self.assertEqual(info["years_required"], 6)
+        self.assertEqual(info["years_lines"][0]["section"], "required")
+
+
 class LocationRule(unittest.TestCase):
     """Regression: the first full live run (2026-10-02) classed 'Anywhere in the US' as non-US and
     sent a company with a matching posting to the networking list (evidence/06-full-live-run-before-us-fix)."""

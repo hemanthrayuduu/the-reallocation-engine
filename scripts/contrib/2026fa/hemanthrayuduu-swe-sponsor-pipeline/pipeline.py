@@ -32,6 +32,7 @@ import csv
 import datetime as dt
 import glob
 import hashlib
+import html
 import importlib
 import importlib.util
 import json
@@ -210,29 +211,86 @@ def no_sponsorship_phrase(job, rules):
     return None
 
 
+_BLOCK_TAGS = re.compile(r"</?(?:p|li|br|div|h[1-6]|tr|ul|ol|table|section)\b[^>]*>", re.I)
+_YEARS = re.compile(r"(\d{1,2})\s*\+?\s*(?:(?:-|–|to)\s*(\d{1,2})\s*\+?\s*)?years?\b(?=[^.;]{0,60}?experience)", re.I)
+_PREFERRED_HEAD = re.compile(r"prefer|nice[- ]to[- ]have|bonus|\bplus\b|ideal|desired", re.I)
+_HEADING_WORDS = re.compile(r"qualif|require|what you|you have|you bring|you'?ll need|must|basic|minimum|experience|"
+                            r"about you|skills|prefer|nice[- ]to[- ]have|bonus|\bplus\b|ideal|desired", re.I)
+_PREFERRED_INLINE = re.compile(r"\ba plus\b|nice[- ]to[- ]have|\bbonus\b", re.I)
+
+
+def description_lines(content):
+    """[(text, is_list_item)] from a description in HTML (escaped or not) or plain text."""
+    raw = html.unescape(content or "")
+    raw = re.sub(r"<li\b[^>]*>", "\n\x00LI", raw, flags=re.I)
+    raw = _BLOCK_TAGS.sub("\n", raw)
+    raw = re.sub(r"<[^>]+>", " ", raw)
+    out = []
+    for part in raw.split("\n"):
+        is_li = part.startswith("\x00LI")
+        text = re.sub(r"\s+", " ", part.replace("\x00LI", "")).strip()
+        if text:
+            out.append((text, is_li))
+    return out
+
+
+def heading_section(text, is_li):
+    """'preferred' | 'required' for a section heading line, else None. List items are never headings."""
+    if is_li or len(text) > 60 or re.search(r"\d", text) or text.endswith(".") or not _HEADING_WORDS.search(text):
+        return None
+    return "preferred" if _PREFERRED_HEAD.search(text) else "required"
+
+
+def years_requirement(content):
+    """Years rule v2 (rules 0.4.0): largest value among required lines; within a line, mentions joined by 'or'
+    are alternatives (smallest counts), otherwise all apply (largest counts); preferred lines never decide."""
+    section, req, pref, lines = "required", [], [], []
+    for text, is_li in description_lines(content):
+        h = heading_section(text, is_li)
+        if h:
+            section = h
+            continue
+        m = re.match(r"^([^:]{3,60}):\s*\S", text)
+        if m and not is_li:
+            h2 = heading_section(m.group(1), False)
+            if h2:
+                section = h2
+        mentions = list(_YEARS.finditer(text))
+        if not mentions:
+            continue
+        values = [int(x.group(1)) for x in mentions]
+        alt = any(re.search(r"\bor\b", text[mentions[i].end():mentions[i + 1].start()], re.I)
+                  for i in range(len(mentions) - 1))
+        value = min(values) if alt else max(values)
+        line_section = "preferred" if (section == "preferred" or _PREFERRED_INLINE.search(text)) else "required"
+        lines.append({"section": line_section, "text": text[:240], "value": value,
+                      "rule": "min (or-alternatives)" if alt else "max"})
+        (pref if line_section == "preferred" else req).append(value)
+    return {"required": max(req) if req else None, "preferred": max(pref) if pref else None, "lines": lines}
+
+
 def description_check(job, rules, persona):
     """Rules applied to the posting text (record). Returns (ruled_out_reason or None, info)."""
     d = rules.get("description_rules") or {}
     text = (GW.strip_html(job.get("content") or "") + " " + (job.get("title") or "")).lower()
-    info = {"years_required": None, "years_mentions": [], "matched_phrase": None,
+    yr = years_requirement(job.get("content"))
+    info = {"years_required": yr["required"], "years_preferred": yr["preferred"], "years_lines": yr["lines"],
+            "years_mentions": [l["text"] for l in yr["lines"]], "matched_phrase": None, "phrase_context": None,
             "stack_terms": [s for s in rules.get("microsoft_ai_stack_terms", []) if GW.phrase_in(s, text)]}
     for key, label in (("eligibility_exclude_phrases", "eligibility"), ("no_sponsorship_phrases", "no-sponsorship")):
         for ph in d.get(key, []):
             if GW.phrase_in(ph, text):
+                i = text.find(ph.lower())
                 info["matched_phrase"] = ph
+                info["phrase_context"] = text[max(0, i - 60): i + len(ph) + 60] if i >= 0 else None
                 return f"{label}: description says «{ph}»", info
     y = d.get("years_of_experience")
-    if y is not None and persona.get("experience_years") is not None:
-        lows = []
-        for m in re.finditer(r"(\d{1,2})\s*\+?\s*(?:(?:-|–|to)\s*(\d{1,2})\s*\+?\s*)?years?\b(?=[^.;]{0,60}?experience)", text):
-            lows.append(int(m.group(1)))
-            info["years_mentions"].append(m.group(0).strip())
-        if lows:
-            info["years_required"] = min(lows)
-            limit = persona["experience_years"] + y.get("tolerance_years", 0)
-            if min(lows) > limit:
-                return (f"experience: description asks for {min(lows)}+ years (lowest stated), "
-                        f"above persona {persona['experience_years']} + tolerance {y.get('tolerance_years', 0)}"), info
+    if y is not None and persona.get("experience_years") is not None and yr["required"] is not None:
+        limit = persona["experience_years"] + y.get("tolerance_years", 0)
+        if yr["required"] > limit:
+            return (f"experience: description requires {yr['required']}+ years (largest required line; 'or' alternatives "
+                    f"count their smallest), above persona {persona['experience_years']} + tolerance "
+                    f"{y.get('tolerance_years', 0)}"), info
     return None, info
 
 
@@ -669,7 +727,11 @@ def run(args):
                               "posted": lab(job.get("first_published") or job.get("updated_at") or None, REC),
                               "family": lab(fam, INP), "fit_lines": why, "fit_note": freason,
                               "years_required": lab(dinfo["years_required"], REC,
-                                                    note="lowest 'N+ years … experience' in the description" if dinfo["years_mentions"] else "not stated in the description"),
+                                                    note=("description text (record) read by years rule v2 (your-input): largest required "
+                                                          "line; 'or' alternatives count their smallest") if dinfo["years_lines"]
+                                                         else "not stated in the description"),
+                              "years_preferred": lab(dinfo["years_preferred"], REC, note="preferred-only lines; never decide"),
+                              "years_lines": dinfo["years_lines"],
                               "microsoft_ai_stack_terms": lab(dinfo["stack_terms"], REC, note="microsoft_ai_stack_terms found in the posting text"),
                               "wage_context": wage_context(soc), "company_key": c["name"]}
         counts["postings_seen"] += pc["seen"]
@@ -804,6 +866,12 @@ def tag(s):
     return f"`{s}`"
 
 
+def years_cell(m):
+    req, pref = m["years_required"]["value"], (m.get("years_preferred") or {}).get("value")
+    cell = f"{req}+" if req is not None else "not stated"
+    return cell + (f" (pref {pref}+)" if pref is not None else "")
+
+
 def render_report(log, meta, roles, companies):
     f, b = log["funnel"], log["buckets"]
     by_id = {r["role_id"]: r for r in roles}
@@ -829,14 +897,13 @@ def render_report(log, meta, roles, companies):
             nn = len(c.get("no_sponsorship_statements") or [])
             nos = f" ⚠ {nn} of {c['postings']['value']['seen']} postings here say they can't sponsor that role" if nn else ""
             star = f"★ {meta[rid]['preferred_location']['matched']}" if meta[rid]["preferred_location"]["value"] else ""
-            yrs = m["years_required"]["value"]
             stack = ", ".join(m["microsoft_ai_stack_terms"]["value"][:5]) or "none found"
             rows.append(
                 f"| {n} | {star} | {r['company']}{' ⚠ board identity unverified' if ident != 'confirmed' else ''}{nos} | "
                 f"[{r['title']}]({m['url']}) — {m['location']['value'] or 'no location'}{flag} {tag('record')} | "
                 f"{m['composite']:.3f} | {c['h1b_total_approvals']['value']:.0f} approvals {tag('record')}; tier **{r['sponsorship']['tier']}** "
                 f"(p {r['sponsorship']['p']}) {tag('your-input')} | {r['fit']['p']:.2f} {tag('your-input')} | "
-                f"{(str(yrs) + '+') if yrs is not None else 'not stated'} {tag('record')} | {stack} {tag('record')} | {wage} |")
+                f"{years_cell(m)} {tag('record')} | {stack} {tag('record')} | {wage} |")
         return rows
 
     L = []
