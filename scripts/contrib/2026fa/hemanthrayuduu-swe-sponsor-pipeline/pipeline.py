@@ -354,6 +354,13 @@ def tier_for(approvals, same_family, rules):
     return None, None
 
 
+def scheme_max(scheme):
+    """Highest score the fit scheme can give: title + capped skills + any-skill bonus + degree + positive location."""
+    w = scheme["weights"]
+    return float(w.get("title", 0) + scheme.get("max_skill_hits", 8) * w.get("skill", 0)
+                 + w.get("skill_any", 0) + w.get("degree", 0) + max(w.get("location", 0), 0))
+
+
 def timeline_gate(persona, today, rules):
     v = persona.get("visa") or {}
     opt = parse_date(v.get("opt_start_date"), "persona visa.opt_start_date")
@@ -613,6 +620,7 @@ def run(args):
     resume = GW.load_resume(str(resume_path))
     scheme_path = REPO / rules["fit"]["scheme"]
     scheme = GW.load_scheme(str(scheme_path))
+    full = scheme_max(scheme) if rules["fit"]["full_score"] == "scheme_max" else float(rules["fit"]["full_score"])
     feats = GW.resume_features(resume)
     timeline = timeline_gate(persona, today, rules)  # F3 raises here, before any fetch
     targets = target_families(persona, rules)
@@ -707,7 +715,7 @@ def run(args):
             if tier is None:
                 continue
             _, fscore, why, freason = GW.judge(job, feats, scheme)
-            fit_p = round(max(0.0, min(1.0, fscore / rules["fit"]["full_score"])), 3)
+            fit_p = round(max(0.0, min(1.0, fscore / full)), 3)
             rid = f"{disc['ats']}:{disc['slug']}:{job.get('id')}"
             roles.append({
                 "role_id": rid, "company": c["name"], "title": title,
@@ -715,7 +723,7 @@ def run(args):
                                 "basis": f"{c['approvals']:.0f} H-1B approvals (record); posting family '{fam}' "
                                          f"{'IS' if same else 'is NOT'} among sponsored families {c['families']} (record); tier rule rules.json"},
                 "fit": {"p": fit_p, "source": INP,
-                        "basis": f"scheme {scheme.get('scheme_version')} score {fscore:.2f} / full_score {rules['fit']['full_score']} — deterministic phrase match, no model"},
+                        "basis": f"scheme {scheme.get('scheme_version')} score {fscore:.2f} / scheme max {full} — deterministic phrase match, no model"},
                 "liveness": {"factor": 1.0, "source": REC, "basis": f"posting present in {disc['ats']} board API response fetched {today}"},
                 "timeline": tl_term,
             })

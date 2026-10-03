@@ -269,6 +269,22 @@ class YearsRuleV2(unittest.TestCase):
         self.assertEqual(info["years_lines"][0]["section"], "required")
 
 
+class FitScale(unittest.TestCase):
+    def test_scheme_max_is_computed_from_the_scheme(self):
+        scheme = json.loads((HERE / "scheme.json").read_text())
+        self.assertEqual(P.scheme_max(scheme), 12.0)
+
+    def test_fit_is_score_over_scheme_max(self):
+        tmp = tempfile.TemporaryDirectory(); out = Path(tmp.name)
+        rc, _, err = run(BASE + ["--out-dir", str(out)])
+        self.assertEqual(rc, 0, err)
+        role = next(r for r in json.loads((out / "roles.json").read_text())["roles"] if r["role_id"] == "greenhouse:lumenbyte:101")
+        self.assertIn("/ scheme max 12.0", role["fit"]["basis"])
+        score = float(role["fit"]["basis"].split("score ")[1].split(" ")[0])
+        self.assertAlmostEqual(role["fit"]["p"], round(min(1.0, score / 12.0), 3))
+        tmp.cleanup()
+
+
 class LocationRule(unittest.TestCase):
     """Regression: the first full live run (2026-10-02) classed 'Anywhere in the US' as non-US and
     sent a company with a matching posting to the networking list (evidence/06-full-live-run-before-us-fix)."""
