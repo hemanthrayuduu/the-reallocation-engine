@@ -214,7 +214,15 @@ class TitleAndDescriptionRules(unittest.TestCase):
                  "Senior Data Engineer": "data_engineering",          # 0.3.0 families
                  "Analytics Engineer": "data_engineering",
                  "Data Scientist II": "data_science",
-                 "Senior Data Scientist, Machine Learning": "ml_ai"}  # ml_ai is checked first
+                 "Senior Data Scientist, Machine Learning": "ml_ai",  # ml_ai is checked first
+                 # verify-iteration-1 false negatives (rules 0.4.1)
+                 "Senior Reinforcement Learning Engineer": "ml_ai",
+                 "Senior Software Engineer, Model Serving": "ml_ai",
+                 "Software Engineer - Data Platform": "data_engineering",
+                 "Senior Software Engineer - Distributed Data Systems": "data_engineering",
+                 "Business Intelligence Engineer": "data_engineering",
+                 "Senior Security Engineer - Data Platform": None,
+                 "Software Engineer - Database Engine Internals": "software"}
         for title, want in cases.items():
             self.assertEqual(P.family_of(title, self.rules), want, title)
 
@@ -269,6 +277,12 @@ class YearsRuleV2(unittest.TestCase):
         r = self.y("<ul><li>3+ years of Python experience</li><li>2+ years of Spark experience is a plus</li></ul>")
         self.assertEqual((r["required"], r["preferred"]), (3, 2))
 
+    def test_a_plus_applies_to_its_own_sentence_only(self):
+        # verify-iteration-1, row 6: the "a plus" belonged to the next sentence, not to the 5+ years requirement
+        r = self.y("<ul><li>5+ years of industry experience developing AI systems in production. "
+                   "Experience building consumer facing features a plus.</li></ul>")
+        self.assertEqual((r["required"], r["preferred"]), (5, None))
+
     def test_no_headings_means_required(self):
         self.assertEqual(self.y("3+ years of experience with Azure OpenAI")["required"], 3)
 
@@ -309,6 +323,19 @@ class FitScale(unittest.TestCase):
         score = float(role["fit"]["basis"].split("score ")[1].split(" ")[0])
         self.assertAlmostEqual(role["fit"]["p"], round(min(1.0, score / 12.0), 3))
         tmp.cleanup()
+
+
+class SampleRule(unittest.TestCase):
+    def test_boundary_titles_rotate_across_companies(self):
+        # verify-iteration-1: "first 5 by company" put all five boundary rows on one board
+        lab = lambda v: {"value": v, "source": "record"}
+        companies = [{"company": lab(co), "other_family_postings": [{"title": t, "url": f"u/{co}/{t}"} for t in titles]}
+                     for co, titles in (("A Inc", ["Data Analyst", "Hardware Engineer", "ML Ops Lead"]),
+                                        ("B Inc", ["Firmware Engineer"]), ("C Inc", ["Controls Engineer", "Electrical Engineer"]))]
+        rows = [r for r in P.verification_sample([], companies) if r["why"] == "boundary other-family title"]
+        self.assertEqual([(r["company"], r["title"]["value"]) for r in rows],
+                         [("A Inc", "Data Analyst"), ("B Inc", "Firmware Engineer"), ("C Inc", "Controls Engineer"),
+                          ("A Inc", "Hardware Engineer"), ("C Inc", "Electrical Engineer")])
 
 
 class LocationRule(unittest.TestCase):

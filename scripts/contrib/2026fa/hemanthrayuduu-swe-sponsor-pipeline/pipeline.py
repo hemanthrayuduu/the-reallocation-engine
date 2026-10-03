@@ -188,8 +188,9 @@ def family_of(title, rules):
     for fam, spec in rules["title_families"].items():
         if any(GW.phrase_in(p, t) for p in spec["patterns"]):
             return fam
-        combo = spec.get("also_if_title_has_role_word_and_ai_word")
-        if (combo and any(GW.phrase_in(w, t) for w in combo["role_words"]) and any(GW.phrase_in(w, t) for w in combo["ai_words"])
+        combo = spec.get("also_if_title_has_role_word_and_family_word") or spec.get("also_if_title_has_role_word_and_ai_word")
+        words = (combo or {}).get("family_words") or (combo or {}).get("ai_words") or []
+        if (combo and any(GW.phrase_in(w, t) for w in combo["role_words"]) and any(GW.phrase_in(w, t) for w in words)
                 and not any(GW.phrase_in(w, t) for w in combo.get("not_if_title_has", []))):
             return fam
     return None
@@ -255,17 +256,19 @@ def years_requirement(content):
             h2 = heading_section(m.group(1), False)
             if h2:
                 section = h2
-        mentions = list(_YEARS.finditer(text))
-        if not mentions:
-            continue
-        values = [int(x.group(1)) for x in mentions]
-        alt = any(re.search(r"\bor\b", text[mentions[i].end():mentions[i + 1].start()], re.I)
-                  for i in range(len(mentions) - 1))
-        value = min(values) if alt else max(values)
-        line_section = "preferred" if (section == "preferred" or _PREFERRED_INLINE.search(text)) else "required"
-        lines.append({"section": line_section, "text": text[:240], "value": value,
-                      "rule": "min (or-alternatives)" if alt else "max"})
-        (pref if line_section == "preferred" else req).append(value)
+        # 0.4.1: judge each sentence on its own, so "… a plus." in the next sentence cannot make a requirement optional
+        for sentence in re.split(r"(?<=[.!?])\s+(?=[A-Z])", text):
+            mentions = list(_YEARS.finditer(sentence))
+            if not mentions:
+                continue
+            values = [int(x.group(1)) for x in mentions]
+            alt = any(re.search(r"\bor\b", sentence[mentions[i].end():mentions[i + 1].start()], re.I)
+                      for i in range(len(mentions) - 1))
+            value = min(values) if alt else max(values)
+            line_section = "preferred" if (section == "preferred" or _PREFERRED_INLINE.search(sentence)) else "required"
+            lines.append({"section": line_section, "text": sentence[:240], "value": value,
+                          "rule": "min (or-alternatives)" if alt else "max"})
+            (pref if line_section == "preferred" else req).append(value)
     return {"required": max(req) if req else None, "preferred": max(pref) if pref else None, "lines": lines}
 
 
@@ -898,11 +901,21 @@ def verification_sample(audit, companies):
             others.setdefault(r["decision"]["value"], []).append(r)
     for d in sorted(others):
         sample += [{"why": f"first 3 of {d}", **r} for r in others[d][:3]]
-    boundary = sorted((c["company"]["value"], p["title"] or "", p["url"]) for c in companies
-                      for p in c.get("other_family_postings", []) if _BOUNDARY_TITLE.search(p["title"] or ""))
+    # 0.4.1: round-robin across companies (sorted), each company's titles sorted, so one big board cannot fill all five rows
+    per = {}
+    for c in companies:
+        for p in c.get("other_family_postings", []):
+            if _BOUNDARY_TITLE.search(p["title"] or ""):
+                per.setdefault(c["company"]["value"], []).append((p["title"] or "", p["url"]))
+    queues = [sorted(v) for _, v in sorted(per.items())]
+    boundary = []
+    while len(boundary) < 5 and any(queues):
+        for co, q in zip(sorted(per), queues):
+            if q and len(boundary) < 5:
+                boundary.append((co,) + q.pop(0))
     sample += [{"why": "boundary other-family title", "company": co, "id": None, "title": lab(t, REC), "url": lab(u, REC),
                 "decision": lab("other-family", INP), "reason": lab("title not in a targeted family", INP), "evidence": {}}
-               for co, t, u in boundary[:5]]
+               for co, t, u in boundary]
     return sample
 
 
