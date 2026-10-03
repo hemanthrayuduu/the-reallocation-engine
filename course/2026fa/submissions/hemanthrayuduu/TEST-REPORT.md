@@ -10,7 +10,22 @@
 - **Iteration 1 (entry-level software/AI):** the tool runs from a fresh copy with no installation, all its tests passed, and every named failure stopped cleanly. Two real defects (a location bug and a silent wrong-file success) were fixed and covered by tests.
 - **Iteration 2 (the author's real situation: mid-level AI Engineer, Microsoft stack, Texas and remote first):** the tool reads job descriptions, and all 21 tests pass. A disabled rule is caught by the tests. Testing on real data also caught and withdrew a wrong rule before it shipped: one that treated "can't sponsor this role" as company-wide.
 - **Iteration 3 (Senior titles + Data Scientist / Data Engineer):** a rules-only change; all 23 tests pass, and 7 roles reached Consider, including the first Texas match. A hand check exposed a rule choice: when a description states two year requirements, the lower one is used.
+- **Iteration 4 (rules 0.4.0–0.4.2, 2026-10-03):** a new years rule, fit on the scheme's own scale and a per-posting audit file. Each iteration a fixed sample of 23 decisions was checked against the live job descriptions; the errors found (1, then 2) became rules with tests, and the third check found **0 of 23** wrong. All 49 tests pass.
 - **The weakness stated plainly:** with the shipped data, no AI posting reaches "apply", because the sponsorship records rarely name AI titles.
+
+## Iteration 4 checks (rules 0.4.0–0.4.2, recipe 0.4.2)
+
+| # | Check | Command / action | Observed | Evidence |
+|---|---|---|---|---|
+| I4-1 | Offline tests | `python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py'` | 49 tests OK (new: years rule v2, fit scale, sample rule, audit) | test file |
+| I4-2 | Live run, rules 0.4.0 | `pipeline.py --out-dir …` | consider 8 · network 5 · check-by-hand 38 · skip 1 | `42-iteration4-live-run.txt` |
+| I4-3 | Verification 1 | 23-row sample vs live descriptions | Twin Health Senior AI Engineer kept wrongly ("a plus" in the next sentence); boundary titles missed by the family words | `verify-iteration-1.md` |
+| I4-4 | Live run, rules 0.4.1 | same | consider 10 · network 6 | `43-iteration4b-live-run.txt` |
+| I4-5 | Verification 2 | same sample rule | 2 RL Engineer postings kept on a *preferred* 2+ ("strongly preferred" after the number; "expertise (5+ years)" not read) | `verify-iteration-2.md` |
+| I4-6 | Live run, rules 0.4.2 | same | consider 8 · network 6 · check-by-hand 38 · skip 1; skip share 91.3% of 92 target-family postings | `44-iteration4c-live-run.txt`, `runs/2026-10-03-live-v4/` |
+| I4-7 | Verification 3 | same sample rule, plus all 16 experience rule-outs | **0 of 23** misclassified; 16 of 16 rule-outs correct | `verify-iteration-3.md` |
+
+The verifications were done by Claude Code against the live descriptions; zero errors in a sample isn't proof of zero errors overall.
 
 ## v0.3.1 fix: outputs never overwrite a tracked file
 
@@ -29,7 +44,7 @@
 - **G1 liveness:** each Consider link opens a live posting with a description and an Apply button. A ⚠ on board identity means checking that the page belongs to the named company.
 - **G2 timeline:** the post-completion OPT start (stand-in 2027-01-11) and the 60-day hiring lag are the student's own, and the DSO has confirmed the OPT dates.
 - **G3 release:** for each Consider row, read the full description:
-  - Does the level fit? The Years column shows the *lowest* number stated. Apptronik's Austin role shows 3+, but its main requirement is 5+ years (open decision 9).
+  - Does the level fit? The Years column shows the *lowest* number stated. Apptronik's Austin role shows 3+, but its main requirement is 5+ years (open decision 9). *(Correction 2026-10-03: the live text says 5+ years **OR** 3+ years (alternatives), not "and", so 3+ is the right reading and the role stays; see `evidence/verify-iteration-1.md`.)*
   - Is there an eligibility or sponsorship clause the phrase lists missed?
   - Does the company's sponsored-title record plausibly cover this kind of role (every row is tier "Possible")?
   - For networking targets, check each company's count of "can't sponsor this role" postings before reaching out.
@@ -41,7 +56,7 @@
 | I3-1 | Code unchanged | `git diff --stat 75f3c41 -- scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py` | empty | (this report) |
 | I3-2 | Offline tests | `python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v` | `Ran 23 tests … OK`. The first run failed `test_F6_…` because the Senior fixture was now scored, which is the intended effect, so the test was updated | `31-iteration3-offline-tests.txt` |
 | I3-3 | Live run | `pipeline.py --out-dir …/runs/2026-10-02-live-v3` | 49 candidates → 11 boards → 67 AI/data postings → 48 US → 16 right level → 9 ruled out by description → 7 kept. **apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1**; skip share 89.6% | `29-iteration3-live-run.txt`, `runs/2026-10-02-live-v3/` |
-| I3-4 | Hand cross-check | Apptronik 6176116004 and Twin Health 5655780004 via the Greenhouse API | Austin role: "5+ years … and 3+ years …", shown as 3+ (lowest-bound rule; TODO 9). Twin Health Senior AI Engineer: 5+ years, correctly ruled out; no can't-sponsor line | `30-iteration3-hand-cross-check.txt` |
+| I3-4 | Hand cross-check | Apptronik 6176116004 and Twin Health 5655780004 via the Greenhouse API | Austin role: "5+ years … and 3+ years …", shown as 3+ (lowest-bound rule; TODO 9). Twin Health Senior AI Engineer: 5+ years, correctly ruled out; no can't-sponsor line | `30-iteration3-hand-cross-check.txt` *(Correction 2026-10-03: the live text says 5+ years **OR** 3+ years (alternatives), not "and", so 3+ is the right reading and the role stays; see `evidence/verify-iteration-1.md`.)* |
 | I3-5 | Toolchain after | doctor, verify, conformance, `pii-scan --diff main`, scope | see evidence | `32-iteration3-toolchain-after.txt` |
 | I3-6 | Gate G1 (machine + human) | `npm run ats:liveness -- --file /tmp/consider-urls-v3.txt`; author opened all 7 | `7 active 0 expired 0 uncertain`; each page has a description and an Apply button | `33-iteration3-G1-liveness-7-links.txt`, run log |
 | I3-7 | Author re-run (for the attestation) | author typed `! bash .build/rerun.sh` (tests, live run to gitignored `.build/my-run-v3`, git status) | 23 OK; apply 0 · consider 7 · network 6 · check-by-hand 38 · skip 1, identical; git status listed one leftover file from an interrupted Claude run (archived) | `34b-iteration3-author-rerun.txt`, `34c-rerun-script.txt`, `34a-INTERRUPTED-claude-rerun.txt` |

@@ -53,6 +53,7 @@ Claude Code, in this session:
   - **Told the author** Twin Health "won't sponsor" from one posting; corrected it.
   - **Wrongly labeled** two drafted predictions as written before the run; corrected before commit.
 - **Iteration 3:** rules 0.3.0 (Senior titles; data_science and data_engineering families with O*NET-backed SOC lookups; Microsoft data-stack terms), persona v3, two new tests; ran `evidence/29`–`32`; found the two-requirement years case (TODO 9).
+- **Iteration 4 (2026-10-03):** wrote the design and plan (`design/`); years rule v2, fit on the scheme's own scale, `pipeline-audit.md` and the verification sample, with tests (49); rules 0.4.0–0.4.2; ran `evidence/42`–`44`; checked each verification sample against the live descriptions (`verify-iteration-1`–`3`). **Misread** the Austin role as "5+ and 3+" in iteration 3 (it is "or"); corrected in every document with a dated note.
 - **DHS source used:** *Study in the States*, "F-1 Optional Practical Training (OPT)", studyinthestates.dhs.gov, read 2026-10-02.
 
 ## What the author decided, checked, changed, or rejected
@@ -77,7 +78,7 @@ Claude Code, in this session:
 - **Iteration 3, checked and decided myself:**
   - opened all 7 Consider links (all live, with descriptions and Apply buttons);
   - confirmed the timeline stand-in (G2);
-  - chose to apply to all 7 Consider rows (G3), treating the Austin role as a reach because its description asks 5+ years;
+  - chose to apply to all 7 Consider rows (G3), treating the Austin role as a reach because its description asks 5+ years; *(the "5+ years" reading was Claude's mistake: the description says 5+ **or** 3+; corrected 2026-10-03)*
   - promoted the recipe to RUNNABLE-SAMPLE for v0.3.0.
 - **Re-ran myself for iteration 3:** I stopped Claude Code's re-run so I could run the checks myself. I ran `! bash .build/rerun.sh` (`evidence/34b`) and `! bash .build/fresh-clone.sh` on a fresh clone at `99bc2c9` (`evidence/35`). Both gave 23 tests OK and an identical live result.
 - **Asked Claude Code to write** the iterations 2–3 part of FRICTIONAL Part B and this iteration-3 entry from the session record; I read them before submitting.

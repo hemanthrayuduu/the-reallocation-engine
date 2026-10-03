@@ -1,9 +1,9 @@
 ---
-status: DRAFT          # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.3.1 reached RUNNABLE-SAMPLE (author re-run + fresh clone); v0.3.2 makes the output guard work without git (it failed in the unzipped submission), so it awaits the author's re-run. See "Lifecycle note".
-todos_open: 8
+status: DRAFT          # DRAFT | SPECIFIED | RUNNABLE-SAMPLE | RUNNABLE-LIVE. v0.3.x reached RUNNABLE-SAMPLE; v0.4.2 changes the years rule, the fit scale and adds a per-posting audit, so it is DRAFT until the author's own re-run and gates. See "Lifecycle note".
+todos_open: 7
 last_gate: "sample-run, 2026-10-02, Hemanth Rayudu, logs/runs/2026fa-hemanthrayuduu-1.md (v0.3.0 G1–G3 cleared; v0.3.1 re-confirmed by author re-run + fresh clone at 0e46158)"
 attestation: null  # set only at VERIFIED; sample-run attestations are in course/2026fa/submissions/hemanthrayuduu/worked-run.md
-recipe_version: 0.3.2  # 0.3.2: output guard also works outside a git checkout (the unzipped submission); 0.3.1: outputs default to a gitignored folder and never overwrite tracked files; open decisions listed separately; 0.2.x: author re-scoped to AI Engineer (Microsoft AI stack), description rules, location preference; 0.3.0: Senior titles + Data Scientist / Data Engineer roles
+recipe_version: 0.4.2  # 0.4.x: years rule v2 (required vs preferred lines; 'or' alternatives), fit on the scheme's own scale, per-posting audit + verification loop (rules 0.4.0–0.4.2); 0.3.2: output guard works outside git; 0.3.1: gitignored outputs; 0.2.x: AI Engineer re-scope + description rules; 0.3.0: Senior titles + Data Scientist / Data Engineer
 ---
 
 # swe-sponsor-pipeline — AI Engineer, Data Scientist and Data Engineer postings at sponsoring, recently funded companies
@@ -24,7 +24,8 @@ recipe_version: 0.3.2  # 0.3.2: output guard also works outside a git checkout (
 It never applies, never emails, and never treats a guess as a record.
 
 **Handoff condition (done when):**
-- `pipeline.py` exits 0 and writes both `pipeline-log.json` and `pipeline-report.md`.
+- `pipeline.py` exits 0 and writes `pipeline-log.json`, `pipeline-report.md` and `pipeline-audit.md`.
+- `pipeline-audit.md` lists every target-family posting with its decision and the text that decided it, plus a fixed verification sample.
 - Every value carries `record` or `your-input`, and `model-judgment` never appears.
 - Every company with no fetched board is in `check-by-hand` and absent from `roles.json`.
 - Every posting ruled out by its description is listed with the phrase or years found, and absent from `roles.json`.
@@ -106,7 +107,7 @@ These are not additions to the repo. They are values a person must choose; the r
 | # | Type | Decision | Why it is open |
 |---|---|---|---|
 | 5 | `[TODO: DEFINE]` | A fit floor, or a lower Proven p | Proven p 0.9 × 0.35 = 0.315 ≥ 0.30, so a Proven posting is Apply at any fit (iteration 1: fit 0.25 → Apply). |
-| 9 | `[TODO: DEFINE]` | Which number counts when a description gives several year requirements | The rule takes the **lowest** (lenient). The iteration-3 hand check found Apptronik's Austin role asks "5+ years of professional software engineering experience" *and* "3+ years … owning data and evaluation infrastructure", so it was kept at 3+ although its main requirement is 5+ (`evidence/30-…`). Lowest, highest, or first-stated is a human choice; it isn't changed here after seeing one result. |
+| 9 | ~~`[TODO: DEFINE]`~~ **closed 2026-10-03 (author's decision, Hemanth Rayudu)** | Which number counts when a description gives several year requirements | Years rule v2 (rules 0.4.0–0.4.2): only *required* lines decide, and the **largest** required line counts. Lines under a preferred / nice-to-have heading, or saying "a plus" or "preferred", never decide. Numbers joined by **"or"** are alternatives, so the smaller one counts. Correction: earlier versions of these documents described Apptronik's Austin role as asking 5+ *and* 3+ years. The live text says 5+ years **OR** 3+ years, so 3+ is the right reading and the role stays (`evidence/verify-iteration-1.md`). |
 
 ## Phase gates
 
@@ -137,7 +138,7 @@ Liveness and timeline are **gates** (multipliers in the scorer), not votes.
 - US location;
 - seniority (Staff / Principal / Lead and above, interns and PhD titles excluded; Senior included since 0.3.0);
 - description rule-outs;
-- fit p (phrase-match score ÷ 8, location weight 0);
+- fit p (phrase-match score ÷ the scheme's own maximum, 12, location weight 0);
 - timeline factor;
 - Texas / remote preference (sort and ★ only);
 - SOC fallback.
@@ -149,7 +150,7 @@ The log records hashes of `rules.json`, `persona.json`, the résumé and the sch
 - That a `check-by-hand` company has no openings.
 - That an Ashby board belongs to the company.
 - That the student is eligible when a requirement is worded differently from the phrase list.
-- The real level of a role whose description states no years, or states several (the lowest is used; TODO 9).
+- The real level of a role whose description states no years. When it states several, the years rule v2 reading is checked by hand on a fixed sample each iteration (see "Verification loop"); zero errors in a sample isn't zero errors overall.
 - That a posting genuinely uses the Microsoft AI stack. The column is a word match; "Azure" alone may just mean the company's cloud.
 - That the hiring lag is realistic. What the employer pays.
 
@@ -200,7 +201,9 @@ companies[]{company, h1b_*, sponsored_titles, sponsored_families, latest_funding
 roles[]{role_id, company, title, sponsorship, fit, liveness, timeline,
         result{url, location, preferred_location, family, years_required, microsoft_ai_stack_terms,
                wage_context, fit_lines[], recommendation, composite, reason, bucket}},
-buckets{apply, consider, network, check-by-hand, skip}, scorer{…}, pipeline_skip_share, cannot_verify[]
+buckets{apply, consider, network, check-by-hand, skip}, scorer{…}, pipeline_skip_share, cannot_verify[],
+postings_audit[]{company, board, id, title, url, location, decision, reason, evidence{years_lines[], phrase, context, …}},
+verification_sample[]{why, …same fields}
 ```
 
 **Human: `pipeline-report.md`.** Sections in this order:
@@ -216,6 +219,8 @@ buckets{apply, consider, network, check-by-hand, skip}, scorer{…}, pipeline_sk
 10. Could not verify.
 11. Gates.
 12. Run record.
+
+**Human: `pipeline-audit.md`.** Executive summary; decision counts; the verification sample (every kept posting, the first 3 of each other decision, and up to 5 other-family titles that look like engineering or data work, taken across companies); every target-family posting with its evidence. Other-family postings are counted, not listed.
 
 **Scorer output:** `roles.json` in; `role-scores.json` and `role-scores.md` written by `role-scorer.mjs`.
 
@@ -245,6 +250,18 @@ buckets{apply, consider, network, check-by-hand, skip}, scorer{…}, pipeline_sk
 | **check by hand** | Find the careers page once (about 2 minutes). Note the slug for TODO 2. |
 | **skip** | Nothing. Skipping is a success. |
 
+## Verification loop (v0.4.x)
+
+The audit makes the tool checkable. Each iteration, every row of the verification sample is compared with its live job description, and each wrong decision becomes a rule fix with a test. The loop stops at zero misclassifications in the sample.
+
+| Iteration | Rules | Sample | Misclassified | Fix |
+|---|---|---|---:|---|
+| 1 | 0.4.0 | 23 | 1 kept wrongly + boundary misses | "a plus" in the next sentence now marks a line preferred; AI / data family words added (`evidence/verify-iteration-1.md`) |
+| 2 | 0.4.1 | 23 | 2 | "preferred" after the number; "expertise (N+ years)" read as a requirement (`evidence/verify-iteration-2.md`) |
+| 3 | 0.4.2 | 23 | **0** | none; all 16 experience rule-outs also checked by hand, 16 of 16 correct (`evidence/verify-iteration-3.md`) |
+
+The checks were done by Claude Code against the live descriptions; the author's G3 review is the human check.
+
 ## Lifecycle note
 
 - **v0.1.2** reached RUNNABLE-SAMPLE on 2026-10-02. Hemanth Rayudu cleared G1–G3 and the sample-run gate (run log, iteration 1).
@@ -253,6 +270,7 @@ buckets{apply, consider, network, check-by-hand, skip}, scorer{…}, pipeline_sk
 - A gate cleared for one version does not carry over (P4), so v0.3.0 had its own gates. Hemanth Rayudu cleared G1–G3 and the sample-run gate for v0.3.0 on 2026-10-02.
 - **v0.3.1** changes only where outputs are written: a gitignored default and a refusal to write into a folder with tracked files. Matching, rules and scoring are unchanged. It also lists the two `[TODO: DEFINE]` items separately as open decisions. The author re-ran the tests and the live run, and ran a fresh clone of the branch at `0e46158`, on 2026-10-02 (`evidence/38`, `39`): 25 tests OK, results identical to v0.3.0, clean status. So the sample-run gate was re-confirmed for v0.3.1.
 - **v0.3.2** fixes a defect found when the Canvas ZIP was unzipped and tested: the v0.3.1 guard relied on git, so outside a git checkout it never fired and `test_never_writes_over_tracked_files` failed. The guard now also refuses any existing folder holding files this tool did not write, which works without git. Matching, rules and scoring are unchanged. It is **DRAFT** until the author's next re-run and fresh clone.
+- **v0.4.0–0.4.2** (2026-10-03) change the years rule, put fit on the scheme's own scale (÷ 12, not ÷ 8), add `pipeline-audit.md`, and tighten the family words from the verification loop. TODO 9 is closed. Final live run: `course/2026fa/submissions/hemanthrayuduu/runs/2026-10-03-live-v4/`. The recipe is **DRAFT** until the author re-runs it and clears this version's gates.
 - The seven open TODOs are proposals outside the executed path. SNICKERDOODLE's zero-open-TODO rule for SPECIFIED conflicts with the assignment's request to list proposals as TODOs. The author's decision on that conflict is recorded in the run log.
 
 ## Run-log template (`logs/runs/`)

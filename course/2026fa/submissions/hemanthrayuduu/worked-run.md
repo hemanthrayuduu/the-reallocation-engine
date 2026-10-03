@@ -4,17 +4,84 @@
 
 **What this is:** the real runs of the job-list tool for a fictional student who mirrors the author's situation, with every command and its actual output pasted in.
 
-**Why read it:** to see which parts of each result are public records and which are the student's own rules, how the output was checked against its sources, and how the tool changed over three iterations.
+**Why read it:** to see which parts of each result are public records and which are the student's own rules, how the output was checked against its sources, and how the tool changed over four iterations.
 
 **What it found:**
 - **Iteration 1** targeted entry-level software roles. A hand check showed both AI roles it suggested were closed to the student.
 - **Iteration 2** re-scoped to mid-level AI Engineer roles on the Microsoft AI stack, Texas and remote first. It reads job descriptions for disqualifiers.
 - **Iteration 3** added Senior titles and Data Scientist / Data Engineer roles, as the author asked. On 2026-10-02 it found **7 roles worth considering**, including the first Texas match, in Austin. It ruled out 9 postings by their descriptions (one citizenship requirement, eight asking 5+ years).
+- **Iteration 4** (2026-10-03) replaced the years rule, put fit on its proper scale and added a per-posting audit. A fixed sample of 23 decisions was checked against the live descriptions three times; the third check found none wrong. **8 roles worth considering**, two of them in preferred locations (Austin, TX and US-remote).
 - **Nothing reached "apply".** That's an honest limit of the sponsorship data, explained below.
 
 ---
 
-# Iteration 3 (current): + Senior titles, Data Scientist and Data Engineer
+# Iteration 4 (current): years rule v2, fit on its own scale, and a checked audit
+
+Rules 0.4.0–0.4.2, recipe 0.4.2, run on 2026-10-03 by Claude Code. Same persona and targets as iteration 3.
+
+## What changed from iteration 3 (all your-input)
+
+- **Years rule v2.** Only *required* lines decide; the largest required line counts; lines under a preferred heading, or saying "a plus" or "preferred", never decide; numbers joined by "or" are alternatives. The old rule took the lowest number anywhere.
+- **Fit scale.** Fit is the phrase-match score divided by the scheme's own maximum (12), not by 8, so it can't saturate at 1.0.
+- **Audit and verification loop.** `pipeline-audit.md` lists every target-family posting with its decision and the sentence that decided it. A fixed sample is checked against the live descriptions each iteration until none is wrong.
+
+## Commands and real output
+
+```
+$ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py'
+Ran 49 tests
+OK
+```
+
+```
+$ python3 scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline/pipeline.py --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-03-live-v4   # rules 0.4.2
+  …(49 progress lines, see evidence/44)…
+✓ swe-sponsor-pipeline (live): 49 candidates, 49 probed, 11 boards found, 15 roles scored
+  apply 0 · consider 8 · network 6 · check-by-hand 38 · skip 1
+  scorer: ✓ scored 15 roles → Apply 0 · Consider 8 · Skip 7 (skip 47%)
+exit=0
+```
+
+**Consider (8 postings, ★ = preferred location):**
+
+| # | ★ | Company | Posting | Score | Sponsorship evidence | Fit | Years asked | Microsoft AI stack terms | Wage context (SOC) |
+|---:|---|---|---|---:|---|---:|---|---|---|
+| 1 | ★ austin | APPTRONIK INC | [Senior Software Engineer, ML Infrastructure](https://boards.greenhouse.io/apptronik/jobs/6176116004?gh_jid=6176116004) — Austin, TX `record` | 0.315 | 56 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.58 `your-input` | 3+ `record` | none found `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via family rule `your-input` |
+| 2 | ★ anywhere in the us | DILIGENT ROBOTICS INC | [ML Engineer, Manipulation](https://job-boards.greenhouse.io/diligentrobotics/jobs/7651459003) — Anywhere in the US `record` | 0.240 | 20 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.33 `your-input` | 3+ `record` | none found `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via family rule `your-input` |
+| 3 |  | DATABRICKS INC | [AI Engineer – Forward Deployed Engineering (AI FDE)](https://databricks.com/company/careers/open-positions/job?gh_jid=8546367002) — United States `record` | 0.384 | 1640 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.81 `your-input` | not stated `record` | azure `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via O*NET title match `record` |
+| 4 |  | DATABRICKS INC | [Senior Applied ML Engineer - ML4Sys ](https://databricks.com/company/careers/open-positions/job?gh_jid=8656900002) — San Francisco, California `record` | 0.240 | 1640 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.33 `your-input` | not stated (pref 4+) `record` | none found `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via family rule `your-input` |
+| 5 |  | DATABRICKS INC | [Senior Data Scientist ](https://databricks.com/company/careers/open-positions/job?gh_jid=5634684002) — Mountain View, California; San Francisco, California `record` | 0.240 | 1640 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.33 `your-input` | not stated `record` | none found `record` | $112,590 median, job zone 4 `record` · SOC 15-2051.00 via O*NET title match `record` |
+| 6 |  | VERKADA INC ⚠ 156 of 307 postings here say they can't sponsor that role | [Senior Software Engineer - Computer Vision](https://job-boards.greenhouse.io/verkada/jobs/4128624007) — San Mateo, CA United States `record` | 0.240 | 272 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.33 `your-input` | 4+ `record` | none found `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via family rule `your-input` |
+| 7 |  | VERKADA INC ⚠ 156 of 307 postings here say they can't sponsor that role | [Software Engineer - Computer Vision](https://job-boards.greenhouse.io/verkada/jobs/5195995007) — San Mateo, CA United States `record` | 0.240 | 272 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.33 `your-input` | 1+ `record` | none found `record` | $140,910 median, job zone 5 `record` · SOC 15-1221.00 via family rule `your-input` |
+| 8 |  | VERKADA INC ⚠ 156 of 307 postings here say they can't sponsor that role | [Software Engineer - Data Platform](https://job-boards.greenhouse.io/verkada/jobs/4129304007) — San Mateo, CA United States `record` | 0.215 | 272 approvals `record`; tier **Possible** (p 0.4) `your-input` | 0.25 `your-input` | 1+ `record` | none found `record` | $135,980 median, job zone 4 `record` · SOC 15-1243.00 via family rule `your-input` |
+
+**Funnel:** 49 candidate companies → 11 boards → 1,506 postings → 92 in a target family → 64 in the US → 25 at the right level → 17 ruled out by the description (16 on years, 1 on citizenship) → 8 kept. Skip share 91.3% of the 92 target-family postings.
+
+## Verification
+
+| Iteration | Rules | Kept | Sample checked | Wrong | What was fixed |
+|---|---|---:|---:|---:|---|
+| 4a | 0.4.0 | 8 | 23 | 1 + boundary misses | "a plus" read per sentence; AI / data family words |
+| 4b | 0.4.1 | 10 | 23 | 2 | "preferred" after the number; "expertise (N+ years)" |
+| 4c | 0.4.2 | 8 | 23 | **0** | none needed; all 16 years rule-outs also checked, 16 of 16 correct |
+
+Details per row: `evidence/verify-iteration-1.md`, `-2.md`, `-3.md`.
+
+**The Austin row, corrected.** Earlier iterations of this document said Apptronik's Austin role asks 5+ years *and* 3+ years. The live description says 5+ years **or** 3+ years. Years rule v2 reads that as 3+, which is within 3.5 + 1, so the row stays and is no longer "a reach".
+
+## Reflection (iteration 4)
+
+- The audit made the tool checkable: every decision now points at a sentence, so a reviewer can disagree with a specific line instead of with the tool.
+- Two of the three errors found were wording the rule hadn't seen ("… is a plus" in the next sentence; "2+ years strongly preferred"). New wording will keep appearing, so G3 stays a human gate.
+- Still nothing reaches Apply: the sponsorship record is a top-few title list (TODO 1).
+
+## Attestation (iteration 4)
+
+To be signed by the author after his own re-run and fresh-clone check (Task 6). Until then the recipe is DRAFT.
+
+---
+
+# Iteration 3 (record): + Senior titles, Data Scientist and Data Engineer
 
 Code `75f3c41` (unchanged since iteration 2) · rules 0.3.0 · recipe 0.3.0 · run folder `runs/2026-10-02-live-v3/`
 
@@ -149,7 +216,7 @@ The Consider table from `runs/2026-10-02-live-v3/pipeline-report.md`, verbatim:
 | Family | `ml_ai` | your-input | role word "engineer" + AI word "ML" (composite rule) |
 | Tier and p | Possible, p 0.4 | your-input | ML posting, software-only sponsored titles, so a soft tier |
 | ★ preferred | yes, "austin" | your-input | persona `preferred_locations` |
-| Years asked | 3+ shown | **record** text, your-input rule | lowest stated bound; the description also says **5+ years** of software engineering (see the cross-check) |
+| Years asked | 3+ shown | **record** text, your-input rule | lowest stated bound; the description also says **5+ years** of software engineering (see the cross-check) *(Correction 2026-10-03: the live text says 5+ years **OR** 3+ years (alternatives), not "and", so 3+ is the right reading and the role stays; see `evidence/verify-iteration-1.md`.)* |
 | Fit | 0.875 | your-input | deterministic phrase match against the résumé |
 | Score | 0.403 → Consider | **record of arithmetic** | `role-scorer.mjs`; the soft tier caps it at Consider |
 
@@ -172,14 +239,14 @@ $ curl -s https://boards-api.greenhouse.io/v1/boards/twinhealth/jobs/5655780004 
 
 What it showed:
 - **Twin Health "Senior AI Engineer":** correctly ruled out (5+ years), and it really has no "can't sponsor" line; the only "sponsor" text is about healthcare.
-- **The Austin role exposes a rule choice.** Its main requirement is 5+ years, but the rule shows 3+. Recorded as `[TODO: DEFINE]` 9 and left for the author to decide, rather than tuned after seeing the result.
+- **The Austin role exposes a rule choice.** Its main requirement is 5+ years, but the rule shows 3+. Recorded as `[TODO: DEFINE]` 9 and left for the author to decide, rather than tuned after seeing the result. *(Correction 2026-10-03: the live text says 5+ years **OR** 3+ years (alternatives), not "and", so 3+ is the right reading and the role stays; see `evidence/verify-iteration-1.md`.)*
 
 ## Reflection (iteration 3)
 
 **What worked:** with Senior titles allowed, the years-asked rule did the real filtering. 8 Senior roles were ruled out on 5+ or 8+ years, and the ones left state 3–4 years or nothing.
 
 **What it missed:**
-1. **The Austin role's 5+ years main requirement** (TODO 9).
+1. **The Austin role's 5+ years main requirement** (TODO 9). *(Correction 2026-10-03: the live text says 5+ years **OR** 3+ years (alternatives), not "and", so 3+ is the right reading and the role stays; see `evidence/verify-iteration-1.md`.)*
 2. **No Data Engineer posting appeared on the 11 boards found.** The family is in place, but this sample has none.
 3. **"Sr. Developer Advocate, AI and Machine Learning" matched the AI family**, a new title-rule gap. It was ruled out anyway on years.
 
@@ -200,7 +267,7 @@ What it showed:
 | **Break (v0.3.1):** `--out-dir` set to the committed iteration-1 run folder | `ERROR: refusing to write into … 5 git-tracked file(s)`, exit 1; nothing overwritten (`evidence/36`) | a run never overwrites a tracked file |
 | Author re-run + fresh clone at `0e46158` (v0.3.1) | 25 OK; identical live result; clean status (`evidence/38`, `39`) | fix changes nothing but the output location |
 | **Break, by rule change:** with the Senior patterns removed, does the fixture Senior posting get scored? | `test_rules_030_senior_titles_are_scored` passes; Staff still excluded (`test_seniority_rules_030`) | Senior in, Staff out |
-| Hand cross-check: Apptronik 6176116004, Twin Health 5655780004 via the API | "5+ years … and 3+ years …"; "5+ years …", no can't-sponsor line | matches the report, and exposes TODO 9 |
+| Hand cross-check: Apptronik 6176116004, Twin Health 5655780004 via the API | "5+ years … and 3+ years …"; "5+ years …", no can't-sponsor line | matches the report, and exposes TODO 9 *(Correction 2026-10-03: the live text says 5+ years **OR** 3+ years (alternatives), not "and", so 3+ is the right reading and the role stays; see `evidence/verify-iteration-1.md`.)* |
 
 ### Did not test
 

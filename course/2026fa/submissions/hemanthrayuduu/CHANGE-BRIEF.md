@@ -138,3 +138,21 @@ Not predicted:
 - 1 Senior Data Scientist reached Consider.
 - No Data Engineer postings on the boards found.
 - A hand check showed the lowest-bound years rule keeps a role whose main requirement is 5+ years (TODO 9).
+
+### Revision 5 — 2026-10-03, Claude Code (approved design: verified accuracy, minimal hardening)
+
+**Predictions**, copied verbatim from the design, *written before implementation (spec commit 4918f08)*:
+
+- **P6:** years v2 flips **no** keep/exclude decision on today's live data. It changes the displayed years for Verkada "Senior Software Engineer – Computer Vision" (1+ → 4+) and Databricks "Senior Applied ML Engineer – ML4Sys" (4+ → preferred only).
+- **P7:** the fit fix lowers fit values, and at least one Consider row may become Skip.
+- **P8:** the first verification sample will find at least one misclassification in the *other-family* boundary titles, i.e. a real AI or data role the title rule misses.
+
+**Outcome:**
+
+| Prediction | Held? | What happened |
+|---|---|---|
+| P6 | **No** | The two display changes happened (Verkada 4+; ML4Sys "pref 4+"). But years v2 *did* flip a decision: Twin Health "Senior AI Engineer" went from ruled out to kept, wrongly, because "a plus" in the next sentence marked the whole line preferred. Verification 1 caught it, and rules 0.4.1 fixed it. |
+| P7 | Partly | Fit values fell (e.g. Austin 0.58). No Consider row became Skip: sponsorship decides the bucket at these values. |
+| P8 | Yes | Verification 1 found boundary titles the family words missed (data-platform, model-serving, reinforcement-learning roles); rules 0.4.1 added the words. |
+
+**Correction to Revision 4:** "keeps a role whose main requirement is 5+ years" was a misreading. The description says 5+ years **or** 3+ years, so 3+ is the right reading. Revision 4 is left as written.

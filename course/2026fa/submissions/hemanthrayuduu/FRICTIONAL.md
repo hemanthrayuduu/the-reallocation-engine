@@ -34,6 +34,9 @@ This is the honest record of how the work actually went: what was tried, what br
 | 24 | Claude runs the attestation re-run | author stopped it mid-run ("wait"), wanting to run it himself. Claude then said "Nothing ran, and nothing was written", which was **false**: the tests had run and a partial evidence file was left | partial file archived as `34a-INTERRUPTED…`; false claim corrected to the author; author ran `! bash .build/rerun.sh` himself (`34b`) | author ran; Claude self-correction | `evidence/34a`, `34b`, `34c` |
 | 25 | "Are we following §1–§4?" (author) | requirements audit: the documented command could overwrite the committed iteration-1 run when run on 2026-10-02; DEFINE items in the additions list; no late `git diff --stat`; no iteration-3 human-judgment note | fixes A–D (v0.3.1); tests 23 → 25; break check `evidence/36` | author asked; Claude audited and fixed | `evidence/36`, `37`; run log |
 | 26 | The ZIP works like the checkout | unzipped and tested, the v0.3.1 ZIP failed `test_never_writes_over_tracked_files`: the guard depended on git, and the ZIP isn't a git checkout | v0.3.2: git-independent guard; gitignore test skips outside a checkout; ZIP re-tested with git blinded | Claude found (by testing the ZIP) and fixed | `evidence/40`, `41` |
+| 27 | The Austin role asks 5+ *and* 3+ years (row 23) | re-reading the live text in verification 1: it says 5+ **or** 3+, so row 23 and the documents built on it were wrong | corrected everywhere with a dated note; years rule v2 reads "or" as alternatives | Claude | `verify-iteration-1.md` |
+| 28 | The 0.4.0 years rule is right | verification 1: a "… is a plus" in the *next* sentence was missed, so Twin Health's Senior AI Engineer was kept | per-sentence check + test; rules 0.4.1 | Claude | `verify-iteration-1.md` |
+| 29 | The 0.4.1 years rule is right | verification 2: "2+ years … strongly preferred" and "expertise (5+ years)" were misread, so two RL Engineer roles were kept | "preferred" after the number; "expertise (N+ years)"; rules 0.4.2; verification 3 found 0 of 23 wrong | Claude | `verify-iteration-2.md`, `-3.md` |
 
 **Unresolved questions:**
 - How should the recipe's proposed-addition TODOs count against SNICKERDOODLE's "zero open TODOs" rule for SPECIFIED?
@@ -99,6 +102,7 @@ This is the honest record of how the work actually went: what was tried, what br
 **What I checked against a source, and the result**
 - **The 7 Consider links:** all live.
 - **The Austin role (Apptronik, Senior Software Engineer, ML Infrastructure):** its description asks for 5+ years of software engineering *and* 3+ years of data-infrastructure work, but the tool shows 3+. I'm applying anyway, knowing it's a reach (`evidence/30`).
+  - *[Correction added by Claude Code, 2026-10-03: the description says 5+ years **or** 3+ years, so the tool's 3+ is right and the role is not a reach. The "and" reading was Claude's mistake, passed on to the author.]*
 - **Twin Health's Senior AI Engineer:** it asks 5+ years, so it was correctly ruled out. It doesn't say it can't sponsor.
 
 **What I accepted, modified, or rejected from the AI's work, and why**

@@ -2,7 +2,7 @@
 owner: hemanthrayuduu
 term: 2026fa
 component: swe-sponsor-pipeline
-status: DRAFT  # mirrors the recipe: v0.3.2 (git-independent output guard) awaits the author's re-run
+status: DRAFT  # mirrors the recipe: v0.4.2 (years rule v2, fit ÷ 12, per-posting audit) awaits the author's re-run and gates
 promoted_to: null
 ---
 
@@ -70,6 +70,7 @@ python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponso
 |---|---|
 | `pipeline-log.json` | the agent: every value as `{value, source}`, input hashes, funnel, buckets |
 | `pipeline-report.md` | the person: executive summary, apply / consider / network / check-by-hand tables, gates |
+| `pipeline-audit.md` | the checker: every target-family posting, its decision and the sentence that decided it, plus a fixed verification sample |
 | `roles.json` | the scorer's input (shape of `data/examples/ch11-roles.json`) |
 | `role-scores.json`, `role-scores.md` | written by `role-scorer.mjs` itself |
 | `.build/raw/*.json` | raw board responses (gitignored), for provenance |

@@ -167,3 +167,21 @@ The iteration-3 sign-off lines at the bottom are still open.
   - The ZIP's tests then pass with git unable to see any repository (`evidence/41`).
 - **Open issues:** status is DRAFT until the author re-runs the tests and a fresh clone on v0.3.2. The ZIP must be rebuilt after the final commit. The PR is not opened yet (author's decision).
 
+## 2026-10-03 — iteration 4: years rule v2, fit scale, per-posting audit (rules 0.4.0–0.4.2, recipe 0.4.2)
+
+- **Recipe:** manual (`recipes/cases/2026fa/hemanthrayuduu-swe-sponsor-pipeline.md` v0.4.2)
+- **Inputs:** same data and persona as iteration 3; `pipeline.py --out-dir course/2026fa/submissions/hemanthrayuduu/runs/2026-10-03-live-v4` (live, run by Claude Code).
+- **Outputs:** `runs/2026-10-03-live-v4/` (report, log, audit, scorer files); `evidence/42`–`44`; `evidence/verify-iteration-1`–`3.md`.
+- **Result:**
+  - Three live runs, each followed by a hand check of a fixed 23-row sample against the live descriptions: 1 wrong + boundary misses → 2 wrong → **0 wrong**. All 16 years rule-outs of the final run were also checked: 16 of 16 correct.
+  - Final: apply 0 · consider 8 · network 6 · check-by-hand 38 · skip 1. 92 target-family postings, 17 ruled out by description, skip share 91.3%. Tests 49/49.
+  - TODO 9 closed by the years rule v2 (author's decision in the approved design). `todos_open` 7.
+- **Correction:** the iteration-3 entry above says the Austin role states 5+ years *and* 3+ years. The description says 5+ **or** 3+. The entry is left as written; this line corrects it.
+- **Open issues:** status is DRAFT until the author re-runs the tests and a fresh clone, and clears this version's gates below.
+
+## Gate decisions — iteration 4 (v0.4.2)
+
+- **Sample-run gate (lifecycle):** ☐ · by/date: ______
+- **G1 liveness:** links checked for the 8 Consider rows: ___ of 8 live · by/date: ______
+- **G2 timeline:** OPT start stand-in (2027-01-11) and 60-day hiring lag confirmed · by/date: ______
+- **G3 release:** rows I would act on: ______; rows rejected and why: ______ · by/date: ______
