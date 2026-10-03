@@ -1,0 +1,11 @@
+# v0.3.2 Canvas ZIP (built from f091f48), unzipped and tested with git BLIND to any repository (GIT_CEILING_DIRECTORIES), i.e. exactly as a grader's unzipped copy
+$ cd <unzipped>/the-reallocation-engine && GIT_CEILING_DIRECTORIES=<unzip dir> git rev-parse --is-inside-work-tree
+fatal: not a git repository (or any of the parent directories): .git
+$ GIT_CEILING_DIRECTORIES=<unzip dir> python3 -m unittest discover -s scripts/contrib/2026fa/hemanthrayuduu-swe-sponsor-pipeline -p 'test_*.py' -v
+test_default_out_dir_is_gitignored_inside_own_folder (test_pipeline.NamedFailures) ... skipped 'not a git checkout (e.g. the unzipped submission): nothing can be git-tracked here'
+test_never_writes_into_a_folder_it_did_not_create (test_pipeline.NamedFailures) ... ok
+test_reuses_its_own_earlier_output_folder (test_pipeline.NamedFailures) ... ok
+Ran 26 tests in 0.331s
+OK (skipped=1)
+$ head -1 of the top-level SUBMISSION.md SHA line
+Submitted commit SHA: f091f48a97ed69297076c7bbf1cb336d66f7e49f (branch contrib/2026fa-hemanthrayuduu-swe-sponsor-pipeline)
